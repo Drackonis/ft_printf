@@ -7,4 +7,13 @@
 
 int	ft_printf(const char *format, ...);
 
+typedef struct s_printf
+{
+	va_list	arg;
+	char *format;
+	int	i;
+
+
+}		t_printf;
+
 #endif
