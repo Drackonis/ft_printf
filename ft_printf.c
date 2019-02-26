@@ -62,8 +62,12 @@ int	ft_nbrlen(const int nbr)
 	int	n;
 	int	l;
 
+	//VERIFIER SI IL FAUT COMPTER LE -
+	//ATTENTION PUTWIDTH DOIT GET SANS LE -
 	l = 0;
 	n = nbr;
+	if (n < 0)
+		n = -n;
 	while (n > 9)
 	{
 		n = n / 10;
@@ -78,7 +82,7 @@ int	ft_ctoi(char c)
 	int	i;
 
 	i = c - '0';
-	printf ("char : %c | i = %d\n", c, i);
+	//printf ("char : %c | i = %d\n", c, i);
 	return(i);
 }
 
@@ -107,36 +111,76 @@ t_printf	put_nbr_modified(t_printf p)
 	int	i;
 
 	i = 0;
+	if (p.plus && p.d >= 0)
+		ft_putchar('+');
+	if (p.d < 0)
+		ft_putchar('-');
 	if (p.is_precision)
 	{
 		l = ft_nbrlen(p.d);
 		precision = ft_nbr_conv(p, p.is_flag + p.is_width + p.is_precision, p.is_precision);
-		printf("precision = %d | len = %d\n", precision, l);
+		printf ("PRECISION : |%d|\n", precision);
+		//printf("precision = %d | len = %d\n", precision, l);
 		while (i++ < precision - l)
 			ft_putchar('0');
 	}
-	if (p.plus && p.d >= 0)
-		ft_putchar('+');
-	ft_putnbr(p.d);
+	if (p.d >= 0)
+		ft_putnbr(p.d);
+	else
+		ft_putnbr(-p.d);
 	return (p);	
 }
 
 t_printf	put_width(t_printf p)
 {
-	int width;
-	
+	int	width;
+	int	precision;
+	int	i;
+
+	i = 0;
 	width = ft_nbr_conv(p, p.is_flag + p.is_width - 1, p.is_width);
-	printf ("width = %d\n", width);	
+	printf ("WIDTH : |%d|\n", width);
+	if (p.space || (p.plus && p.d >= 0) || p.d < 0)
+		width--;
+	if (p.is_precision)
+	{
+		precision = ft_nbr_conv(p, p.is_flag + p.is_width + p.is_precision, p.is_precision);
+		if (p.minus)
+			precision -= ft_nbrlen(p.d);
+		width -= precision;
+	}
+	width -= ft_nbrlen(p.d);
+	printf ("printed width : %d | nbrlen : %d | p.d : %d\n", width, ft_nbrlen(p.d), p.d);
+	if (p.zero && !p.minus && p.is_precision == 0)
+	{
+		if (p.d < 0)
+			ft_putchar('-');
+		while (i < width)
+		{
+			ft_putchar('0');
+			i++;
+		}
+	}
+	else
+	{
+		while (i < width)
+		{
+			ft_putchar (' ');
+			i++;
+		}
+		/*if (p.d < 0)
+			ft_putchar('-');*/
+	}
+	//printf ("width = %d\n", width);	
 	return (p);
 }
 
 t_printf	flag_modifier(t_printf p)
 {
 	int	i;
-	int	space;
-	
+	p.minus = 0;
 	p.plus = 0;
-	space = 0;
+	p.space = 0;
 	i = 0;
 	while (i < p.is_flag)
 	{
@@ -145,10 +189,10 @@ t_printf	flag_modifier(t_printf p)
 		if (p.conv[i] == '+')
 			p.plus++;
 		if (p.conv[i] == ' ')
-			space++;
+			p.space++;
 		i++;
 	}
-	if (space && !p.plus)
+	if (p.space && !p.plus && p.d >= 0)
 		ft_putchar(' ');
 	return (p);
 }
@@ -195,20 +239,23 @@ t_printf	int_conv(t_printf p)
 {
 	int d;
 
-	printf ("INT CONV\n");
+	//printf ("INT CONV\n");
 	p.d = va_arg(p.arg, int);
 	if (p.diff != 0)
 	{
 		//printf ("C//ARG SUPP Diff : %d\n", p.diff);
 		p = is_modifier(p);
 		p = flag_modifier(p);
+		printf ("MINUS : %d\n", p.minus);
 		if (p.minus)
 		{
+			printf ("put nbr modified in first : MINUS > 0\n");
 			p = put_nbr_modified(p);
 			p = put_width(p);
 		}
 		else
 		{
+			printf ("put whidth in first : MINUS <= 0 \n");
 			p = put_width(p);
 			p = put_nbr_modified(p);
 		}
@@ -247,10 +294,10 @@ t_printf	call_conv(t_printf p, t_printf ptmp)
 
 	i = 0;
 	ptmp.diff = (p.i - 1) - ptmp.i;
-	printf ("%d\n", ptmp.diff);
+	//printf ("%d\n", ptmp.diff);
 	while (i < ptmp.diff)
 	{
-		printf ("char : %c\n", p.conv[i]);
+		//printf ("char : %c\n", p.conv[i]);
 		ptmp.conv[i] = p.conv[i];
 		i++;
 	}
@@ -299,7 +346,7 @@ t_printf	check_conv(t_printf ptmp)
 	{
 		//printf ("C//Current char : %c | pos : %d\n", p.format[p.i], p.i);
 		p.conv[p.c] = p.format[p.i];
-		printf ("assigned : %c | char assign : %c\n", p.conv[p.c], p.format[p.i]);
+		//printf ("assigned : %c | char assign : %c\n", p.conv[p.c], p.format[p.i]);
 		p.c++;
 		p.i++;
 	}

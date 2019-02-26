@@ -20,6 +20,7 @@ typedef struct s_printf
 	int	minus;
 	int	plus;
 	int	zero;
+	int	space;
 
 }		t_printf;
 
