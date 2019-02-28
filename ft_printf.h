@@ -17,10 +17,12 @@ typedef struct s_printf
 	int	is_flag;
 	int	is_width;
 	int	is_precision;
+	int	is_noread;
 	int	minus;
 	int	plus;
 	int	zero;
 	int	space;
+	int 	mput;
 
 }		t_printf;
 
