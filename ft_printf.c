@@ -57,13 +57,14 @@ t_printf 	put_percent(t_printf p)
 	return(p);
 }
 
-int	ft_nbrlen(const int nbr)
+int	ft_nbrlen(t_printf p)
 {
-	int	n;
-	int	l;
+	long long	n;
+	int		l;
 
-	//VERIFIER SI IL FAUT COMPTER LE -
-	//ATTENTION PUTWIDTH DOIT GET SANS LE -
+	if (p.hcount == 1)
+		n = (long long)p.d1;
+	//ATTENTION PUTWIDTH DOIT GET LA LONGUEUR SANS LE -
 	l = 0;
 	n = nbr;
 	if (n < 0)
@@ -113,23 +114,23 @@ t_printf	put_nbr_modified(t_printf p)
 	int	i;
 
 	i = 0;
-	if (p.plus && p.d >= 0)
+	if (p.plus && !p.isneg)
 		ft_putchar('+');
-	if (p.d < 0 && !p.mput)
+	if (p.isneg && !p.mput)
 	{
 		ft_putchar('-');
 		p.mput++;
 	}
 	if (p.is_precision)
 	{
-		l = ft_nbrlen(p.d);
-		precision = ft_nbr_conv(p, p.is_flag + p.is_width + p.is_noread + p.is_precision, p.is_precision);
+		l = ft_nbrlen(p);
+		precision = ft_nbr_conv(p, p.is_flag + p.is_width + p.is_precision, p.is_precision);
 		//printf ("PRECISION : |%d|\n", precision);
 		//printf("precision = %d | len = %d\n", precision, l);
 		while (i++ < precision - l)
 			ft_putchar('0');
 	}
-	if (p.d >= 0)
+	if (!p.isneg)
 		ft_putnbr(p.d);
 	else
 		ft_putnbr(-p.d);
@@ -145,14 +146,14 @@ t_printf	put_width(t_printf p)
 	i = 0;
 	width = ft_nbr_conv(p, p.is_flag + p.is_width - 1, p.is_width);
 	//printf ("WIDTH : |%d|\n", width);
-	if (p.space || (p.plus && p.d >= 0) || p.d < 0)
+	if (p.space || (p.plus && !p.isneg) || p.isneg)
 	{
 		width--;
 		//printf ("Width-- : %d\n", width);
 	}
 	if (p.is_precision)
 	{
-		precision = ft_nbr_conv(p, p.is_flag + p.is_width + p.is_noread + p.is_precision, p.is_precision);
+		precision = ft_nbr_conv(p, p.is_flag + p.is_width + p.is_precision, p.is_precision);
 		//printf ("Precision : %d\n", precision);
 		
 		precision -= ft_nbrlen(p.d);
@@ -167,7 +168,7 @@ t_printf	put_width(t_printf p)
 	//printf ("printed width : %d | nbrlen : %d | p.d : %d\n", width, ft_nbrlen(p.d), p.d);
 	if (p.zero && !p.minus && p.is_precision == 0)
 	{
-		if (p.d < 0 && !p.mput)
+		if (p.isneg && !p.mput)
 		{
 			ft_putchar('-');
 			p.mput++;
@@ -195,6 +196,7 @@ t_printf	put_width(t_printf p)
 t_printf	flag_modifier(t_printf p)
 {
 	int	i;
+
 	p.minus = 0;
 	p.mput = 0;
 	p.plus = 0;
@@ -221,33 +223,26 @@ t_printf	is_modifier(t_printf p)
 	int	point;
 	int	number;
 
-	point = 0;
-	number = 0;
 	p.c = 0;
 	p.is_flag = 0;
 	p.zero = 0;
 	p.is_width = 0;
 	p.is_precision = 0;
-	p.is_noread = 0;
+	p.hcount = 0;
+	p.lcount = 0;
 	while (p.c < p.diff)
 	{
 		c = p.conv[p.c];
-		if (c == '-' || c == '+' || c == ' ' || c == '#')
+		if (c == '-' || c == '+' || c == ' ')
 			p.is_flag++;
-		if (c == '0' && !number)
+		else if (c == '0' && !number)
 		{
 			p.is_flag++;
 			p.zero++;
 		}
-		if (c == '.')
-		{
+		else if (c == '.' && point == 0)
 			point += 1;
-			if (point > 1)
-				p.is_noread++;
-			p.is_noread += p.is_precision;
-			p.is_precision = 0;
-		}
-		if (c >= '1' && c <= '9' || (c == '0' && number))
+		else if (c >= '1' && c <= '9' || (c == '0' && number))
 		{
 			number = 1;
 			if (point == 0)
@@ -255,20 +250,103 @@ t_printf	is_modifier(t_printf p)
 			else
 				p.is_precision++;
 		}
+		else if (c == 'h')
+			p.hcount++;
+		else if (c == 'l')
+			p.lcount++;
+		else
+			ft_putstr("Format error : %[flags][width][.precision][size]type");
 		p.c++;
+	}
+	return (p);
+}
+
+int	 		int_init_error(t_printf p)
+{
+	char		c;
+	int		i;
+	int		nbPoint;
+
+	nbPoint = 0;
+	i = p.c;
+	c = p.conv[i];
+	while (i < p.diff && (c == '-' || c == '+' || c == ' '))
+	{
+		i++;
+		c = p.conv[i];
+	}
+	while (i < p.diff && ((c >= '0' && c <= '9') || c == '.'))
+	{
+		if (c == '.')
+			nbPoint++;
+		if (nbPoint > 1)
+			ft_putstr("Format error : %[flags][width][.precision][size]type");
+		i++;
+		c = p.conv[i];
+	}
+	while (i < p.diff && (c == 'h' || c == 'l'))
+	{
+		i++;
+		c = p.conv[i];
+	}
+	if (i != p.diff)
+		ft_putstr("Format error : %[flags][width][.precision][size]type");
+	return (0);
+}
+
+t_printf	get_arg(t_printf p)
+{
+	p.d = 0;
+	p.d0 = 0;
+	p.d1 = 0;
+	p.d2 = 0;
+	p.d3 = 0;
+	p.isneg = 0;
+	if (p.hcount > 0)
+	{
+		//short & signed char is promoted to int when pass in va_arg
+		if (p.hcount == 1)
+		{
+			p.d1 = (short)va_arg(p.arg, int);
+			p.isneg = (p.d1 < 0) ? 1 : 0;
+		}
+		else if (p.hcount == 2)
+		{
+			p.d0 = (signed char)va_arg(p.arg, int);
+			p.isneg = (p.d0 < 0) ? 1 : 0;
+		}
+	}
+	else if (p.lcount > 0)
+	{
+		if (p.lcount == 1)
+		{
+			p.d2 = va_arg(p.arg, long);
+			p.isneg = (p.d2 < 0) ? 1 : 0;
+		}
+		else if (p.lcount == 2)
+		{
+			p.d3 = va_arg(p.arg, long long);
+			p.isneg = (p.d3 < 0) ? 1 : 0;
+
+		}
+	}
+	else
+	{
+		p.d = va_arg(p.arg, int);
+		p.isneg = (p.d < 0) ? 1 : 0;
+
 	}
 	return (p);
 }
 
 t_printf	int_conv(t_printf p)
 {
-	int d;
-
 	//printf ("INT CONV\n");
-	p.d = va_arg(p.arg, int);
 	//printf ("C//ARG SUPP Diff : %d\n", p.diff);
+	int_init_error(p);
 	p = is_modifier(p);
 	p = flag_modifier(p);
+	p = get_arg(p);
 	//printf ("MINUS : %d\n", p.minus);
 	if (p.minus)
 	{
@@ -282,7 +360,7 @@ t_printf	int_conv(t_printf p)
 		p = put_width(p);
 		p = put_nbr_modified(p);
 	}
-	//printf ("is_flags = %d | is_width = %d | is_noread = %d | is_precision = %d\n", p.is_flag, p.is_width, p.is_noread, p.is_precision);
+	//printf ("is_flags = %d | is_width = %d | is_precision = %d | hcount = %d | lcount %d\n", p.is_flag, p.is_width, p.is_precision, p.hcount, p.lcount);
 	p.c = 0;
 	while (p.c < p.diff)
 	{
@@ -413,10 +491,10 @@ int		main(int argc, char **argv)
 {
 	argc++;
 	t_printf p;
-	ft_putstr("MY PRINTF   : ");
-	printf("TRUE PRINTF : ");
+	int i = 42;
+	printf("TRUE PRINTF : \n");
 	printf(argv[1],ft_atoi(argv[2]), ft_atoi(argv[3]));
-	printf("\n");
+	printf("\nMY PRINTF   : \n");
 	//printf("C// %% ca fait quoi ?\n");
 	p = ft_printf(argv[1], ft_atoi(argv[2]), ft_atoi(argv[3]));
 	//printf ("C//p.i = %d", p.i);

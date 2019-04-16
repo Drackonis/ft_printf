@@ -5,28 +5,35 @@
 # include <stdarg.h>
 # include "libft/libft.h"
 
-typedef struct s_printf
+typedef struct		s_printf
 {
-	va_list	arg;
-	char	*format;
-	int	i;
-	int	diff;
-	char	conv[30];
-	int	c;
-	int	d;
-	int	is_flag;
-	int	is_width;
-	int	is_precision;
-	int	is_noread;
-	int	minus;
-	int	plus;
-	int	zero;
-	int	space;
-	int 	mput;
+	va_list		arg;
+	char		*format;
+	int		i;
+	int		diff;
+	char		conv[30];
+	int		c;
+	int		d;
+	signed char	d0;
+	short		d1;	
+	long		d2;
+	long long 	d3;
+	int		is_flag;
+	int		is_width;
+	int		is_precision;
+	//int		is_noread;
+	int		minus;
+	int		plus;
+	int		zero;
+	int		space;
+	int 		mput;
+	int		hcount;
+	int		lcount;
+	int		isneg;
 
-}		t_printf;
+}			t_printf;
 
-t_printf	ft_printf(const char *format, ...);
-void		ft_putnbr_base(int, char*);
+t_printf		ft_printf(const char *format, ...);
+void			ft_putnbr_base(int, char*);
 
 #endif
