@@ -1,8 +1,5 @@
 #include "ft_printf.h"
 
-
-
-
 t_printf 	char_conv(t_printf p)
 {
 	printf ("CHAR CONV\n");
@@ -57,16 +54,31 @@ t_printf 	put_percent(t_printf p)
 	return(p);
 }
 
-int	ft_nbrlen(t_printf p)
+void	ft_putnbr_intmax(intmax_t num)
 {
-	long long	n;
+	intmax_t		nb;
+	int			t;
+	char			c;
+
+	t = 0;
+	nb = num;
+	if (nb >= 10)
+	{
+		t = nb % 10;
+		c = t + 48;
+		ft_putnbr_intmax(nb / 10);
+	}
+	else
+		c = nb + 48;
+	write(1, &c, 1);
+}
+
+int	ft_nbrlen(intmax_t n)
+{
 	int		l;
 
-	if (p.hcount == 1)
-		n = (long long)p.d1;
 	//ATTENTION PUTWIDTH DOIT GET LA LONGUEUR SANS LE -
 	l = 0;
-	n = nbr;
 	if (n < 0)
 		n = -n;
 	while (n > 9)
@@ -75,6 +87,7 @@ int	ft_nbrlen(t_printf p)
 		l++;
 	}
 	l++;
+	//printf ("\n len = %d\n", l);
 	return (l);
 }
 
@@ -123,7 +136,7 @@ t_printf	put_nbr_modified(t_printf p)
 	}
 	if (p.is_precision)
 	{
-		l = ft_nbrlen(p);
+		l = p.numlen;
 		precision = ft_nbr_conv(p, p.is_flag + p.is_width + p.is_precision, p.is_precision);
 		//printf ("PRECISION : |%d|\n", precision);
 		//printf("precision = %d | len = %d\n", precision, l);
@@ -131,9 +144,9 @@ t_printf	put_nbr_modified(t_printf p)
 			ft_putchar('0');
 	}
 	if (!p.isneg)
-		ft_putnbr(p.d);
+		ft_putnbr_intmax(p.d4);
 	else
-		ft_putnbr(-p.d);
+		ft_putnbr(-p.d4);
 	return (p);	
 }
 
@@ -301,6 +314,7 @@ t_printf	get_arg(t_printf p)
 	p.d1 = 0;
 	p.d2 = 0;
 	p.d3 = 0;
+	p.d4 = 0;
 	p.isneg = 0;
 	if (p.hcount > 0)
 	{
@@ -309,11 +323,15 @@ t_printf	get_arg(t_printf p)
 		{
 			p.d1 = (short)va_arg(p.arg, int);
 			p.isneg = (p.d1 < 0) ? 1 : 0;
+			p.numlen = ft_nbrlen(p.d1);
+			p.d4 = (intmax_t)p.d1;
 		}
 		else if (p.hcount == 2)
 		{
 			p.d0 = (signed char)va_arg(p.arg, int);
 			p.isneg = (p.d0 < 0) ? 1 : 0;
+			p.numlen = ft_nbrlen(p.d0);
+			p.d4 = (intmax_t)p.d0;
 		}
 	}
 	else if (p.lcount > 0)
@@ -322,19 +340,23 @@ t_printf	get_arg(t_printf p)
 		{
 			p.d2 = va_arg(p.arg, long);
 			p.isneg = (p.d2 < 0) ? 1 : 0;
+			p.numlen = ft_nbrlen(p.d2);
+			p.d4 = (intmax_t)p.d2;
 		}
 		else if (p.lcount == 2)
 		{
 			p.d3 = va_arg(p.arg, long long);
 			p.isneg = (p.d3 < 0) ? 1 : 0;
-
+			p.numlen = ft_nbrlen(p.d3);
+			p.d4 = (intmax_t)p.d3;
 		}
 	}
 	else
 	{
 		p.d = va_arg(p.arg, int);
 		p.isneg = (p.d < 0) ? 1 : 0;
-
+		p.numlen = ft_nbrlen(p.d);
+		p.d4 = (intmax_t)p.d;
 	}
 	return (p);
 }

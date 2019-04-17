@@ -18,6 +18,7 @@ typedef struct		s_printf
 	short		d1;	
 	long		d2;
 	long long 	d3;
+	intmax_t	d4;
 	int		is_flag;
 	int		is_width;
 	int		is_precision;
@@ -30,6 +31,7 @@ typedef struct		s_printf
 	int		hcount;
 	int		lcount;
 	int		isneg;
+	int		numlen;
 
 }			t_printf;
 
