@@ -116,7 +116,7 @@ int	ft_nbr_conv(t_printf p, int start, int val)
 		puissance *= 10;
 		i++;
 	}
-	//printf ("NRE RETURN : %d\n", nbr);
+	//printf ("\nNRE RETURN : %d\n", nbr);
 	return (nbr);
 }
 
@@ -137,6 +137,7 @@ t_printf	put_nbr_modified(t_printf p)
 	if (p.is_precision)
 	{
 		l = p.numlen;
+		//printf ("NUMLEN = %d", l);
 		precision = ft_nbr_conv(p, p.is_flag + p.is_width + p.is_precision, p.is_precision);
 		//printf ("PRECISION : |%d|\n", precision);
 		//printf("precision = %d | len = %d\n", precision, l);
@@ -167,7 +168,7 @@ t_printf	put_width(t_printf p)
 	if (p.is_precision)
 	{
 		precision = ft_nbr_conv(p, p.is_flag + p.is_width + p.is_precision, p.is_precision);
-		//printf ("Precision : %d\n", precision);
+		//printf ("\nPrecision : %d\n", precision);
 		
 		precision -= ft_nbrlen(p.d);
 		if (precision < 0)
@@ -202,7 +203,7 @@ t_printf	put_width(t_printf p)
 		/*if (p.d < 0)
 			ft_putchar('-');*/
 	}
-	//printf ("width = %d\n", width);	
+	//printf ("\nwidth = %d\n", width);	
 	return (p);
 }
 
@@ -236,6 +237,8 @@ t_printf	is_modifier(t_printf p)
 	int	point;
 	int	number;
 
+	point = 0;
+	number = 0;
 	p.c = 0;
 	p.is_flag = 0;
 	p.zero = 0;
@@ -253,7 +256,7 @@ t_printf	is_modifier(t_printf p)
 			p.is_flag++;
 			p.zero++;
 		}
-		else if (c == '.' && point == 0)
+		else if (c == '.' /*&& point == 0*/)
 			point += 1;
 		else if (c >= '1' && c <= '9' || (c == '0' && number))
 		{
@@ -267,8 +270,8 @@ t_printf	is_modifier(t_printf p)
 			p.hcount++;
 		else if (c == 'l')
 			p.lcount++;
-		else
-			ft_putstr("Format error : %[flags][width][.precision][size]type");
+		/*else
+			ft_putstr("Format error : %[flags][width][.precision][size]type");*/
 		p.c++;
 	}
 	return (p);
@@ -292,8 +295,8 @@ int	 		int_init_error(t_printf p)
 	{
 		if (c == '.')
 			nbPoint++;
-		if (nbPoint > 1)
-			ft_putstr("Format error : %[flags][width][.precision][size]type");
+		/*if (nbPoint > 1)
+			ft_putstr("Format error : %[flags][width][.precision][size]type");*/
 		i++;
 		c = p.conv[i];
 	}
@@ -302,8 +305,8 @@ int	 		int_init_error(t_printf p)
 		i++;
 		c = p.conv[i];
 	}
-	if (i != p.diff)
-		ft_putstr("Format error : %[flags][width][.precision][size]type");
+	/*if (i != p.diff)
+		ft_putstr("Format error : %[flags][width][.precision][size]type");*/
 	return (0);
 }
 
@@ -382,7 +385,7 @@ t_printf	int_conv(t_printf p)
 		p = put_width(p);
 		p = put_nbr_modified(p);
 	}
-	//printf ("is_flags = %d | is_width = %d | is_precision = %d | hcount = %d | lcount %d\n", p.is_flag, p.is_width, p.is_precision, p.hcount, p.lcount);
+	//printf ("\nis_flags = %d | is_width = %d | is_precision = %d | hcount = %d | lcount %d\n", p.is_flag, p.is_width, p.is_precision, p.hcount, p.lcount);
 	p.c = 0;
 	while (p.c < p.diff)
 	{
