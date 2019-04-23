@@ -2,7 +2,7 @@
 #include <stdio.h>
 
 
-int	nbrlen(intmax_t nbr)
+/*int	nbrlen(intmax_t nbr)
 {
 	int	l;
 
@@ -20,11 +20,12 @@ int	nbrlen(intmax_t nbr)
 void	test(intmax_t i)
 {
 	i*=2;
-}
+}*/
 
 int	main(int argc, char **argv)
 {
-	int i = atoi(argv[1]);
+
+	/*int i = atoi(argv[1]);
 	signed char j;
 	int k = 0;
 	int l = i;
@@ -37,6 +38,6 @@ int	main(int argc, char **argv)
 	test(l);
 	printf ("l : %d\n", l);
 	m = nbrlen(n);
-	printf ("n : %lld | m : %d", n, m);
+	printf ("n : %lld | m : %d", n, m);*/
 	return(0);
 }
