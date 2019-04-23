@@ -1,17 +1,19 @@
 #include "ft_printf.h"
+#include "libft/libft.h"
 
 t_printf 	char_conv(t_printf p)
 {
 	//Tester avec : ./a.exe " Test char %-+0c et int %0 +-5.7d" "x" "42"
 	//Modifier le main (pas de atoi mais envoyez un char à la place)
-	printf ("/* CHAR CONV */");
 	//Variable utiles :
 	//p.format (char*) contient la chaine de charactere entiere passé par l'utilisateur 
 	//p.conv (char*) contient les éventuels flags se trouvant entre le '%' et le 'c'
 	//p.i (int) c'est la position du % dans p.format
 	//p.diff (int) c'est la position du dernier flags dans p.conv, si p.diff est égal à 0 il n'y à pas de flags
-	printf ("Chaine de charactere : %s | chaine de flags : %s\n", p.format, p.conv);
-	printf ("Position du %% dans la chaine de charactere : %c | position du dernier charactere avant le c %c | p.diff : %d\n", p.format[p.i], p.conv[p.diff - 1], p.diff);
+	//printf ("Chaine de charactere : %s | chaine de flags : %s\n", p.format, p.conv);
+	//printf ("Position du %% dans la chaine de charactere : %c | position du dernier charactere avant le c %c | p.diff : %d\n", p.format[p.i], p.conv[p.diff - 1], p.diff);
+	if (p.is_width > 0)
+		ft_putchar((unsigned char)va_arg(p.arg, int));
 	return(p);
 }
 
@@ -267,7 +269,7 @@ t_printf	is_modifier(t_printf p)
 		}
 		else if (c == '.' /*&& point == 0*/)
 			point += 1;
-		else if (c >= '1' && c <= '9' || (c == '0' && number))
+		else if ((c >= '1' && c <= '9') || (c == '0' && number))
 		{
 			number = 1;
 			if (point == 0)
@@ -525,7 +527,7 @@ int		main(int argc, char **argv)
 {
 	argc++;
 	t_printf p;
-	int i = 42;
+	//int i = 42;
 	printf("TRUE PRINTF : \n");
 	printf(argv[1],ft_atoi(argv[2]), ft_atoi(argv[3]));
 	printf("\nMY PRINTF   : \n");
