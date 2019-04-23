@@ -3,7 +3,7 @@
 
 # include <stdio.h>
 # include <stdarg.h>
-# include "libft/libft.h"
+# include "libft/libft.h" //includes abusifs
 
 typedef struct		s_printf
 {
