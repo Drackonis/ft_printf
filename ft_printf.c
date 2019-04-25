@@ -28,25 +28,15 @@ t_printf 	string_conv(t_printf p)
 
 	i = 0;
 	str = (char *)va_arg(p.arg, char *);
-	/*if (!str)
+	if (!str)
 	{
-		ft_putstr("(null)");
-		*ret = *ret + 6;
-	}
-	*/
-	if (p.is_precision >= 0)
-	{
-		while (i < p.is_precision && str[i])
-		{
-			ft_putchar(str[i++]);
-			p.ret++;
-			//*ret++;
-		}
+		ft_putstr(str);
+		p.ret++;
 	}
 	else
 	{
-		ft_putstr(str);
-		//*ret = *ret + strlen(str);
+		ft_putstr("(null)");
+		p.ret++;
 	}
 	return(p);
 }
