@@ -15,6 +15,7 @@ t_printf	char_conv(t_printf p)
 	//printf ("Position du %% dans la chaine de charactere : %c | position du dernier charactere avant le c %c | p.diff : %d\n", p.format[p.i], p.conv[p.diff - 1], p.diff);
 	if (p.is_width > 0)
 		ft_putchar((unsigned char)va_arg(p.arg, int));
+	p.ret++;
 	// *ret = *ret + 1;
 	return(p);
 }
@@ -37,6 +38,7 @@ t_printf 	string_conv(t_printf p)
 		while (i < p.is_precision && str[i])
 		{
 			ft_putchar(str[i++]);
+			p.ret++;
 			//*ret++;
 		}
 	}
@@ -523,6 +525,7 @@ t_printf	ft_printf(const char *format, ...)
 	t_printf p;
 	p.i = 0;
 	p.c = 0;
+	p.ret = 0;
 	//int ret = 0; c ici qu'il faut l'initier;
 	p.format = ft_strdup(format);
 	//printf ("C//Len : %d\n", ft_strlen(p.format));
@@ -541,12 +544,13 @@ t_printf	ft_printf(const char *format, ...)
 		else
 		{
 			write(1, &p.format[p.i], 1);
+			p.ret++;
 			p.i++;
 		}
 	}
 	va_end(p.arg);
 	ft_putchar('\n'); /*//ATTENTION !!!!!!\\*/
-	return (p);
+	return (p.ret);
 	//return (ret);
 }
 

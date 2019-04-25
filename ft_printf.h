@@ -7,6 +7,7 @@
 
 typedef struct		s_printf
 {
+	int		ret;
 	va_list		arg;
 	char		*format;
 	int		i;
