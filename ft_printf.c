@@ -1,7 +1,8 @@
 #include "ft_printf.h"
 #include "libft/libft.h"
 
-t_printf 	char_conv(t_printf p)
+//void		char_conv(t_printf p, int *ret)
+t_printf	char_conv(t_printf p)
 {
 	//Tester avec : ./a.exe " Test char %-+0c et int %0 +-5.7d" "x" "42"
 	//Modifier le main (pas de atoi mais envoyez un char à la place)
@@ -14,12 +15,36 @@ t_printf 	char_conv(t_printf p)
 	//printf ("Position du %% dans la chaine de charactere : %c | position du dernier charactere avant le c %c | p.diff : %d\n", p.format[p.i], p.conv[p.diff - 1], p.diff);
 	if (p.is_width > 0)
 		ft_putchar((unsigned char)va_arg(p.arg, int));
+	// *ret = *ret + 1;
 	return(p);
 }
 
 t_printf 	string_conv(t_printf p)
 {
-	printf ("STRING CONV\n");
+	char *str;
+	int		i;
+
+	i = 0;
+	str = (char *)va_arg(p.arg, char *);
+	/*if (!str)
+	{
+		ft_putstr("(null)");
+		*ret = *ret + 6;
+	}
+	*/
+	if (p.is_precision >= 0)
+	{
+		while (i < p.is_precision && str[i])
+		{
+			ft_putchar(str[i++]);
+			//*ret++;
+		}
+	}
+	else
+	{
+		ft_putstr(str);
+		//*ret = *ret + strlen(str);
+	}
 	return(p);
 }
 
@@ -457,7 +482,7 @@ t_printf	call_conv(t_printf p, t_printf ptmp)
 	else if (p.format[p.i] == '%')
 		p = put_percent(ptmp);
 	p.i += ptmp.diff + 1;
-	return(p);
+	return (p);
 }
 
 t_printf	check_conv(t_printf ptmp)
@@ -498,6 +523,7 @@ t_printf	ft_printf(const char *format, ...)
 	t_printf p;
 	p.i = 0;
 	p.c = 0;
+	//int ret = 0; c ici qu'il faut l'initier;
 	p.format = ft_strdup(format);
 	//printf ("C//Len : %d\n", ft_strlen(p.format));
 	check_error(p);
@@ -521,18 +547,21 @@ t_printf	ft_printf(const char *format, ...)
 	va_end(p.arg);
 	ft_putchar('\n'); /*//ATTENTION !!!!!!\\*/
 	return (p);
+	//return (ret);
 }
 
 int		main(int argc, char **argv)
 {
 	argc++;
 	t_printf p;
-	//int i = 42;
+	char *i = "qwertyuio";
 	printf("TRUE PRINTF : \n");
-	printf(argv[1],ft_atoi(argv[2]), ft_atoi(argv[3]));
+	//printf(argv[1], ft_atoi(argv[2]), ft_atoi(argv[3]));
 	printf("\nMY PRINTF   : \n");
 	//printf("C// %% ca fait quoi ?\n");
-	p = ft_printf(argv[1], ft_atoi(argv[2]), ft_atoi(argv[3]));
+	//ft_printf(argv[1], ft_atoi(argv[2]), ft_atoi(argv[3]));
+	ft_putchar('\n');
+	ft_printf("salut mdrrrrrrrr %s\n", i);
 	//printf ("C//p.i = %d", p.i);
 	printf ("\n");
 	return (0);
