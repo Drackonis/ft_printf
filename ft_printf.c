@@ -1,5 +1,6 @@
 #include "ft_printf.h"
 #include "libft/libft.h"
+#include <wchar.h>
 
 //void		char_conv(t_printf p, int *ret)
 t_printf	char_conv(t_printf p)
@@ -13,23 +14,47 @@ t_printf	char_conv(t_printf p)
 	//p.diff (int) c'est la position du dernier flags dans p.conv, si p.diff est égal à 0 il n'y à pas de flags
 	//printf ("Chaine de charactere : %s | chaine de flags : %s\n", p.format, p.conv);
 	//printf ("Position du %% dans la chaine de charactere : %c | position du dernier charactere avant le c %c | p.diff : %d\n", p.format[p.i], p.conv[p.diff - 1], p.diff);
+//	printf("ici %s\n", p.conv);
+	p = is_modifier(p);
+	printf("%c\n", p.format[p.i]);
+//	printf("lcount %d\n", p.lcount);
 	char c;
-	
-	c = (char)va_arg(p.arg, int);
-	p.ret++;
-	ft_putchar(c);
+	void *v;
+
+	if (p.format[p.i + 1] == 'C' || (p.format[p.i + 2] == 'c' && p.lcount == 1))
+	{
+		v = va_arg(p.arg, void*);
+		p.ret++;
+		ft_putchar((char)c);
+	}
+	else
+	{
+		c = (char)va_arg(p.arg, int);
+		p.ret++;
+		ft_putchar(c);
+	}
 	return(p);
 }
 
 t_printf 	string_conv(t_printf p)
 {
 	char *str;
+	void *v;
 	int		i;
-
+	
 	i = 0;
-	str = (char *)va_arg(p.arg, char *);
-	if (!str)
+	if (p.format[p.i + 1] == 'S' || (p.format[p.i + 2] == 's' && p.lcount == 1))
 	{
+		v = va_arg(p.arg, wchar_t *);
+		if (v != NULL)
+		{
+			ft_putstr(v);
+			p.ret++;
+		}
+	}	
+	if (p.format[p.i + 1] == 's')
+	{
+		str = va_arg(p.arg, char*);
 		ft_putstr(str);
 		p.ret++;
 	}
@@ -550,14 +575,14 @@ int		main(int argc, char **argv)
 	argc++;
 	t_printf p;
 //	char *i = "qwertyuio";
-	char c = 'z';
+	void *c = "o";
 	printf("TRUE PRINTF : \n");
 	//printf(argv[1], ft_atoi(argv[2]), ft_atoi(argv[3]));
 	printf("\nMY PRINTF   : \n");
 	//printf("C// %% ca fait quoi ?\n");
 	//ft_printf(argv[1], ft_atoi(argv[2]), ft_atoi(argv[3]));
 	ft_putchar('\n');
-	ft_printf("salut mdrrrrrrrr %c\n", c);
+	ft_printf("salut mdrrrrrrrr %C\n", c);
 	//printf ("C//p.i = %d", p.i);
 	printf ("\n");
 	return (0);
