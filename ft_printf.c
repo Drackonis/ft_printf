@@ -13,10 +13,11 @@ t_printf	char_conv(t_printf p)
 	//p.diff (int) c'est la position du dernier flags dans p.conv, si p.diff est égal à 0 il n'y à pas de flags
 	//printf ("Chaine de charactere : %s | chaine de flags : %s\n", p.format, p.conv);
 	//printf ("Position du %% dans la chaine de charactere : %c | position du dernier charactere avant le c %c | p.diff : %d\n", p.format[p.i], p.conv[p.diff - 1], p.diff);
-	if (p.is_width > 0)
-		ft_putchar((unsigned char)va_arg(p.arg, int));
+	char c;
+	
+	c = (char)va_arg(p.arg, int);
 	p.ret++;
-	// *ret = *ret + 1;
+	ft_putchar(c);
 	return(p);
 }
 
@@ -550,7 +551,7 @@ t_printf	ft_printf(const char *format, ...)
 	}
 	va_end(p.arg);
 	ft_putchar('\n'); /*//ATTENTION !!!!!!\\*/
-	return (p.ret);
+	return (p);
 	//return (ret);
 }
 
@@ -558,14 +559,15 @@ int		main(int argc, char **argv)
 {
 	argc++;
 	t_printf p;
-	char *i = "qwertyuio";
+//	char *i = "qwertyuio";
+	char c = 'z';
 	printf("TRUE PRINTF : \n");
 	//printf(argv[1], ft_atoi(argv[2]), ft_atoi(argv[3]));
 	printf("\nMY PRINTF   : \n");
 	//printf("C// %% ca fait quoi ?\n");
 	//ft_printf(argv[1], ft_atoi(argv[2]), ft_atoi(argv[3]));
 	ft_putchar('\n');
-	ft_printf("salut mdrrrrrrrr %s\n", i);
+	ft_printf("salut mdrrrrrrrr %c\n", c);
 	//printf ("C//p.i = %d", p.i);
 	printf ("\n");
 	return (0);
