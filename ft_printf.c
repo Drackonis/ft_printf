@@ -49,19 +49,19 @@ t_printf 	string_conv(t_printf p)
 		if (v != NULL)
 		{
 			ft_putstr(v);
-			p.ret++;
+			p.ret += ft_strlen(v);
 		}
 	}	
 	if (p.format[p.i + 1] == 's')
 	{
 		str = va_arg(p.arg, char*);
 		ft_putstr(str);
-		p.ret++;
+		p.ret += ft_strlen(str);
 	}
 	else
 	{
 		ft_putstr("(null)");
-		p.ret++;
+		p.ret += 6;
 	}
 	return(p);
 }
@@ -182,11 +182,15 @@ t_printf	put_nbr_modified(t_printf p)
 
 	i = 0;
 	if (p.plus && !p.isneg)
+	{
+		p.ret++;
 		ft_putchar('+');
+	}
 	if (p.isneg && !p.mput)
 	{
 		ft_putchar('-');
 		p.mput++;
+		p.ret++;
 	}
 	if (p.is_precision)
 	{
@@ -196,7 +200,10 @@ t_printf	put_nbr_modified(t_printf p)
 		//printf ("PRECISION : |%d|\n", precision);
 		//printf("precision = %d | len = %d\n", precision, l);
 		while (i++ < precision - l)
+		{
 			ft_putchar('0');
+			p.ret++;
+		}
 	}
 	if (!p.isneg)
 		ft_putnbr_intmax(p.d4);
@@ -240,11 +247,13 @@ t_printf	put_width(t_printf p)
 		{
 			ft_putchar('-');
 			p.mput++;
+			p.ret++;
 		}
 		while (i < width)
 		{
 			ft_putchar('0');
 			i++;
+			p.ret++;
 		}
 	}
 	else
@@ -253,6 +262,7 @@ t_printf	put_width(t_printf p)
 		{
 			ft_putchar (' ');
 			i++;
+			p.ret++;
 		}
 		/*if (p.d < 0)
 			ft_putchar('-');*/
@@ -281,7 +291,10 @@ t_printf	flag_modifier(t_printf p)
 		i++;
 	}
 	if (p.space && !p.plus && p.d >= 0)
+	{
 		ft_putchar(' ');
+		p.ret++;
+	}
 	return (p);
 }
 
@@ -415,6 +428,7 @@ t_printf	get_arg(t_printf p)
 		p.numlen = ft_nbrlen(p.d);
 		p.d4 = (intmax_t)p.d;
 	}
+	p.ret += p.numlen;
 	return (p);
 }
 
@@ -536,7 +550,7 @@ t_printf	check_conv(t_printf ptmp)
 	return(p);
 }
 
-t_printf	ft_printf(const char *format, ...)
+int		ft_printf(const char *format, ...)
 {
 	t_printf p;
 	p.i = 0;
@@ -566,23 +580,25 @@ t_printf	ft_printf(const char *format, ...)
 	}
 	va_end(p.arg);
 	ft_putchar('\n'); /*//ATTENTION !!!!!!\\*/
-	return (p);
+	return (p.ret);
 	//return (ret);
 }
 
 int		main(int argc, char **argv)
 {
+	int	ret;
 	argc++;
 	t_printf p;
 //	char *i = "qwertyuio";
 	void *c = "o";
 	printf("TRUE PRINTF : \n");
-	//printf(argv[1], ft_atoi(argv[2]), ft_atoi(argv[3]));
+	printf(argv[1], ft_atoi(argv[2]), ft_atoi(argv[3]));
 	printf("\nMY PRINTF   : \n");
 	//printf("C// %% ca fait quoi ?\n");
-	//ft_printf(argv[1], ft_atoi(argv[2]), ft_atoi(argv[3]));
+	ret = ft_printf(argv[1], ft_atoi(argv[2]), ft_atoi(argv[3]));
 	ft_putchar('\n');
-	ft_printf("salut mdrrrrrrrr %C\n", c);
+	//ft_printf("salut mdrrrrrrrr %C\n", c);
+	printf ("RET = %d\n", ret);
 	//printf ("C//p.i = %d", p.i);
 	printf ("\n");
 	return (0);
