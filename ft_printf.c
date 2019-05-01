@@ -68,7 +68,14 @@ t_printf 	string_conv(t_printf p)
 
 t_printf 	locat_conv(t_printf p)
 {
-	printf ("ADRESSE CONV\n");
+
+	uintptr_t	i;
+	int		len;
+
+	i = (uintptr_t)va_arg(p.arg, void*);
+	ft_putstr("0x");
+	len = ft_putnbr_base(i, "0123456789ABCDEF");
+	p.ret += len + 2;
 	return(p);
 }
 
@@ -587,15 +594,16 @@ int		ft_printf(const char *format, ...)
 int		main(int argc, char **argv)
 {
 	int	ret;
+	int j = 1;
 	argc++;
 	t_printf p;
 //	char *i = "qwertyuio";
 	void *c = "o";
 	printf("TRUE PRINTF : \n");
-	printf(argv[1], ft_atoi(argv[2]), ft_atoi(argv[3]));
+	printf(argv[1], ft_atoi(argv[2]), &j);
 	printf("\nMY PRINTF   : \n");
 	//printf("C// %% ca fait quoi ?\n");
-	ret = ft_printf(argv[1], ft_atoi(argv[2]), ft_atoi(argv[3]));
+	ret = ft_printf(argv[1], ft_atoi(argv[2]), &j);
 	ft_putchar('\n');
 	//ft_printf("salut mdrrrrrrrr %C\n", c);
 	printf ("RET = %d\n", ret);

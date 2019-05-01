@@ -37,7 +37,7 @@ typedef struct		s_printf
 }			t_printf;
 
 int			ft_printf(const char *format, ...);
-void			ft_putnbr_base(int, char*);
+int			ft_putnbr_base(int, char*);
 t_printf		is_modifier(t_printf p);
 
 #endif
