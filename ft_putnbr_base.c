@@ -37,6 +37,7 @@ int	ft_putnbr_base(int nbr, char *base)
 
 	i = 0;
 	size = 0;
+	len = 0;
 	if (check_base(base))
 	{
 		if (nbr < 0)

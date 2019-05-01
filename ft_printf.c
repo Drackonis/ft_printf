@@ -72,6 +72,7 @@ t_printf 	locat_conv(t_printf p)
 	uintptr_t	i;
 	int		len;
 
+	len = 0;
 	i = (uintptr_t)va_arg(p.arg, void*);
 	ft_putstr("0x");
 	len = ft_putnbr_base(i, "0123456789ABCDEF");
@@ -111,7 +112,8 @@ t_printf 	float_conv(t_printf p)
 
 t_printf 	put_percent(t_printf p)
 {
-	printf ("PUT PERCENT\n");
+	ft_putchar('%');
+	p.ret++;
 	return(p);
 }
 
@@ -594,20 +596,20 @@ int		ft_printf(const char *format, ...)
 int		main(int argc, char **argv)
 {
 	int	ret;
+	int	true_ret;
 	int j = 1;
 	argc++;
 	t_printf p;
 //	char *i = "qwertyuio";
 	void *c = "o";
 	printf("TRUE PRINTF : \n");
-	printf(argv[1], ft_atoi(argv[2]), &j);
-	printf("\nMY PRINTF   : \n");
+	true_ret = printf(argv[1], &j);
+	printf("\n\nMY PRINTF   : \n");
 	//printf("C// %% ca fait quoi ?\n");
-	ret = ft_printf(argv[1], ft_atoi(argv[2]), &j);
+	ret = ft_printf(argv[1], &j);
 	ft_putchar('\n');
 	//ft_printf("salut mdrrrrrrrr %C\n", c);
-	printf ("RET = %d\n", ret);
+	printf ("RET = %d\nTRUE RET = %d\n", ret, true_ret);
 	//printf ("C//p.i = %d", p.i);
-	printf ("\n");
 	return (0);
 }

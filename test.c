@@ -40,7 +40,7 @@ int	main(int argc, char **argv)
 	a = 5;
 	b = &a;
 	x = (int) &i;
-	printf("10.1 : %p | 10.2 : %p | 5 : %p | b : %p\n", &i, &j, &a, b);
+	printf("10.1 : % 0-5p | 10.2 : %p | 5 : %p | b : %p\n", &i, &j, &a, b);
 	ft_putchar(*(1 + (unsigned char*) &x));
 	ft_putchar(*(( unsigned char *) &x));
 
