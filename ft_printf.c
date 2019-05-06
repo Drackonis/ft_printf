@@ -21,7 +21,7 @@ t_printf	char_conv(t_printf p)
 	char c;
 	void *v;
 
-	if (p.format[p.i + 1] == 'C' || (p.format[p.i + 2] == 'c' && p.lcount == 1))
+	if (p.format[p.diff + 1] == 'C' || (p.format[p.diff + 1] == 'c' && p.format[p.diff] == 'l'))
 	{
 		v = va_arg(p.arg, void*);
 		p.ret++;
@@ -40,19 +40,21 @@ t_printf 	string_conv(t_printf p)
 {
 	char *str;
 	void *v;
-	int		i;
-	
-	i = 0;
-	if (p.format[p.i + 1] == 'S' || (p.format[p.i + 2] == 's' && p.lcount == 1))
+
+	p = is_modifier(p);
+	printf("diff %c\n", p.format[p.diff + 1]);
+//	printf("format.i = %c\n", p.format[p.i + 1]);
+	printf("conv = %s\n", p.conv);
+	if (p.format[p.diff + 1] == 'S' || (p.format[p.diff + 1] == 's' && p.format[p.diff] == 'l'))
 	{
-		v = va_arg(p.arg, wchar_t *);
+		v = va_arg(p.arg, wchar_t*);
 		if (v != NULL)
 		{
-			ft_putstr(v);
+			ft_putwstr(v);
 			p.ret += ft_strlen(v);
 		}
 	}	
-	if (p.format[p.i + 1] == 's')
+	else if (p.format[p.diff + 1] == 's')
 	{
 		str = va_arg(p.arg, char*);
 		ft_putstr(str);
@@ -338,7 +340,10 @@ t_printf	is_modifier(t_printf p)
 		{
 			number = 1;
 			if (point == 0)
-				p.is_width++;
+			{
+				p.is_width = p.conv[p.c];
+				printf("conv %s\n", p.conv);
+			}
 			else
 				p.is_precision++;
 		}
@@ -504,7 +509,7 @@ t_printf	call_conv(t_printf p, t_printf ptmp)
 	//printf ("Current char conv : %c\n", p.format[p.i]);
 	if (p.format[p.i] == 'c')
 		p = char_conv(ptmp);
-	else if (p.format[p.i] == 's')
+	else if (p.format[p.i] == 's' || p.format[p.i] == 'S')
 		p = string_conv(ptmp);
 	else if (p.format[p.i] == 'p')
 		p = locat_conv(ptmp);
@@ -544,6 +549,7 @@ t_printf	check_conv(t_printf ptmp)
 			p.format[p.i] != 'x' &&\
 			p.format[p.i] != 'X' &&\
 			p.format[p.i] != 'f' &&\
+			p.format[p.i] != 'S' &&\
 			p.format[p.i] != '%')
 	{
 		//printf ("C//Current char : %c | pos : %d\n", p.format[p.i], p.i);
@@ -600,16 +606,14 @@ int		main(int argc, char **argv)
 	int j = 1;
 	argc++;
 	t_printf p;
-//	char *i = "qwertyuio";
-	void *c = "o";
+	int lol = 1234;
+	char mb[] = "Grâve";
+	wchar_t s[100];
+	mbstowcs(s, mb, 100);
 	printf("TRUE PRINTF : \n");
-	true_ret = printf(argv[1], &j);
+	printf("%.10ls", s);
 	printf("\n\nMY PRINTF   : \n");
-	//printf("C// %% ca fait quoi ?\n");
-	ret = ft_printf(argv[1], &j);
+	ft_printf("%ls", s);
 	ft_putchar('\n');
-	//ft_printf("salut mdrrrrrrrr %C\n", c);
-	printf ("RET = %d\nTRUE RET = %d\n", ret, true_ret);
-	//printf ("C//p.i = %d", p.i);
 	return (0);
 }
