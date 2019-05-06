@@ -23,6 +23,8 @@ typedef struct		s_printf
 	int		is_flag;
 	int		is_width;
 	int		is_precision;
+	int		f_precision;
+	int		f_width;
 	//int		is_noread;
 	int		minus;
 	int		plus;

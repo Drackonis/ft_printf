@@ -341,8 +341,9 @@ t_printf	is_modifier(t_printf p)
 			number = 1;
 			if (point == 0)
 			{
-				p.is_width = p.conv[p.c];
-				printf("conv %s\n", p.conv);
+				p.is_width++;
+				//p.is_width = p.conv[p.c];
+				//printf("conv %s\n", p.conv);
 			}
 			else
 				p.is_precision++;
@@ -355,6 +356,11 @@ t_printf	is_modifier(t_printf p)
 			ft_putstr("Format error : %[flags][width][.precision][size]type");*/
 		p.c++;
 	}
+	
+	p.f_width = ft_nbr_conv(p, p.is_flag + p.is_width - 1, p.is_width);
+	if (p.is_precision)
+		p.f_precision = ft_nbr_conv(p, p.is_flag + p.is_width + p.is_precision, p.is_precision);
+	printf ("\nPrecision : |%d| Width : |%d|\n", p.f_precision, p.f_width);
 	return (p);
 }
 
@@ -611,9 +617,9 @@ int		main(int argc, char **argv)
 	wchar_t s[100];
 	mbstowcs(s, mb, 100);
 	printf("TRUE PRINTF : \n");
-	printf("%.10ls", s);
+	printf(argv[1], ft_atoi(argv[2]), ft_atoi(argv[3]));
 	printf("\n\nMY PRINTF   : \n");
-	ft_printf("%ls", s);
+	ft_printf(argv[1], ft_atoi(argv[2]), ft_atoi(argv[3]));
 	ft_putchar('\n');
 	return (0);
 }
