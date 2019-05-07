@@ -84,25 +84,45 @@ t_printf 	locat_conv(t_printf p)
 
 t_printf 	octo_conv(t_printf p)
 {
-	printf ("OCTO CONV\n");
+	//printf ("OCTAL CONV\n");
+	unsigned int	i;
+	int		len;
+	i = va_arg(p.arg, unsigned int);
+	len = ft_putnbr_base(i, "01234567");
+	p.ret += len + 2;	
 	return(p);
 }
 
 t_printf 	dec_conv(t_printf p)
 {
-	printf ("DEC CONV\n");
+	//printf ("UNSIGNED CONV\n");
+	unsigned int	i;
+	int		len;
+	i = va_arg(p.arg, unsigned int);
+	len = ft_putnbr_base(i, "0123456789");
+	p.ret += len + 2;	
 	return(p);
 }
 
 t_printf 	exa_conv(t_printf p)
 {
-	printf ("EXA CONV\n");
+	//printf ("EXADECIMAL CONV\n");
+	unsigned int	i;
+	int		len;
+	i = va_arg(p.arg, unsigned int);
+	len = ft_putnbr_base(i, "0123456789abcdef");
+	p.ret += len + 2;	
 	return(p);
 }
 
 t_printf 	mexa_conv(t_printf p)
 {
-	printf ("MEXA CONV\n");
+	//printf ("MAJ EXADECIMAL CONV\n");
+	unsigned int	i;
+	int		len;
+	i = va_arg(p.arg, unsigned int);
+	len = ft_putnbr_base(i, "0123456789ABCDEF");
+	p.ret += len + 2;	
 	return(p);
 }
 
@@ -355,8 +375,7 @@ t_printf	is_modifier(t_printf p)
 		/*else
 			ft_putstr("Format error : %[flags][width][.precision][size]type");*/
 		p.c++;
-	}
-	
+	}	
 	p.f_width = ft_nbr_conv(p, p.is_flag + p.is_width - 1, p.is_width);
 	if (p.is_precision)
 		p.f_precision = ft_nbr_conv(p, p.is_flag + p.is_width + p.is_precision, p.is_precision);
@@ -456,7 +475,7 @@ t_printf	int_conv(t_printf p)
 {
 	//printf ("INT CONV\n");
 	//printf ("C//ARG SUPP Diff : %d\n", p.diff);
-	int_init_error(p);
+	//int_init_error(p);
 	p = is_modifier(p);
 	p = flag_modifier(p);
 	p = get_arg(p);
@@ -616,6 +635,7 @@ int		main(int argc, char **argv)
 	char mb[] = "Grâve";
 	wchar_t s[100];
 	mbstowcs(s, mb, 100);
+	//printf("Test %o , %o , %o\n", "123" "456" "159487");
 	printf("TRUE PRINTF : \n");
 	printf(argv[1], ft_atoi(argv[2]), ft_atoi(argv[3]));
 	printf("\n\nMY PRINTF   : \n");
