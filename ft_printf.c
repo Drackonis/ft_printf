@@ -170,12 +170,16 @@ t_printf	put_nbr_modified(t_printf p)
 		//printf ("NUMLEN = %d", l);
 		//printf ("PRECISION : |%d|\n", precision);
 		//printf("precision = %d | len = %d\n", precision, l);
+		if (p.baseconv == 5) ft_putstr("0x"); 
 		while (i++ < p.f_precision - p.numlen)
 		{
 			ft_putchar('0');
 			p.ret++;
 		}
 	}
+	else if (p.baseconv == 5 && p.f_precision == 0 && (!p.zero || p.minus))
+		ft_putstr("0x");
+
 	if (p.baseconv == 0)
 	{
 		if (!p.isneg)
@@ -189,7 +193,7 @@ t_printf	put_nbr_modified(t_printf p)
 		if (p.baseconv == 2) ft_putnbr_base(p.d5, "01234567");
 		if (p.baseconv == 3) ft_putnbr_base(p.d5, "0123456789abcdef");
 		if (p.baseconv == 4) ft_putnbr_base(p.d5, "0123456789ABCDEF");
-		if (p.baseconv == 5) ft_putnbr_base(p.d6, "0123456789abcdef");
+		if (p.baseconv == 5) ft_putnbr_base(p.d6, "0123456789abcdef");		
 	}
 	return (p);	
 }
@@ -220,7 +224,7 @@ t_printf	put_width(t_printf p)
 		//printf ("WIDTH : |%d|\n", width);
 	}
 	//printf ("Remove nbrlen : %d | width : %d\n", ft_nbrlen(p.d), width);
-	width = width - p.numlen;
+	width -= p.numlen;
 	//printf ("width : %d\n", width);
 	//printf ("printed width : %d | nbrlen : %d | p.d : %d\n", width, ft_nbrlen(p.d), p.d);
 	if (p.zero && !p.minus && p.is_precision == 0)
@@ -231,6 +235,7 @@ t_printf	put_width(t_printf p)
 			p.mput++;
 			p.ret++;
 		}
+		if (p.baseconv == 5) ft_putstr("0x"); 
 		while (i < width)
 		{
 			ft_putchar('0');
@@ -242,7 +247,7 @@ t_printf	put_width(t_printf p)
 	{
 		while (i < width)
 		{
-			ft_putchar (' ');
+			ft_putchar(' ');
 			i++;
 			p.ret++;
 		}
@@ -295,6 +300,8 @@ t_printf	is_modifier(t_printf p)
 	p.is_precision = 0;
 	p.hcount = 0;
 	p.lcount = 0;
+	p.f_precision = 0;
+	p.f_width = 0;
 	while (p.c < p.diff)
 	{
 		c = p.conv[p.c];
@@ -480,7 +487,6 @@ t_printf 	locat_conv(t_printf p)
 
 	//len = 0;
 	p.baseconv = 5;
-	ft_putstr("0x");
 	p = get_conv(p);
 	//i = (uintptr_t)va_arg(p.arg, void*);
 	//len = ft_putnbr_base(i, "0123456789abcdef");
@@ -663,9 +669,10 @@ int		main(int argc, char **argv)
 	mbstowcs(s, mb, 100);
 	//printf("Test %o , %o , %o\n", "123" "456" "159487");
 	printf("TRUE PRINTF : \n");
-	printf(argv[1], ft_atoi(argv[2]), &j);
+	true_ret = printf(argv[1], ft_atoi(argv[2]), &j);
 	printf("\n\nMY PRINTF   : \n");
-	ft_printf(argv[1], ft_atoi(argv[2]), &j);
+	ret = ft_printf(argv[1], ft_atoi(argv[2]), &j);
 	ft_putchar('\n');
+	printf ("RET = %d\nTRUE RET = %d\n", ret, true_ret);
 	return (0);
 }
