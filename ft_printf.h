@@ -53,5 +53,5 @@ int			ft_nbrlen_base(unsigned int, int);
 int			ft_printf(const char *format, ...);
 int			ft_putnbr_base(int, char*);
 t_printf		is_modifier(t_printf p);
-
+void		ft_printf_f(float n, char *res, int afterpoint);
 #endif

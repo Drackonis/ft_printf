@@ -14,10 +14,10 @@ t_printf	char_conv(t_printf p)
 	//p.diff (int) c'est la position du dernier flags dans p.conv, si p.diff est égal à 0 il n'y à pas de flags
 	//printf ("Chaine de charactere : %s | chaine de flags : %s\n", p.format, p.conv);
 	//printf ("Position du %% dans la chaine de charactere : %c | position du dernier charactere avant le c %c | p.diff : %d\n", p.format[p.i], p.conv[p.diff - 1], p.diff);
-//	printf("ici %s\n", p.conv);
+	//	printf("ici %s\n", p.conv);
 	p = is_modifier(p);
 	printf("%c\n", p.format[p.i]);
-//	printf("lcount %d\n", p.lcount);
+	//	printf("lcount %d\n", p.lcount);
 	char c;
 	void *v;
 
@@ -43,7 +43,7 @@ t_printf 	string_conv(t_printf p)
 
 	p = is_modifier(p);
 	printf("diff %c\n", p.format[p.diff + 1]);
-//	printf("format.i = %c\n", p.format[p.i + 1]);
+	//	printf("format.i = %c\n", p.format[p.i + 1]);
 	printf("conv = %s\n", p.conv);
 	if (p.format[p.diff + 1] == 'S' || (p.format[p.diff + 1] == 's' && p.format[p.diff] == 'l'))
 	{
@@ -71,7 +71,14 @@ t_printf 	string_conv(t_printf p)
 
 t_printf 	float_conv(t_printf p)
 {
-	printf ("FLOAT CONV\n");
+	p = is_modifier(p);
+	char res[100];
+	float n;
+	n = va_arg(p.arg, double);
+	if (p.f_precision == 0)
+		p.f_precision = 6;
+	ft_printf_f(n, res, p.f_precision);
+	ft_putstr(res);
 	return(p);
 }
 
@@ -216,7 +223,7 @@ t_printf	put_width(t_printf p)
 	{
 		precision = p.f_precision;
 		//printf ("\nPrecision : %d\n", precision);
-		
+
 		precision -= p.numlen;
 		if (precision < 0)
 			precision = 0;
@@ -252,7 +259,7 @@ t_printf	put_width(t_printf p)
 			p.ret++;
 		}
 		/*if (p.d < 0)
-			ft_putchar('-');*/
+		  ft_putchar('-');*/
 	}
 	//printf ("\nwidth = %d\n", width);	
 	return (p);
@@ -331,7 +338,7 @@ t_printf	is_modifier(t_printf p)
 		else if (c == 'l')
 			p.lcount++;
 		/*else
-			ft_putstr("Format error : %[flags][width][.precision][size]type");*/
+		  ft_putstr("Format error : %[flags][width][.precision][size]type");*/
 		p.c++;
 	}	
 	p.f_width = ft_nbr_conv(p, p.is_flag + p.is_width - 1, p.is_width);
@@ -360,7 +367,7 @@ int	 		int_init_error(t_printf p)
 		if (c == '.')
 			nbPoint++;
 		/*if (nbPoint > 1)
-			ft_putstr("Format error : %[flags][width][.precision][size]type");*/
+		  ft_putstr("Format error : %[flags][width][.precision][size]type");*/
 		i++;
 		c = p.conv[i];
 	}
@@ -370,7 +377,7 @@ int	 		int_init_error(t_printf p)
 		c = p.conv[i];
 	}
 	/*if (i != p.diff)
-		ft_putstr("Format error : %[flags][width][.precision][size]type");*/
+	  ft_putstr("Format error : %[flags][width][.precision][size]type");*/
 	return (0);
 }
 
@@ -533,14 +540,14 @@ t_printf	int_conv(t_printf p)
 	return(p);
 }
 /*
-t_printf	percent_found(t_printf p)
-{
-	//ft_putchar('>');
-	ft_printf_int(p);
-	//ft_putchar(p.format[p.i]);
-	//ft_putstr("->");
-	p.i += 2;
-	return (p);
+   t_printf	percent_found(t_printf p)
+   {
+//ft_putchar('>');
+ft_printf_int(p);
+//ft_putchar(p.format[p.i]);
+//ft_putstr("->");
+p.i += 2;
+return (p);
 }
 */
 int		check_error(t_printf p)
@@ -663,15 +670,17 @@ int		main(int argc, char **argv)
 	int j = 1;
 	argc++;
 	t_printf p;
-	int lol = 1234;
+	float F = 123.123;
 	char mb[] = "Grâve";
 	wchar_t s[100];
 	mbstowcs(s, mb, 100);
 	//printf("Test %o , %o , %o\n", "123" "456" "159487");
 	printf("TRUE PRINTF : \n");
-	true_ret = printf(argv[1], ft_atoi(argv[2]), &j);
+//	true_ret = printf(argv[1], ft_atoi(argv[2]), &j);
+	printf(" bonjour alo %f", F);
 	printf("\n\nMY PRINTF   : \n");
-	ret = ft_printf(argv[1], ft_atoi(argv[2]), &j);
+//	ret = ft_printf(argv[1], ft_atoi(argv[2]), &j);
+	ft_printf(" bonjour alo %f", F);
 	ft_putchar('\n');
 	printf ("RET = %d\nTRUE RET = %d\n", ret, true_ret);
 	return (0);
