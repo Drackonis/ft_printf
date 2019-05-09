@@ -68,63 +68,6 @@ t_printf 	string_conv(t_printf p)
 	return(p);
 }
 
-t_printf 	locat_conv(t_printf p)
-{
-
-	uintptr_t	i;
-	int		len;
-
-	len = 0;
-	i = (uintptr_t)va_arg(p.arg, void*);
-	ft_putstr("0x");
-	len = ft_putnbr_base(i, "0123456789ABCDEF");
-	p.ret += len + 2;
-	return(p);
-}
-
-t_printf 	octo_conv(t_printf p)
-{
-	//printf ("OCTAL CONV\n");
-	unsigned int	i;
-	int		len;
-	i = va_arg(p.arg, unsigned int);
-	len = ft_putnbr_base(i, "01234567");
-	p.ret += len + 2;	
-	return(p);
-}
-
-t_printf 	dec_conv(t_printf p)
-{
-	//printf ("UNSIGNED CONV\n");
-	unsigned int	i;
-	int		len;
-	i = va_arg(p.arg, unsigned int);
-	len = ft_putnbr_base(i, "0123456789");
-	p.ret += len + 2;	
-	return(p);
-}
-
-t_printf 	exa_conv(t_printf p)
-{
-	//printf ("EXADECIMAL CONV\n");
-	unsigned int	i;
-	int		len;
-	i = va_arg(p.arg, unsigned int);
-	len = ft_putnbr_base(i, "0123456789abcdef");
-	p.ret += len + 2;	
-	return(p);
-}
-
-t_printf 	mexa_conv(t_printf p)
-{
-	//printf ("MAJ EXADECIMAL CONV\n");
-	unsigned int	i;
-	int		len;
-	i = va_arg(p.arg, unsigned int);
-	len = ft_putnbr_base(i, "0123456789ABCDEF");
-	p.ret += len + 2;	
-	return(p);
-}
 
 t_printf 	float_conv(t_printf p)
 {
@@ -208,7 +151,6 @@ int	ft_nbr_conv(t_printf p, int start, int val)
 t_printf	put_nbr_modified(t_printf p)
 {
 	int	l;
-	int	precision;
 	int	i;
 
 	i = 0;
@@ -225,21 +167,30 @@ t_printf	put_nbr_modified(t_printf p)
 	}
 	if (p.is_precision)
 	{
-		l = p.numlen;
 		//printf ("NUMLEN = %d", l);
-		precision = ft_nbr_conv(p, p.is_flag + p.is_width + p.is_precision, p.is_precision);
 		//printf ("PRECISION : |%d|\n", precision);
 		//printf("precision = %d | len = %d\n", precision, l);
-		while (i++ < precision - l)
+		while (i++ < p.f_precision - p.numlen)
 		{
 			ft_putchar('0');
 			p.ret++;
 		}
 	}
-	if (!p.isneg)
-		ft_putnbr_intmax(p.d4);
+	if (p.baseconv == 0)
+	{
+		if (!p.isneg)
+			ft_putnbr_intmax(p.d4);
+		else
+			ft_putnbr_intmax(-p.d4);
+	}
 	else
-		ft_putnbr(-p.d4);
+	{
+		if (p.baseconv == 1) ft_putnbr_base(p.d5, "0123456789");
+		if (p.baseconv == 2) ft_putnbr_base(p.d5, "01234567");
+		if (p.baseconv == 3) ft_putnbr_base(p.d5, "0123456789abcdef");
+		if (p.baseconv == 4) ft_putnbr_base(p.d5, "0123456789ABCDEF");
+		if (p.baseconv == 5) ft_putnbr_base(p.d6, "0123456789abcdef");
+	}
 	return (p);	
 }
 
@@ -250,7 +201,7 @@ t_printf	put_width(t_printf p)
 	int	i;
 
 	i = 0;
-	width = ft_nbr_conv(p, p.is_flag + p.is_width - 1, p.is_width);
+	width = p.f_width;
 	//printf ("WIDTH : |%d|\n", width);
 	if (p.space || (p.plus && !p.isneg) || p.isneg)
 	{
@@ -259,17 +210,17 @@ t_printf	put_width(t_printf p)
 	}
 	if (p.is_precision)
 	{
-		precision = ft_nbr_conv(p, p.is_flag + p.is_width + p.is_precision, p.is_precision);
+		precision = p.f_precision;
 		//printf ("\nPrecision : %d\n", precision);
 		
-		precision -= ft_nbrlen(p.d);
+		precision -= p.numlen;
 		if (precision < 0)
 			precision = 0;
 		width -= precision;
 		//printf ("WIDTH : |%d|\n", width);
 	}
 	//printf ("Remove nbrlen : %d | width : %d\n", ft_nbrlen(p.d), width);
-	width = width - ft_nbrlen(p.d);
+	width = width - p.numlen;
 	//printf ("width : %d\n", width);
 	//printf ("printed width : %d | nbrlen : %d | p.d : %d\n", width, ft_nbrlen(p.d), p.d);
 	if (p.zero && !p.minus && p.is_precision == 0)
@@ -315,13 +266,13 @@ t_printf	flag_modifier(t_printf p)
 	{
 		if (p.conv[i] == '-')
 			p.minus++;
-		if (p.conv[i] == '+')
+		if (p.conv[i] == '+' && p.baseconv == 0)
 			p.plus++;
 		if (p.conv[i] == ' ')
 			p.space++;
 		i++;
 	}
-	if (p.space && !p.plus && p.d >= 0)
+	if (p.space && !p.plus && p.d >= 0 && p.baseconv == 0)
 	{
 		ft_putchar(' ');
 		p.ret++;
@@ -379,7 +330,7 @@ t_printf	is_modifier(t_printf p)
 	p.f_width = ft_nbr_conv(p, p.is_flag + p.is_width - 1, p.is_width);
 	if (p.is_precision)
 		p.f_precision = ft_nbr_conv(p, p.is_flag + p.is_width + p.is_precision, p.is_precision);
-	printf ("\nPrecision : |%d| Width : |%d|\n", p.f_precision, p.f_width);
+	//printf ("\nPrecision : |%d| Width : |%d|\n", p.f_precision, p.f_width);
 	return (p);
 }
 
@@ -418,14 +369,36 @@ int	 		int_init_error(t_printf p)
 
 t_printf	get_arg(t_printf p)
 {
+	int	current_base;
 	p.d = 0;
 	p.d0 = 0;
 	p.d1 = 0;
 	p.d2 = 0;
 	p.d3 = 0;
 	p.d4 = 0;
+	p.d5 = 0;
+	p.d6 = 0;
 	p.isneg = 0;
-	if (p.hcount > 0)
+	current_base = 10;
+	if (p.baseconv > 0 && p.hcount == 0 && p.lcount == 0)
+	{
+		if (p.baseconv == 2) current_base = 8;
+		if (p.baseconv > 2) current_base = 16;
+		if (p.baseconv < 5)
+		{
+			p.d5 = va_arg(p.arg, unsigned int);
+			p.numlen = ft_nbrlen_base(p.d5, current_base);
+			p.d4 = (intmax_t)p.d5;
+		}
+		else
+		{
+			p.d6 = (uintptr_t)va_arg(p.arg, void*);
+			p.numlen = ft_nbrlen_base(p.d6, current_base);
+			p.d4 = (intmax_t)p.d6;
+		}
+
+	}
+	else if (p.hcount > 0)
 	{
 		//short & signed char is promoted to int when pass in va_arg
 		if (p.hcount == 1)
@@ -471,11 +444,8 @@ t_printf	get_arg(t_printf p)
 	return (p);
 }
 
-t_printf	int_conv(t_printf p)
+t_printf	get_conv(t_printf p)
 {
-	//printf ("INT CONV\n");
-	//printf ("C//ARG SUPP Diff : %d\n", p.diff);
-	//int_init_error(p);
 	p = is_modifier(p);
 	p = flag_modifier(p);
 	p = get_arg(p);
@@ -492,13 +462,68 @@ t_printf	int_conv(t_printf p)
 		p = put_width(p);
 		p = put_nbr_modified(p);
 	}
-	//printf ("\nis_flags = %d | is_width = %d | is_precision = %d | hcount = %d | lcount %d\n", p.is_flag, p.is_width, p.is_precision, p.hcount, p.lcount);
+	//printf ("\nis_flags = %d | is_width = %d | is_precision = %d | hcount = %d | lcount %d\n", p.is_flag, p.is_		width, p.is_precision, p.hcount, p.lcount);
 	p.c = 0;
 	while (p.c < p.diff)
 	{
 		//printf ("C// char conv : %c | %d\n", p.conv[p.c], p.c);
 		p.c++;
 	}
+	return(p);
+}
+
+t_printf 	locat_conv(t_printf p)
+{
+
+	//uintptr_t	i;
+	//int		len;
+
+	//len = 0;
+	p.baseconv = 5;
+	ft_putstr("0x");
+	p = get_conv(p);
+	//i = (uintptr_t)va_arg(p.arg, void*);
+	//len = ft_putnbr_base(i, "0123456789abcdef");
+	p.ret += 2;
+	return(p);
+}
+
+
+t_printf 	octo_conv(t_printf p)
+{
+	p.baseconv = 2;
+	p = get_conv(p);
+	return(p);
+}
+
+t_printf 	dec_conv(t_printf p)
+{
+	//printf ("UNSIGNED CONV\n");
+	p.baseconv = 1;
+	p = get_conv(p);
+	return(p);
+}
+
+t_printf 	exa_conv(t_printf p)
+{
+	//printf ("EXADECIMAL CONV\n");
+	p.baseconv = 3;
+	p = get_conv(p);
+	return(p);
+}
+
+t_printf 	mexa_conv(t_printf p)
+{
+	//printf ("MAJ EXADECIMAL CONV\n");
+	p.baseconv = 4;
+	p = get_conv(p);
+	return(p);
+}
+
+
+t_printf	int_conv(t_printf p)
+{
+	p = get_conv(p);
 	return(p);
 }
 /*
@@ -596,6 +621,7 @@ int		ft_printf(const char *format, ...)
 	p.i = 0;
 	p.c = 0;
 	p.ret = 0;
+	p.baseconv = 0;
 	//int ret = 0; c ici qu'il faut l'initier;
 	p.format = ft_strdup(format);
 	//printf ("C//Len : %d\n", ft_strlen(p.format));
@@ -637,9 +663,9 @@ int		main(int argc, char **argv)
 	mbstowcs(s, mb, 100);
 	//printf("Test %o , %o , %o\n", "123" "456" "159487");
 	printf("TRUE PRINTF : \n");
-	printf(argv[1], ft_atoi(argv[2]), ft_atoi(argv[3]));
+	printf(argv[1], ft_atoi(argv[2]), &j);
 	printf("\n\nMY PRINTF   : \n");
-	ft_printf(argv[1], ft_atoi(argv[2]), ft_atoi(argv[3]));
+	ft_printf(argv[1], ft_atoi(argv[2]), &j);
 	ft_putchar('\n');
 	return (0);
 }

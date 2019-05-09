@@ -28,6 +28,19 @@ int	check_base(char *base)
 	return(1);
 }
 
+int	ft_nbrlen_base(unsigned int nbr, int base)
+{
+	int	i;
+	int	len;
+
+	while (nbr > 0)
+	{
+		nbr /= base;
+		len++;
+	}
+	return(len);
+}
+
 int	ft_putnbr_base(int nbr, char *base)
 {
 	int	size;
@@ -48,7 +61,7 @@ int	ft_putnbr_base(int nbr, char *base)
 		}
 		while (base[size])
 			size++;
-		while (nbr)
+		while (nbr > 0)
 		{
 			n[i] = nbr % size;
 			nbr = nbr / size;
