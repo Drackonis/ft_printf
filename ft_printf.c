@@ -2,22 +2,9 @@
 #include "libft/libft.h"
 #include <wchar.h>
 
-//void		char_conv(t_printf p, int *ret)
 t_printf	char_conv(t_printf p)
 {
-	//Tester avec : ./a.exe " Test char %-+0c et int %0 +-5.7d" "x" "42"
-	//Modifier le main (pas de atoi mais envoyez un char à la place)
-	//Variable utiles :
-	//p.format (char*) contient la chaine de charactere entiere passé par l'utilisateur 
-	//p.conv (char*) contient les éventuels flags se trouvant entre le '%' et le 'c'
-	//p.i (int) c'est la position du % dans p.format
-	//p.diff (int) c'est la position du dernier flags dans p.conv, si p.diff est égal à 0 il n'y à pas de flags
-	//printf ("Chaine de charactere : %s | chaine de flags : %s\n", p.format, p.conv);
-	//printf ("Position du %% dans la chaine de charactere : %c | position du dernier charactere avant le c %c | p.diff : %d\n", p.format[p.i], p.conv[p.diff - 1], p.diff);
-	//	printf("ici %s\n", p.conv);
 	p = is_modifier(p);
-	printf("%c\n", p.format[p.i]);
-	//	printf("lcount %d\n", p.lcount);
 	char c;
 	void *v;
 
@@ -38,26 +25,26 @@ t_printf	char_conv(t_printf p)
 
 t_printf 	string_conv(t_printf p)
 {
-	char *str;
-	void *v;
+	char	*str;
+	void	*v;
+	int		i;
 
 	p = is_modifier(p);
-	printf("diff %c\n", p.format[p.diff + 1]);
-	//	printf("format.i = %c\n", p.format[p.i + 1]);
-	printf("conv = %s\n", p.conv);
-	if (p.format[p.diff + 1] == 'S' || (p.format[p.diff + 1] == 's' && p.format[p.diff] == 'l'))
+	i = p.i + ft_strlen(p.conv) + 1;
+
+	if (p.format[i] == 'S' || (p.format[i] == 's' && p.format[i] == 'l'))
 	{
 		v = va_arg(p.arg, wchar_t*);
 		if (v != NULL)
 		{
-			ft_putwstr(v);
+			ft_putlwstr(v, p.f_precision);
 			p.ret += ft_strlen(v);
 		}
 	}	
-	else if (p.format[p.diff + 1] == 's')
+	else if (p.format[i] == 's')
 	{
 		str = va_arg(p.arg, char*);
-		ft_putstr(str);
+		ft_putlstr(str, p.f_precision);
 		p.ret += ft_strlen(str);
 	}
 	else
@@ -670,17 +657,17 @@ int		main(int argc, char **argv)
 	int j = 1;
 	argc++;
 	t_printf p;
-	float F = 123.123;
+	char *F = "bonjour alooo";
 	char mb[] = "Grâve";
 	wchar_t s[100];
 	mbstowcs(s, mb, 100);
 	//printf("Test %o , %o , %o\n", "123" "456" "159487");
 	printf("TRUE PRINTF : \n");
 //	true_ret = printf(argv[1], ft_atoi(argv[2]), &j);
-	printf(" bonjour alo %f", F);
+	printf("mdr  %.0s", F);
 	printf("\n\nMY PRINTF   : \n");
 //	ret = ft_printf(argv[1], ft_atoi(argv[2]), &j);
-	ft_printf(" bonjour alo %f", F);
+	ft_printf("mdr  %.0s", F);
 	ft_putchar('\n');
 	printf ("RET = %d\nTRUE RET = %d\n", ret, true_ret);
 	return (0);
