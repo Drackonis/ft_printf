@@ -5,16 +5,19 @@
 t_printf	char_conv(t_printf p)
 {
 	p = is_modifier(p);
-	char c;
-	void *v;
+	char	c;
+	void	*v;
+	int		i;
 
-	if (p.format[p.diff + 1] == 'C' || (p.format[p.diff + 1] == 'c' && p.format[p.diff] == 'l'))
+	i = p.i + ft_strlen(p.conv) + 1;
+	printf(" i =  %c\n", p.format[i]);
+	if (p.format[i] == 'C' || (p.format[i] == 'c' && p.lcount == 1))
 	{
 		v = va_arg(p.arg, void*);
 		p.ret++;
-		ft_putchar((char)c);
+		ft_putchar((char)v);
 	}
-	else
+	else if (p.format[i] == 'c')
 	{
 		c = (char)va_arg(p.arg, int);
 		p.ret++;
@@ -31,8 +34,7 @@ t_printf 	string_conv(t_printf p)
 
 	p = is_modifier(p);
 	i = p.i + ft_strlen(p.conv) + 1;
-
-	if (p.format[i] == 'S' || (p.format[i] == 's' && p.format[i] == 'l'))
+	if (p.format[i] == 'S' || (p.format[i] == 's' && p.format[i - 1] == 'l'))
 	{
 		v = va_arg(p.arg, wchar_t*);
 		if (v != NULL)
@@ -657,6 +659,7 @@ int		main(int argc, char **argv)
 	int j = 1;
 	argc++;
 	t_printf p;
+	wint_t C = 'c';
 	char *F = "bonjour alooo";
 	char mb[] = "Grâve";
 	wchar_t s[100];
@@ -664,10 +667,10 @@ int		main(int argc, char **argv)
 	//printf("Test %o , %o , %o\n", "123" "456" "159487");
 	printf("TRUE PRINTF : \n");
 //	true_ret = printf(argv[1], ft_atoi(argv[2]), &j);
-	printf("mdr  %.0s", F);
+	printf("mdr  %.3ls", s);
 	printf("\n\nMY PRINTF   : \n");
 //	ret = ft_printf(argv[1], ft_atoi(argv[2]), &j);
-	ft_printf("mdr  %.0s", F);
+	ft_printf("mdr  %.3ls", s);
 	ft_putchar('\n');
 	printf ("RET = %d\nTRUE RET = %d\n", ret, true_ret);
 	return (0);
