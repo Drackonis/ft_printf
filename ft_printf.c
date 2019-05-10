@@ -15,7 +15,7 @@ t_printf	char_conv(t_printf p)
 	{
 		v = va_arg(p.arg, void*);
 		p.ret++;
-		ft_putchar((char)v);
+		//ft_putchar((char)v);
 	}
 	else if (p.format[i] == 'c')
 	{
@@ -203,11 +203,13 @@ t_printf	put_width(t_printf p)
 	i = 0;
 	width = p.f_width;
 	//printf ("WIDTH : |%d|\n", width);
-	if (p.space || (p.plus && !p.isneg) || p.isneg)
+	if ((p.space && p.baseconv == 0) || (p.plus && !p.isneg) || p.isneg)
 	{
 		width--;
 		//printf ("Width-- : %d\n", width);
 	}
+	if (p.baseconv == 5)
+		width -= 2;
 	if (p.is_precision)
 	{
 		precision = p.f_precision;
@@ -251,33 +253,6 @@ t_printf	put_width(t_printf p)
 		  ft_putchar('-');*/
 	}
 	//printf ("\nwidth = %d\n", width);	
-	return (p);
-}
-
-t_printf	flag_modifier(t_printf p)
-{
-	int	i;
-
-	p.minus = 0;
-	p.mput = 0;
-	p.plus = 0;
-	p.space = 0;
-	i = 0;
-	while (i < p.is_flag)
-	{
-		if (p.conv[i] == '-')
-			p.minus++;
-		if (p.conv[i] == '+' && p.baseconv == 0)
-			p.plus++;
-		if (p.conv[i] == ' ')
-			p.space++;
-		i++;
-	}
-	if (p.space && !p.plus && p.d >= 0 && p.baseconv == 0)
-	{
-		ft_putchar(' ');
-		p.ret++;
-	}
 	return (p);
 }
 
@@ -336,6 +311,34 @@ t_printf	is_modifier(t_printf p)
 	//printf ("\nPrecision : |%d| Width : |%d|\n", p.f_precision, p.f_width);
 	return (p);
 }
+
+t_printf	flag_modifier(t_printf p)
+{
+	int	i;
+
+	p.minus = 0;
+	p.mput = 0;
+	p.plus = 0;
+	p.space = 0;
+	i = 0;
+	while (i < p.is_flag)
+	{
+		if (p.conv[i] == '-')
+			p.minus++;
+		if (p.conv[i] == '+' && p.baseconv == 0)
+			p.plus++;
+		if (p.conv[i] == ' ')
+			p.space++;
+		i++;
+	}
+	if (p.space && !p.plus && p.d >= 0 && p.baseconv == 0)
+	{
+		ft_putchar(' ');
+		p.ret++;
+	}
+	return (p);
+}
+
 
 int	 		int_init_error(t_printf p)
 {
@@ -443,6 +446,8 @@ t_printf	get_arg(t_printf p)
 		p.numlen = ft_nbrlen(p.d);
 		p.d4 = (intmax_t)p.d;
 	}
+	//printf ("\np.numlen : %d\n", p.numlen);
+	//printf ("\nbaseconv: %d\n", p.baseconv);
 	p.ret += p.numlen;
 	return (p);
 }
@@ -665,12 +670,12 @@ int		main(int argc, char **argv)
 	wchar_t s[100];
 	mbstowcs(s, mb, 100);
 	//printf("Test %o , %o , %o\n", "123" "456" "159487");
-	printf("TRUE PRINTF : \n");
-//	true_ret = printf(argv[1], ft_atoi(argv[2]), &j);
-	printf("mdr  %.3ls", s);
-	printf("\n\nMY PRINTF   : \n");
-//	ret = ft_printf(argv[1], ft_atoi(argv[2]), &j);
-	ft_printf("mdr  %.3ls", s);
+	printf("TRUE PRINTF: \n");
+	true_ret = printf(argv[1], ft_atoi(argv[2]), &j);
+	//printf("mdr  %.3ls", s);
+	printf("\nMY|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||\n");
+	ret = ft_printf(argv[1], ft_atoi(argv[2]), &j);
+	//ft_printf("mdr  %.3ls", s);
 	ft_putchar('\n');
 	printf ("RET = %d\nTRUE RET = %d\n", ret, true_ret);
 	return (0);
