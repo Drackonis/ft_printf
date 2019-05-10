@@ -10,12 +10,11 @@ t_printf	char_conv(t_printf p)
 	int		i;
 
 	i = p.i + ft_strlen(p.conv) + 1;
-	printf(" i =  %c\n", p.format[i]);
 	if (p.format[i] == 'C' || (p.format[i] == 'c' && p.lcount == 1))
 	{
 		v = va_arg(p.arg, void*);
 		p.ret++;
-		//ft_putchar((char)v);
+		ft_putchar((char)v);
 	}
 	else if (p.format[i] == 'c')
 	{
@@ -63,6 +62,8 @@ t_printf 	float_conv(t_printf p)
 	p = is_modifier(p);
 	char res[100];
 	float n;
+
+	printf("f_width = %d\n", p.f_width);
 	n = va_arg(p.arg, double);
 	if (p.f_precision == 0)
 		p.f_precision = 6;
@@ -146,7 +147,7 @@ int	ft_nbr_conv(t_printf p, int start, int val)
 
 t_printf	put_nbr_modified(t_printf p)
 {
-	int	l;
+	//int	l;
 	int	i;
 
 	i = 0;
@@ -655,28 +656,4 @@ int		ft_printf(const char *format, ...)
 	ft_putchar('\n'); /*//ATTENTION !!!!!!\\*/
 	return (p.ret);
 	//return (ret);
-}
-
-int		main(int argc, char **argv)
-{
-	int	ret;
-	int	true_ret;
-	int j = 1;
-	argc++;
-	t_printf p;
-	wint_t C = 'c';
-	char *F = "bonjour alooo";
-	char mb[] = "Grâve";
-	wchar_t s[100];
-	mbstowcs(s, mb, 100);
-	//printf("Test %o , %o , %o\n", "123" "456" "159487");
-	printf("TRUE PRINTF: \n");
-	true_ret = printf(argv[1], ft_atoi(argv[2]), &j);
-	//printf("mdr  %.3ls", s);
-	printf("\nMY|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||\n");
-	ret = ft_printf(argv[1], ft_atoi(argv[2]), &j);
-	//ft_printf("mdr  %.3ls", s);
-	ft_putchar('\n');
-	printf ("RET = %d\nTRUE RET = %d\n", ret, true_ret);
-	return (0);
 }

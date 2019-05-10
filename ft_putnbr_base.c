@@ -30,9 +30,9 @@ int	check_base(char *base)
 
 int	ft_nbrlen_base(unsigned int nbr, int base)
 {
-	int	i;
 	int	len;
 
+	len = 0;
 	while (nbr > 0)
 	{
 		nbr /= base;

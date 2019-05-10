@@ -6,11 +6,11 @@
 #    By: rkergast <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/24 16:06:19 by rkergast          #+#    #+#              #
-#    Updated: 2019/05/06 17:43:14 by dieroyer         ###   ########.fr        #
+#    Updated: 2019/05/10 17:50:28 by dieroyer         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = ft_printf
+NAME = libftprintf.a
 
 CC = gcc
 
@@ -20,13 +20,17 @@ HEADERS = libft/libft.h
 
 LIBFT = libft/libft.a
 
-SRC = ft_printf.c
+SRC = ft_printf.c \
+	  ft_printf_f.c \
+	  ft_putnbr_base.c
 
 SRC_LIBFT = libft/ft_atoi.c \
 			libft/ft_putchar.c \
 			libft/ft_putstr.c \
 			libft/ft_strdup.c \
-			libft/ft_putwstr 
+			libft/ft_putlwstr.c \
+			libft/ft_putlstr.c \
+			libft/ft_strlen.c
 
 OBJ = $(SRC:.c=.o)
 
@@ -35,7 +39,8 @@ OBJ = $(SRC:.c=.o)
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(OBJ)
-	$(CC) $(FLAGS) $(OBJ) $(LIBFT) -o $(NAME)
+	libtool -static -o $(NAME) $(OBJ) $(LIBFT)
+	ranlib $(NAME)
 
 $(LIBFT): $(SRC_LIBFT) $(HEADERS)
 	make -C libft
