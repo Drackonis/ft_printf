@@ -44,6 +44,7 @@ typedef struct		s_printf
 	int 		mput;
 	int		hcount;
 	int		lcount;
+	int		Lcount;
 	int		isneg;
 	int		numlen;
 }			t_printf;
@@ -79,6 +80,8 @@ void	reverse(char *str, int len);
 int		ft_inttostr(int x, char *str, int d);
 int		ft_power(int x, unsigned int y);
 void	ft_printf_f(float n, char *res, int afterpoint);
+void	ft_printf_blf(long double n, char *res, int	afterpoint);
+void	ft_printf_lf(double n, char *res, int afterpoint);
 int	check_base(char *base);
 int	ft_nbrlen_base(unsigned int nbr, int base);
 int	ft_putnbr_base(int nbr, char *base);

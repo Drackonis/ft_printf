@@ -1,25 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putlstr.c                                       :+:      :+:    :+:   */
+/*   ft_power.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dieroyer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/05/09 17:45:09 by dieroyer          #+#    #+#             */
-/*   Updated: 2019/05/13 18:34:09 by dieroyer         ###   ########.fr       */
+/*   Created: 2019/05/13 18:32:15 by dieroyer          #+#    #+#             */
+/*   Updated: 2019/05/13 18:32:34 by dieroyer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
-void	ft_putlstr(char *str, int len)
+int		ft_power(int x, unsigned int y)
 {
-	int i;
+	int temp;
 
-	i = 0;
-	while (str[i] && i < len)
-	{
-		ft_putchar(str[i]);
-		i++;
-	}
+	if (y == 0)
+		return (1);
+	temp = ft_power(x, y / 2);
+	if (y % 2 == 0)
+		return (temp * temp);
+	else
+		return (x * temp * temp);
 }

@@ -1,6 +1,7 @@
 #include "ft_printf.h"
 #include "libft/libft.h"
 #include <wchar.h>
+#include <string.h>
 
 t_printf	char_conv(t_printf p)
 {
@@ -59,15 +60,29 @@ t_printf 	string_conv(t_printf p)
 
 t_printf 	float_conv(t_printf p)
 {
-	p = is_modifier(p);
 	char res[100];
-	float n;
-
-	printf("f_width = %d\n", p.f_width);
-	n = va_arg(p.arg, double);
+	p = is_modifier(p);
+	
 	if (p.f_precision == 0)
 		p.f_precision = 6;
-	ft_printf_f(n, res, p.f_precision);
+	if (p.lcount > 0)
+	{
+		double m;
+		m = va_arg(p.arg, double);
+		ft_printf_lf(m, res, p.f_precision);
+	}
+	else if (p.Lcount > 0)
+	{
+		long double l;
+		l = va_arg(p.arg, long double);
+		ft_printf_blf(l, res, p.f_precision);
+	}
+	else
+	{
+		float n;
+		n = va_arg(p.arg, double);
+		ft_printf_f(n, res, p.f_precision);
+	}
 	ft_putstr(res);
 	return(p);
 }
@@ -274,6 +289,7 @@ t_printf	is_modifier(t_printf p)
 	p.lcount = 0;
 	p.f_precision = 0;
 	p.f_width = 0;
+	p.Lcount = 0;
 	while (p.c < p.diff)
 	{
 		c = p.conv[p.c];
@@ -302,6 +318,8 @@ t_printf	is_modifier(t_printf p)
 			p.hcount++;
 		else if (c == 'l')
 			p.lcount++;
+		else if (c == 'L')
+			p.Lcount++;
 		/*else
 		  ft_putstr("Format error : %[flags][width][.precision][size]type");*/
 		p.c++;
@@ -653,7 +671,7 @@ int		ft_printf(const char *format, ...)
 		}
 	}
 	va_end(p.arg);
-	ft_putchar('\n'); /*//ATTENTION !!!!!!\\*/
+//	ft_putchar('\n'); /*//ATTENTION !!!!!!\\*/
 	return (p.ret);
 	//return (ret);
 }

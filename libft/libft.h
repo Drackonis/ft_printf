@@ -6,7 +6,7 @@
 /*   By: rkergast <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/09 16:51:21 by rkergast          #+#    #+#             */
-/*   Updated: 2019/05/10 17:19:17 by dieroyer         ###   ########.fr       */
+/*   Updated: 2019/05/13 18:33:31 by dieroyer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ typedef struct		s_list
 	struct s_list	*next;
 }					t_list;
 
+int					ft_power(int x, unsigned int y);
 void				ft_putlstr(char *str, int len);
 void				ft_putlwstr(wchar_t *str, int len);
 int					ft_atoi(const char *str);

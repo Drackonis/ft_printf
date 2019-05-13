@@ -6,11 +6,14 @@
 /*   By: dieroyer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/09 17:09:54 by dieroyer          #+#    #+#             */
-/*   Updated: 2019/05/10 17:09:21 by dieroyer         ###   ########.fr       */
+/*   Updated: 2019/05/13 19:19:40 by dieroyer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-   
-void	reverse(char *str, int len)
+
+#include "libft/libft.h"
+#include <stdarg.h>
+
+static void	reverse(char *str, int len)
 {
 	int i;
 	int j;
@@ -28,7 +31,7 @@ void	reverse(char *str, int len)
 	}
 }
 
-int		ft_inttostr(int x, char *str, int d)
+static int		ft_inttostr(int x, char *str, int d)
 {
 	int i;
 
@@ -45,19 +48,6 @@ int		ft_inttostr(int x, char *str, int d)
 	return (i);
 }
 
-int		ft_power(int x, unsigned int y)
-{
-	int temp;
-
-	if (y == 0)
-		return (1);
-	temp = ft_power(x, y / 2);
-	if (y % 2 == 0)
-		return (temp * temp);
-	else
-		return (x * temp * temp);
-}
-
 void	ft_printf_f(float n, char *res, int afterpoint)
 {
 	int		ipart;
@@ -66,6 +56,40 @@ void	ft_printf_f(float n, char *res, int afterpoint)
 
 	ipart = (int)n;
 	fpart = n - (float)ipart;
+	i = ft_inttostr(ipart, res, 0);
+	if (afterpoint != 0)
+	{
+		res[i] = '.';
+		fpart = fpart * ft_power(10, afterpoint) + 0.5;
+		ft_inttostr((int)fpart, res + i + 1, afterpoint);
+	}
+}
+
+void	ft_printf_blf(long double n, char *res, int afterpoint)
+{
+	int		ipart;
+	long double	fpart;
+	int		i;
+
+	ipart = (int)n;
+	fpart = n - (long double)ipart;
+	i = ft_inttostr(ipart, res, 0);
+	if (afterpoint != 0)
+	{
+		res[i] = '.';
+		fpart = fpart * ft_power(10, afterpoint) + 0.5;
+		ft_inttostr((int)fpart, res + i + 1, afterpoint);
+	}
+}
+
+void	ft_printf_lf(double n, char *res, int afterpoint)
+{
+	int		ipart;
+	double	fpart;
+	int		i;
+
+	ipart = (int)n;
+	fpart = n - (double)ipart;
 	i = ft_inttostr(ipart, res, 0);
 	if (afterpoint != 0)
 	{
