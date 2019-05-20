@@ -6,7 +6,7 @@
 /*   By: dieroyer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/09 17:09:54 by dieroyer          #+#    #+#             */
-/*   Updated: 2019/05/13 19:19:40 by dieroyer         ###   ########.fr       */
+/*   Updated: 2019/05/20 15:49:56 by dieroyer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,51 +50,51 @@ static int		ft_inttostr(int x, char *str, int d)
 
 void	ft_printf_f(float n, char *res, int afterpoint)
 {
-	int		ipart;
+	intmax_t		ipart;
 	float	fpart;
-	int		i;
+	intmax_t		i;
 
-	ipart = (int)n;
+	ipart = (intmax_t)n;
 	fpart = n - (float)ipart;
 	i = ft_inttostr(ipart, res, 0);
 	if (afterpoint != 0)
 	{
 		res[i] = '.';
 		fpart = fpart * ft_power(10, afterpoint) + 0.5;
-		ft_inttostr((int)fpart, res + i + 1, afterpoint);
+		ft_inttostr((intmax_t)fpart, res + i + 1, afterpoint);
 	}
 }
 
 void	ft_printf_blf(long double n, char *res, int afterpoint)
 {
-	int		ipart;
+	intmax_t	ipart;
 	long double	fpart;
-	int		i;
+	intmax_t	i;
 
-	ipart = (int)n;
+	ipart = (intmax_t)n;
 	fpart = n - (long double)ipart;
 	i = ft_inttostr(ipart, res, 0);
 	if (afterpoint != 0)
 	{
 		res[i] = '.';
 		fpart = fpart * ft_power(10, afterpoint) + 0.5;
-		ft_inttostr((int)fpart, res + i + 1, afterpoint);
+		ft_inttostr((intmax_t)fpart, res + i + 1, afterpoint);
 	}
 }
 
 void	ft_printf_lf(double n, char *res, int afterpoint)
 {
-	int		ipart;
+	intmax_t		ipart;
 	double	fpart;
-	int		i;
+	intmax_t	i;
 
-	ipart = (int)n;
+	ipart = (intmax_t)n;
 	fpart = n - (double)ipart;
 	i = ft_inttostr(ipart, res, 0);
 	if (afterpoint != 0)
 	{
 		res[i] = '.';
 		fpart = fpart * ft_power(10, afterpoint) + 0.5;
-		ft_inttostr((int)fpart, res + i + 1, afterpoint);
+		ft_inttostr((intmax_t)fpart, res + i + 1, afterpoint);
 	}
 }
