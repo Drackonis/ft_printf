@@ -57,33 +57,55 @@ t_printf 	string_conv(t_printf p)
 	return(p);
 }
 
-
 t_printf 	float_conv(t_printf p)
 {
-	char res[100];
 	p = is_modifier(p);
-	
+	p = flag_modifier(p);
 	if (p.f_precision == 0)
 		p.f_precision = 6;
 	if (p.lcount > 0)
 	{
 		double m;
 		m = va_arg(p.arg, double);
-		ft_printf_lf(m, res, p.f_precision);
+	p.isneg = (m < 0) ? 1 : 0;
+		ft_printf_lf(m, p.strf, p.f_precision);
 	}
 	else if (p.Lcount > 0)
 	{
 		long double l;
 		l = va_arg(p.arg, long double);
-		ft_printf_blf(l, res, p.f_precision);
+		p.isneg = (l < 0) ? 1 : 0;
+		ft_printf_blf(l, p.strf, p.f_precision);
 	}
 	else
 	{
 		float n;
 		n = va_arg(p.arg, double);
-		ft_printf_f(n, res, p.f_precision);
+		p.isneg = (n < 0) ? 1 : 0;
+		ft_printf_f(n, p.strf, p.f_precision);
 	}
-	ft_putstr(res);
+	p.numlen = ft_strlen(p.strf);
+	p.baseconv = -1;
+	if (p.minus)
+	{
+		//printf ("put nbr modified in first : MINUS > 0\n");
+		p = put_nbr_modified(p);
+		p = put_width(p);
+	}
+	else
+	{
+		//printf ("put whidth in first : MINUS <= 0 \n");
+		p = put_width(p);
+		p = put_nbr_modified(p);
+	}
+	//printf ("\nis_flags = %d | is_width = %d | is_precision = %d | hcount = %d | lcount %d\n", p.is_flag, p.is_		width, p.is_precision, p.hcount, p.lcount);
+	p.c = 0;
+	while (p.c < p.diff)
+	{
+		//printf ("C// char conv : %c | %d\n", p.conv[p.c], p.c);
+		p.c++;
+	}
+	//ft_putstr(res);
 	return(p);
 }
 
@@ -232,6 +254,7 @@ t_printf	put_nbr_modified(t_printf p)
 			ft_putstr("7fff");
 			ft_putnbr_base(p.d6, "0123456789abcdef");
 		}
+		else if (p.baseconv == -1) ft_putstr(p.strf);
 	}
 	return (p);	
 }
@@ -245,7 +268,7 @@ t_printf	put_width(t_printf p)
 	i = 0;
 	width = p.f_width;
 	//printf ("WIDTH : |%d|\n", width);
-	if ((p.space && p.baseconv == 0) || (p.plus && !p.isneg) || p.isneg)
+	if ((p.space && p.baseconv <= 0) || (p.plus && !p.isneg) || p.isneg)
 	{
 		width--;
 		//printf ("Width-- : %d\n", width);
@@ -721,7 +744,7 @@ int		ft_printf(const char *format, ...)
 	return (p.ret);
 	//return (ret);
 }
-
+/*
 int		main(int argc, char **argv)
 {
 	int ret = 0;
@@ -736,4 +759,4 @@ int		main(int argc, char **argv)
 	ret = ft_printf(argv[1], ft_atoi(argv[2]), &y);
 	printf("\nTRUE RET = %d\nMY RET = %d\n", true_ret, ret);
 	return (0);
-}
+}*/

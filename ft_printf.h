@@ -15,6 +15,7 @@ typedef struct		s_printf
 	 * 4 = maj exadecimal
 	 * 5 = adress
 	*/
+	char  strf[100];
 	int		ret;
 	va_list		arg;
 	char		*format;
