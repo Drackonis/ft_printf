@@ -51,6 +51,10 @@ typedef struct		s_printf
 	int		numlen;
 }			t_printf;
 
+t_printf	ft_flag_modifier(t_printf p);
+t_printf	ft_putwidth(t_printf p, int len);
+t_printf	ft_getconv(t_printf p, int base, int len);
+t_printf	str_bonus(t_printf p);
 int			ft_nbrlen_base(unsigned int nbr, int base);
 int			ft_printf(const char *format, ...);
 t_printf	char_conv(t_printf p);

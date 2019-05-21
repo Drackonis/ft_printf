@@ -6,14 +6,14 @@
 /*   By: dieroyer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/09 17:09:54 by dieroyer          #+#    #+#             */
-/*   Updated: 2019/05/20 15:49:56 by dieroyer         ###   ########.fr       */
+/*   Updated: 2019/05/21 17:15:28 by dieroyer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft/libft.h"
-#include <stdarg.h>
+#include "ft_printf.h"
 
-static void	reverse(char *str, int len)
+void	reverse(char *str, int len)
 {
 	int i;
 	int j;
@@ -31,11 +31,20 @@ static void	reverse(char *str, int len)
 	}
 }
 
-static int		ft_inttostr(int x, char *str, int d)
+int		ft_inttostr(int x, char *str, int d)
 {
+	t_printf p;
 	int i;
+	int neg;
 
 	i = 0;
+	neg = 0;
+	if (x < 0)
+	{
+		x *= -1;
+		neg = 1;
+		p.strf[0] = '-';
+	}
 	while (x)
 	{
 		str[i++] = (x % 10) + '0';

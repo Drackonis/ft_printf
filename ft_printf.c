@@ -3,60 +3,7 @@
 #include <wchar.h>
 #include <string.h>
 
-t_printf	char_conv(t_printf p)
-{
-	p = is_modifier(p);
-	char	c;
-	void	*v;
-	int		i;
-
-	i = p.i + ft_strlen(p.conv) + 1;
-	if (p.format[i] == 'C' || (p.format[i] == 'c' && p.lcount == 1))
-	{
-		v = va_arg(p.arg, void*);
-		p.ret++;
-		ft_putchar((char)v);
-	}
-	else if (p.format[i] == 'c')
-	{
-		c = (char)va_arg(p.arg, int);
-		p.ret++;
-		ft_putchar(c);
-	}
-	return(p);
-}
-
-t_printf 	string_conv(t_printf p)
-{
-	char	*str;
-	void	*v;
-	int		i;
-
-	p = is_modifier(p);
-	i = p.i + ft_strlen(p.conv) + 1;
-	if (p.format[i] == 'S' || (p.format[i] == 's' && p.format[i - 1] == 'l'))
-	{
-		v = va_arg(p.arg, wchar_t*);
-		if (v != NULL)
-		{
-			ft_putlwstr(v, p.f_precision);
-			p.ret += ft_strlen(v);
-		}
-	}	
-	else if (p.format[i] == 's')
-	{
-		str = va_arg(p.arg, char*);
-		ft_putlstr(str, p.f_precision);
-		p.ret += ft_strlen(str);
-	}
-	else
-	{
-		ft_putstr("(null)");
-		p.ret += 6;
-	}
-	return(p);
-}
-
+/*
 t_printf 	float_conv(t_printf p)
 {
 	p = is_modifier(p);
@@ -67,7 +14,7 @@ t_printf 	float_conv(t_printf p)
 	{
 		double m;
 		m = va_arg(p.arg, double);
-	p.isneg = (m < 0) ? 1 : 0;
+		p.isneg = (m < 0) ? 1 : 0;
 		ft_printf_lf(m, p.strf, p.f_precision);
 	}
 	else if (p.Lcount > 0)
@@ -86,29 +33,27 @@ t_printf 	float_conv(t_printf p)
 	}
 	p.numlen = ft_strlen(p.strf);
 	p.baseconv = -1;
+	ft_getconv(p, -1, p.numlen);
+	return (p);
+}
 	if (p.minus)
 	{
-		//printf ("put nbr modified in first : MINUS > 0\n");
 		p = put_nbr_modified(p);
 		p = put_width(p);
 	}
 	else
 	{
-		//printf ("put whidth in first : MINUS <= 0 \n");
 		p = put_width(p);
 		p = put_nbr_modified(p);
 	}
-	//printf ("\nis_flags = %d | is_width = %d | is_precision = %d | hcount = %d | lcount %d\n", p.is_flag, p.is_		width, p.is_precision, p.hcount, p.lcount);
 	p.c = 0;
 	while (p.c < p.diff)
 	{
-		//printf ("C// char conv : %c | %d\n", p.conv[p.c], p.c);
 		p.c++;
 	}
-	//ft_putstr(res);
 	return(p);
 }
-
+*/
 t_printf 	put_percent(t_printf p)
 {
 	ft_putchar('%');
