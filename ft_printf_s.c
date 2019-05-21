@@ -6,7 +6,7 @@
 /*   By: dieroyer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 16:07:54 by dieroyer          #+#    #+#             */
-/*   Updated: 2019/05/21 20:13:37 by dieroyer         ###   ########.fr       */
+/*   Updated: 2019/05/21 20:20:36 by dieroyer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,9 @@ t_printf 	string_conv(t_printf p)
 	if (p.format[i] == 's' && p.format[i - 1] != 'l')
 	{
 		str = va_arg(p.arg, char*);
-		if (p.f_precision == 0)
+		if ((p.f_precision == 0 ) || (p.f_precision > (int)ft_strlen((str))))
 			p.f_precision = ft_strlen(str);
-		ft_putwidth(p, ft_strlen(str));
+		ft_putwidth(p, p.f_precision);
 		ft_putlstr(str, p.f_precision);
 		p.ret += ft_strlen(str);
 	}
