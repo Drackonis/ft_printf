@@ -54,12 +54,6 @@ t_printf 	float_conv(t_printf p)
 	return(p);
 }
 */
-t_printf 	put_percent(t_printf p)
-{
-	ft_putchar('%');
-	p.ret++;
-	return(p);
-}
 
 void	ft_putnbr_intmax(intmax_t num)
 {
@@ -200,6 +194,7 @@ t_printf	put_nbr_modified(t_printf p)
 			ft_putnbr_base(p.d6, "0123456789abcdef");
 		}
 		else if (p.baseconv == -1) ft_putstr(p.strf);
+		else if (p.baseconv == -2) ft_putchar('%');
 	}
 	return (p);	
 }
@@ -253,7 +248,8 @@ t_printf	put_width(t_printf p)
 	{
 		while (i < width)
 		{
-			ft_putchar(' ');
+			
+			(p.baseconv == -2 && p.zero) ? ft_putchar('0') : ft_putchar(' ');
 			i++;
 			p.ret++;
 		}
@@ -403,7 +399,13 @@ t_printf	get_arg(t_printf p)
 	p.d6 = 0;
 	p.isneg = 0;
 	current_base = 10;
-	if (p.baseconv > 0 && p.hcount == 0 && p.lcount == 0)
+	p.numlen = 0;
+	if (p.baseconv == -2)
+	{
+		p.numlen = 1;
+		p.f_precision = 0;
+	}
+	else if (p.baseconv > 0 && p.hcount == 0 && p.lcount == 0)
 	{
 		if (p.baseconv == 2) 
 			current_base = 8;
@@ -528,6 +530,12 @@ t_printf 	locat_conv(t_printf p)
 	return(p);
 }
 
+t_printf 	put_percent(t_printf p)
+{
+	p.baseconv = -2;
+	p = get_conv(p);
+	return(p);
+}
 
 t_printf 	octo_conv(t_printf p)
 {
@@ -697,11 +705,11 @@ int		main(int argc, char **argv)
 	char y;
 	argc++;
 	printf("TRUE PRINTF :\n");
-	true_ret = printf(argv[1], ft_atoi(argv[2]), &y);
+	true_ret = printf(argv[1], ft_atoi(argv[2]));
 	printf ("\n");
 	write(1,"MY PRINTF :", 11);
 	printf ("\n");
-	ret = ft_printf(argv[1], ft_atoi(argv[2]), &y);
+	ret = ft_printf(argv[1], ft_atoi(argv[2]));
 	printf("\nTRUE RET = %d\nMY RET = %d\n", true_ret, ret);
 	return (0);
 }*/

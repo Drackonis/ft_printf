@@ -2,12 +2,14 @@
 # define FT_PRINTF
 
 # include <stdarg.h>
+# include <stdio.h>
 # include "libft/libft.h" //includes abusifs
 
 typedef struct		s_printf
 {
 	int		baseconv;
-	/*
+	/*-2 = %%
+	 *-1 = float
 	 * 0 = decimal
 	 * 1 = unsigned decimal
 	 * 2 = octal
