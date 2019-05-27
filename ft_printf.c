@@ -694,6 +694,7 @@ int		ft_printf(const char *format, ...)
 	}
 	va_end(p.arg);
 //	ft_putchar('\n'); /*//ATTENTION !!!!!!\\*/
+	//printf("\nret = %d\n", p.ret);
 	return (p.ret);
 	//return (ret);
 }
