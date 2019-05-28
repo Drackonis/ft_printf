@@ -17,7 +17,11 @@ typedef struct		s_printf
 	 * 4 = maj exadecimal
 	 * 5 = adress
 	*/
-	char  strf[100];
+	char	strf[100]; // float
+	char	*str; //stringconv
+	double	m; //floatconv
+	long double l;
+	float	n;
 	int		ret;
 	va_list		arg;
 	char		*format;
@@ -53,6 +57,8 @@ typedef struct		s_printf
 	int		numlen;
 }			t_printf;
 
+t_printf	ft_putstrret(t_printf p, int ret);
+t_printf	ft_putstrpreci(t_printf p);
 t_printf	ft_flag_modifier(t_printf p);
 t_printf	ft_putwidth(t_printf p, int len);
 t_printf	ft_getconv(t_printf p, int base, int len);
