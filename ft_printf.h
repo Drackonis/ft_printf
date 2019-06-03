@@ -49,7 +49,8 @@ typedef struct		s_printf
 	int		zero;
 	int		space;
 	int		sharp;
-	int 	mput;
+	int 		mput;
+	int		pput;
 	int		hcount;
 	int		lcount;
 	int		Lcount;

@@ -146,7 +146,7 @@ t_printf	put_nbr_modified(t_printf p)
 	int precision;
 	i = 0;
 	precision = p.f_precision;
-	if (p.plus && !p.isneg)
+	if (p.plus && !p.isneg && !p.pput)
 	{
 		p.ret++;
 		ft_putchar('+');
@@ -235,6 +235,12 @@ t_printf	put_width(t_printf p)
 			ft_putchar('-');
 			p.mput++;
 			p.ret++;
+		}
+		if (p.plus && !p.isneg && !p.pput)
+		{
+			p.ret++;
+			p.pput++;
+			ft_putchar('+');
 		}
 		put_sharp(p);
 		while (i < width)
@@ -328,6 +334,7 @@ t_printf	flag_modifier(t_printf p)
 
 	p.minus = 0;
 	p.mput = 0;
+	p.pput = 0;
 	p.plus = 0;
 	p.space = 0;
 	p.sharp = 0;
@@ -344,7 +351,7 @@ t_printf	flag_modifier(t_printf p)
 			p.sharp++;
 		i++;
 	}
-	if (p.space && !p.plus && p.d >= 0 && p.baseconv == 0)
+	if (p.space && !p.plus && p.d >= 0 && p.baseconv == 0 && !p.isneg)
 	{
 		ft_putchar(' ');
 		p.ret++;
