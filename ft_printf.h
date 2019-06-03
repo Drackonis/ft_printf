@@ -8,14 +8,14 @@
 typedef struct		s_printf
 {
 	int		baseconv;
-	/*-2 = %%
-	 *-1 = float
-	 * 0 = decimal
-	 * 1 = unsigned decimal
-	 * 2 = octal
-	 * 3 = exadecimal
-	 * 4 = maj exadecimal
-	 * 5 = adress
+	/*-2 = %% 
+	 *-1 = float %f
+	 * 0 = decimal %d %i
+	 * 1 = unsigned decimal %u
+	 * 2 = octal %o
+	 * 3 = exadecimal %x
+	 * 4 = maj exadecimal %X
+	 * 5 = adress %p
 	*/
 	char	strf[100]; // float
 	char	*str; //stringconv

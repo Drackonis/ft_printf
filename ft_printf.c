@@ -130,12 +130,17 @@ t_printf	put_sharp(t_printf p)
 	if (p.sharp)
 	{
 		if (p.baseconv == 2)
+		{
 			ft_putstr("0");
+			p.ret++;
+		}
 		else if (p.baseconv == 3)
 			ft_putstr("0x");
 		else if (p.baseconv == 4)
 			ft_putstr("0X");
 	}
+	if (p.baseconv >= 3)
+		p.ret += 2;
 	return (p);
 }
 
@@ -191,6 +196,7 @@ t_printf	put_nbr_modified(t_printf p)
 		else if (p.baseconv == 5)
 		{
 			ft_putstr("7fff");
+			p.ret += 4;
 			ft_putnbr_base(p.d6, "0123456789abcdef");
 		}
 		else if (p.baseconv == -1) ft_putstr(p.strf);
@@ -351,7 +357,7 @@ t_printf	flag_modifier(t_printf p)
 			p.sharp++;
 		i++;
 	}
-	if (p.space && !p.plus && p.d >= 0 && p.baseconv == 0 && !p.isneg)
+	if (p.space && !p.plus && p.d >= 0 && p.baseconv == 0)
 	{
 		ft_putchar(' ');
 		p.ret++;
@@ -434,17 +440,17 @@ t_printf	get_arg(t_printf p)
 		{
 			p.f_width -= 6;
 			p.f_precision -= 4;
-			p.ret += 6;
+			//p.ret += 6;
 		}
 		else if (p.baseconv == 2)
 		{
 			p.f_width -= 1;
-			p.ret++;
+			//p.ret++;
 		}
 		else if (p.baseconv == 3 || p.baseconv == 4)
 		{
 			p.f_width -= 2;
-			p.ret += 2;
+			//p.ret += 2;
 		}
 	}
 	else if (p.hcount > 0)
@@ -705,7 +711,7 @@ int		ft_printf(const char *format, ...)
 	return (p.ret);
 	//return (ret);
 }
-/*
+
 int		main(int argc, char **argv)
 {
 	int ret = 0;
@@ -720,4 +726,4 @@ int		main(int argc, char **argv)
 	ret = ft_printf(argv[1], ft_atoi(argv[2]));
 	printf("\nTRUE RET = %d\nMY RET = %d\n", true_ret, ret);
 	return (0);
-}*/
+}
