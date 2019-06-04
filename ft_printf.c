@@ -6,7 +6,7 @@
 /*   By: rkergast <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/04 11:59:58 by rkergast          #+#    #+#             */
-/*   Updated: 2019/06/04 13:26:43 by rkergast         ###   ########.fr       */
+/*   Updated: 2019/06/04 13:33:56 by rkergast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -479,6 +479,41 @@ t_printf	get_arg_l(t_printf p)
 	return (p);
 }
 
+t_printf	get_arg_base(t_printf p, int current_base)
+{
+	if (p.baseconv < 5)
+	{
+		p.d5 = va_arg(p.arg, unsigned int);
+		p.numlen = ft_nbrlen_base(p.d5, current_base);
+		p.d4 = (intmax_t)p.d5;
+	}
+	else
+	{
+		p.d6 = (uintptr_t)va_arg(p.arg, void*);
+		p.numlen = ft_nbrlen_base(p.d6, current_base);
+		p.d4 = (intmax_t)p.d6;
+	}
+	if (p.baseconv == 5)
+	{
+		p.f_width -= 6;
+		p.f_precision -= 4;
+	}
+	else if (p.baseconv == 2)
+		p.f_width -= 1;
+	else if (p.baseconv == 3 || p.baseconv == 4)
+		p.f_width -= 2;
+	return (p);
+}
+
+t_printf	get_int_arg(t_printf p)
+{
+	p.d = va_arg(p.arg, int);
+	p.isneg = (p.d < 0) ? 1 : 0;
+	p.numlen = ft_nbrlen(p.d);
+	p.d4 = (intmax_t)p.d;
+	return (p);
+}
+
 t_printf	get_arg(t_printf p)
 {
 	int		current_base;
@@ -495,39 +530,14 @@ t_printf	get_arg(t_printf p)
 			current_base = 8;
 		else if (p.baseconv > 2)
 			current_base = 16;
-		if (p.baseconv < 5)
-		{
-			p.d5 = va_arg(p.arg, unsigned int);
-			p.numlen = ft_nbrlen_base(p.d5, current_base);
-			p.d4 = (intmax_t)p.d5;
-		}
-		else
-		{
-			p.d6 = (uintptr_t)va_arg(p.arg, void*);
-			p.numlen = ft_nbrlen_base(p.d6, current_base);
-			p.d4 = (intmax_t)p.d6;
-		}
-		if (p.baseconv == 5)
-		{
-			p.f_width -= 6;
-			p.f_precision -= 4;
-		}
-		else if (p.baseconv == 2)
-			p.f_width -= 1;
-		else if (p.baseconv == 3 || p.baseconv == 4)
-			p.f_width -= 2;
+		p = get_arg_base(p, current_base);
 	}
 	else if (p.hcount > 0)
 		p = get_arg_h(p);
 	else if (p.lcount > 0)
 		p = get_arg_l(p);
 	else
-	{
-		p.d = va_arg(p.arg, int);
-		p.isneg = (p.d < 0) ? 1 : 0;
-		p.numlen = ft_nbrlen(p.d);
-		p.d4 = (intmax_t)p.d;
-	}
+		p = get_int_arg(p);
 	p.ret += p.numlen;
 	return (p);
 }
