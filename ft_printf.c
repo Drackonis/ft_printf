@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rkergast <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/06/04 11:59:58 by rkergast          #+#    #+#             */
+/*   Updated: 2019/06/04 12:26:57 by rkergast         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
 #include "libft/libft.h"
 #include <wchar.h>
@@ -58,7 +70,7 @@ t_printf 	float_conv(t_printf p)
 void	ft_putnbr_intmax(intmax_t num)
 {
 	intmax_t		nb;
-	int			t;
+	int				t;
 	char			c;
 
 	t = 0;
@@ -74,11 +86,10 @@ void	ft_putnbr_intmax(intmax_t num)
 	write(1, &c, 1);
 }
 
-int	ft_nbrlen(intmax_t n)
+int		ft_nbrlen(intmax_t n)
 {
 	int		l;
 
-	//ATTENTION PUTWIDTH DOIT GET LA LONGUEUR SANS LE -
 	l = 0;
 	if (n < 0)
 		n = -n;
@@ -88,36 +99,32 @@ int	ft_nbrlen(intmax_t n)
 		l++;
 	}
 	l++;
-	//printf ("\n len = %d\n", l);
 	return (l);
 }
 
-int	ft_ctoi(char c)
+int		ft_ctoi(char c)
 {
-	int	i;
+	int		i;
 
 	i = c - '0';
-	//printf ("char : %c | i = %d\n", c, i);
-	return(i);
+	return (i);
 }
 
-int	ft_nbr_conv(t_printf p, int start, int val)
+int		ft_nbr_conv(t_printf p, int start, int val)
 {
-	int i;
-	int nbr;
-	int puissance;
+	int		i;
+	int		nbr;
+	int		puissance;
 
 	i = 0;
 	nbr = 0;
 	puissance = 1;
 	while (i < val)
 	{
-		//printf ("CHAR CONV : %c | s-i : %d\n", p.conv[start - i], start - i);
 		nbr += puissance * (ft_ctoi(p.conv[start - i]));
 		puissance *= 10;
 		i++;
 	}
-	//printf ("\nNRE RETURN : %d\n", nbr);
 	return (nbr);
 }
 
@@ -146,9 +153,9 @@ t_printf	put_sharp(t_printf p)
 
 t_printf	put_nbr_modified(t_printf p)
 {
-	//int	l;
-	int	i;
-	int precision;
+	int		i;
+	int		precision;
+
 	i = 0;
 	precision = p.f_precision;
 	if (p.plus && !p.isneg && !p.pput)
@@ -164,9 +171,6 @@ t_printf	put_nbr_modified(t_printf p)
 	}
 	if (p.is_precision)
 	{
-		//printf ("NUMLEN = %d", l);
-		//printf ("PRECISION : |%d|\n", precision);
-		//printf("precision = %d | len = %d\n", precision, l);
 		put_sharp(p);
 		while (i++ < precision - p.numlen)
 		{
@@ -176,10 +180,6 @@ t_printf	put_nbr_modified(t_printf p)
 	}
 	else if (p.minus)
 		put_sharp(p);
-
-	/*else if (p.f_precision == 0 && (!p.zero || p.minus))
-		put_sharp(p);*/
-
 	if (p.baseconv == 0)
 	{
 		if (!p.isneg)
@@ -189,51 +189,49 @@ t_printf	put_nbr_modified(t_printf p)
 	}
 	else
 	{
-		if (p.baseconv == 1) ft_putnbr_base(p.d5, "0123456789");
-		else if (p.baseconv == 2) ft_putnbr_base(p.d5, "01234567");
-		else if (p.baseconv == 3) ft_putnbr_base(p.d5, "0123456789abcdef");
-		else if (p.baseconv == 4) ft_putnbr_base(p.d5, "0123456789ABCDEF");
+		if (p.baseconv == 1)
+			ft_putnbr_base(p.d5, "0123456789");
+		else if (p.baseconv == 2)
+			ft_putnbr_base(p.d5, "01234567");
+		else if (p.baseconv == 3)
+			ft_putnbr_base(p.d5, "0123456789abcdef");
+		else if (p.baseconv == 4)
+			ft_putnbr_base(p.d5, "0123456789ABCDEF");
 		else if (p.baseconv == 5)
 		{
 			ft_putstr("7fff");
 			p.ret += 4;
 			ft_putnbr_base(p.d6, "0123456789abcdef");
 		}
-		else if (p.baseconv == -1) ft_putstr(p.strf);
-		else if (p.baseconv == -2) ft_putchar('%');
+		else if (p.baseconv == -1)
+			ft_putstr(p.strf);
+		else if (p.baseconv == -2)
+			ft_putchar('%');
 	}
-	return (p);	
+	return (p);
 }
 
 t_printf	put_width(t_printf p)
 {
-	int	width;
-	int	precision;
-	int	i;
+	int		width;
+	int		precision;
+	int		i;
 
 	i = 0;
 	width = p.f_width;
-	//printf ("WIDTH : |%d|\n", width);
 	if ((p.space && p.baseconv <= 0) || (p.plus && !p.isneg) || p.isneg)
 	{
 		width--;
-		//printf ("Width-- : %d\n", width);
 	}
 	if (p.is_precision)
 	{
 		precision = p.f_precision;
-		//printf ("\nPrecision : %d\n", precision);
-
 		precision -= p.numlen;
 		if (precision < 0)
 			precision = 0;
 		width -= precision;
-		//printf ("WIDTH : |%d|\n", width);
 	}
-	//printf ("Remove nbrlen : %d | width : %d\n", ft_nbrlen(p.d), width);
 	width -= p.numlen;
-	//printf ("width : %d\n", width);
-	//printf ("printed width : %d | nbrlen : %d | p.d : %d\n", width, ft_nbrlen(p.d), p.d);
 	if (p.zero && !p.minus && p.is_precision == 0)
 	{
 		if (p.isneg && !p.mput)
@@ -260,26 +258,21 @@ t_printf	put_width(t_printf p)
 	{
 		while (i < width)
 		{
-			
 			(p.baseconv == -2 && p.zero) ? ft_putchar('0') : ft_putchar(' ');
 			i++;
 			p.ret++;
 		}
-		/*if (p.d < 0)
-		  ft_putchar('-');*/
 	}
 	if (!p.zero && !p.minus && p.is_precision == 0)
 		put_sharp(p);
-
-	//printf ("\nwidth = %d\n", width);	
 	return (p);
 }
 
 t_printf	is_modifier(t_printf p)
 {
 	char	c;
-	int	point;
-	int	number;
+	int		point;
+	int		number;
 
 	point = 0;
 	number = 0;
@@ -303,17 +296,13 @@ t_printf	is_modifier(t_printf p)
 			p.is_flag++;
 			p.zero++;
 		}
-		else if (c == '.' /*&& point == 0*/)
+		else if (c == '.')
 			point += 1;
 		else if ((c >= '1' && c <= '9') || (c == '0' && number))
 		{
 			number = 1;
 			if (point == 0)
-			{
 				p.is_width++;
-				//p.is_width = p.conv[p.c];
-				//printf("conv %s\n", p.conv);
-			}
 			else
 				p.is_precision++;
 		}
@@ -323,20 +312,18 @@ t_printf	is_modifier(t_printf p)
 			p.lcount++;
 		else if (c == 'L')
 			p.Lcount++;
-		/*else
-		  ft_putstr("Format error : %[flags][width][.precision][size]type");*/
 		p.c++;
-	}	
+	}
 	p.f_width = ft_nbr_conv(p, p.is_flag + p.is_width - 1, p.is_width);
 	if (p.is_precision)
-		p.f_precision = ft_nbr_conv(p, p.is_flag + p.is_width + p.is_precision, p.is_precision);
-	//printf ("\nPrecision : |%d| Width : |%d|\n", p.f_precision, p.f_width);
+		p.f_precision = ft_nbr_conv(p, p.is_flag + p.is_width +\
+				p.is_precision, p.is_precision);
 	return (p);
 }
 
 t_printf	flag_modifier(t_printf p)
 {
-	int	i;
+	int		i;
 
 	p.minus = 0;
 	p.mput = 0;
@@ -365,14 +352,13 @@ t_printf	flag_modifier(t_printf p)
 	return (p);
 }
 
-
-int	 		int_init_error(t_printf p)
+int		int_init_error(t_printf p)
 {
-	char		c;
+	char	c;
 	int		i;
-	int		nbPoint;
+	int		nbpoint;
 
-	nbPoint = 0;
+	nbpoint = 0;
 	i = p.c;
 	c = p.conv[i];
 	while (i < p.diff && (c == '-' || c == '+' || c == ' '))
@@ -383,9 +369,7 @@ int	 		int_init_error(t_printf p)
 	while (i < p.diff && ((c >= '0' && c <= '9') || c == '.'))
 	{
 		if (c == '.')
-			nbPoint++;
-		/*if (nbPoint > 1)
-		  ft_putstr("Format error : %[flags][width][.precision][size]type");*/
+			nbpoint++;
 		i++;
 		c = p.conv[i];
 	}
@@ -394,14 +378,13 @@ int	 		int_init_error(t_printf p)
 		i++;
 		c = p.conv[i];
 	}
-	/*if (i != p.diff)
-	  ft_putstr("Format error : %[flags][width][.precision][size]type");*/
 	return (0);
 }
 
 t_printf	get_arg(t_printf p)
 {
-	int	current_base;
+	int		current_base;
+
 	p.d = 0;
 	p.d0 = 0;
 	p.d1 = 0;
@@ -420,9 +403,9 @@ t_printf	get_arg(t_printf p)
 	}
 	else if (p.baseconv > 0 && p.hcount == 0 && p.lcount == 0)
 	{
-		if (p.baseconv == 2) 
+		if (p.baseconv == 2)
 			current_base = 8;
-		else if (p.baseconv > 2) 
+		else if (p.baseconv > 2)
 			current_base = 16;
 		if (p.baseconv < 5)
 		{
@@ -440,22 +423,14 @@ t_printf	get_arg(t_printf p)
 		{
 			p.f_width -= 6;
 			p.f_precision -= 4;
-			//p.ret += 6;
 		}
 		else if (p.baseconv == 2)
-		{
 			p.f_width -= 1;
-			//p.ret++;
-		}
 		else if (p.baseconv == 3 || p.baseconv == 4)
-		{
 			p.f_width -= 2;
-			//p.ret += 2;
-		}
 	}
 	else if (p.hcount > 0)
 	{
-		//short & signed char is promoted to int when pass in va_arg
 		if (p.hcount == 1)
 		{
 			p.d1 = (short)va_arg(p.arg, int);
@@ -495,8 +470,6 @@ t_printf	get_arg(t_printf p)
 		p.numlen = ft_nbrlen(p.d);
 		p.d4 = (intmax_t)p.d;
 	}
-	//printf ("\np.numlen : %d\n", p.numlen);
-	//printf ("\nbaseconv: %d\n", p.baseconv);
 	p.ret += p.numlen;
 	return (p);
 }
@@ -506,98 +479,70 @@ t_printf	get_conv(t_printf p)
 	p = is_modifier(p);
 	p = flag_modifier(p);
 	p = get_arg(p);
-	//printf ("MINUS : %d\n", p.minus);
 	if (p.minus)
 	{
-		//printf ("put nbr modified in first : MINUS > 0\n");
 		p = put_nbr_modified(p);
 		p = put_width(p);
 	}
 	else
 	{
-		//printf ("put whidth in first : MINUS <= 0 \n");
 		p = put_width(p);
 		p = put_nbr_modified(p);
 	}
-	//printf ("\nis_flags = %d | is_width = %d | is_precision = %d | hcount = %d | lcount %d\n", p.is_flag, p.is_		width, p.is_precision, p.hcount, p.lcount);
 	p.c = 0;
 	while (p.c < p.diff)
-	{
-		//printf ("C// char conv : %c | %d\n", p.conv[p.c], p.c);
 		p.c++;
-	}
-	return(p);
+	return (p);
 }
 
-t_printf 	locat_conv(t_printf p)
+t_printf	locat_conv(t_printf p)
 {
-
-	//uintptr_t	i;
-	//int		len;
-
-	//len = 0;
 	p.baseconv = 5;
 	p = get_conv(p);
-	//i = (uintptr_t)va_arg(p.arg, void*);
-	//len = ft_putnbr_base(i, "0123456789abcdef");
-	return(p);
+	return (p);
 }
 
-t_printf 	put_percent(t_printf p)
+t_printf	put_percent(t_printf p)
 {
 	p.baseconv = -2;
 	p = get_conv(p);
-	return(p);
+	return (p);
 }
 
-t_printf 	octo_conv(t_printf p)
+t_printf	octo_conv(t_printf p)
 {
 	p.baseconv = 2;
 	p = get_conv(p);
-	return(p);
+	return (p);
 }
 
-t_printf 	dec_conv(t_printf p)
+t_printf	dec_conv(t_printf p)
 {
-	//printf ("UNSIGNED CONV\n");
 	p.baseconv = 1;
 	p = get_conv(p);
-	return(p);
+	return (p);
 }
 
-t_printf 	exa_conv(t_printf p)
+t_printf	exa_conv(t_printf p)
 {
-	//printf ("EXADECIMAL CONV\n");
 	p.baseconv = 3;
 	p = get_conv(p);
-	return(p);
+	return (p);
 }
 
-t_printf 	mexa_conv(t_printf p)
+t_printf	mexa_conv(t_printf p)
 {
-	//printf ("MAJ EXADECIMAL CONV\n");
 	p.baseconv = 4;
 	p = get_conv(p);
-	return(p);
+	return (p);
 }
-
 
 t_printf	int_conv(t_printf p)
 {
 	p = get_conv(p);
-	return(p);
+	return (p);
 }
-/*
-   t_printf	percent_found(t_printf p)
-   {
-//ft_putchar('>');
-ft_printf_int(p);
-//ft_putchar(p.format[p.i]);
-//ft_putstr("->");
-p.i += 2;
-return (p);
-}
-*/
+
 int		check_error(t_printf p)
 {
 	p.i = 0;
@@ -610,14 +555,11 @@ t_printf	call_conv(t_printf p, t_printf ptmp)
 
 	i = 0;
 	ptmp.diff = (p.i - 1) - ptmp.i;
-	//printf ("Diff :%d\n", ptmp.diff);
 	while (i < ptmp.diff)
 	{
-		//printf ("Copied char : %c | p.i : %d\n", p.conv[i], i);
 		ptmp.conv[i] = p.conv[i];
 		i++;
 	}
-	//printf ("Current char conv : %c\n", p.format[p.i]);
 	if (p.format[p.i] == 'c')
 		p = char_conv(ptmp);
 	else if (p.format[p.i] == 's' || p.format[p.i] == 'S')
@@ -648,9 +590,8 @@ t_printf	check_conv(t_printf ptmp)
 
 	p = ptmp;
 	p.i++;
-	//printf ("C//current i : %d\n", p.i);
 	p.c = 0;
-	while(p.format[p.i] != 'c' &&\
+	while (p.format[p.i] != 'c' &&\
 			p.format[p.i] != 's' &&\
 			p.format[p.i] != 'p' &&\
 			p.format[p.i] != 'd' &&\
@@ -663,40 +604,31 @@ t_printf	check_conv(t_printf ptmp)
 			p.format[p.i] != 'S' &&\
 			p.format[p.i] != '%')
 	{
-		//printf ("C//Current char : %c | pos : %d\n", p.format[p.i], p.i);
 		p.conv[p.c] = p.format[p.i];
-		//printf ("assigned : %c | char assign : %c | p.c : %d\n", p.conv[p.c], p.format[p.i], p.c);
 		p.c++;
 		p.i++;
 	}
-	//printf ("C//Current conv : %%%c\n", p.format[p.i]);
 	p = call_conv(p, ptmp);
 	p.i++;
-	//printf ("C// Check return char : %c | i : %d\n", p.format[p.i], p.i);
-	return(p);
+	return (p);
 }
 
 int		ft_printf(const char *format, ...)
 {
-	t_printf p;
+	t_printf	p;
+
 	p.i = 0;
 	p.c = 0;
 	p.ret = 0;
 	p.baseconv = 0;
-	//int ret = 0; c ici qu'il faut l'initier;
 	p.format = ft_strdup(format);
-	//printf ("C//Len : %d\n", ft_strlen(p.format));
 	check_error(p);
-	//check_conv(p);
 	va_start(p.arg, format);
 	while (p.format[p.i])
 	{
 		if (p.format[p.i] == '%')
 		{
-			//printf ("\n_____%% FOUND_____\n");
 			p = check_conv(p);
-			//printf ("C// Check return char : %c | i : %d\n", p.format[p.i], p.i);
-			//p = percent_found(p);
 		}
 		else
 		{
@@ -706,24 +638,22 @@ int		ft_printf(const char *format, ...)
 		}
 	}
 	va_end(p.arg);
-//	ft_putchar('\n'); /*//ATTENTION !!!!!!\\*/
-	//printf("\nret = %d\n", p.ret);
 	return (p.ret);
-	//return (ret);
 }
-
-int		main(int argc, char **argv)
-{
-	int ret = 0;
-	int true_ret = 0;
-	char y;
-	argc++;
-	printf("TRUE PRINTF :\n");
-	true_ret = printf(argv[1], ft_atoi(argv[2]));
-	printf ("\n");
-	write(1,"MY PRINTF :", 11);
-	printf ("\n");
-	ret = ft_printf(argv[1], ft_atoi(argv[2]));
-	printf("\nTRUE RET = %d\nMY RET = %d\n", true_ret, ret);
-	return (0);
-}
+/*
+**int		main(int argc, char **argv)
+**{
+**	int ret = 0;
+**	int true_ret = 0;
+**	char y;
+**	argc++;
+**	printf("TRUE PRINTF :\n");
+**	true_ret = printf(argv[1], ft_atoi(argv[2]));
+**	printf ("\n");
+**	write(1,"MY PRINTF :", 11);
+**	printf ("\n");
+**	ret = ft_printf(argv[1], ft_atoi(argv[2]));
+**	printf("\nTRUE RET = %d\nMY RET = %d\n", true_ret, ret);
+**	return (0);
+**}
+*/
