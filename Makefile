@@ -6,7 +6,7 @@
 #    By: rkergast <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/24 16:06:19 by rkergast          #+#    #+#              #
-#    Updated: 2019/05/21 19:15:48 by dieroyer         ###   ########.fr        #
+#    Updated: 2019/06/05 12:29:37 by dieroyer         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,14 +25,12 @@ SRC = ft_printf.c \
 	  ft_printf_f2.c \
 	  ft_putnbr_base.c \
 	  ft_printf_s.c \
-	  ft_getconv.c
+	  ft_getconv.c 
 
 SRC_LIBFT = libft/ft_atoi.c \
 			libft/ft_putchar.c \
 			libft/ft_putstr.c \
 			libft/ft_strdup.c \
-			libft/ft_putlwstr.c \
-			libft/ft_putlstr.c \
 			libft/ft_strlen.c
 
 OBJ = $(SRC:.c=.o)

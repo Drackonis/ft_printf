@@ -6,7 +6,7 @@
 /*   By: dieroyer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 16:07:54 by dieroyer          #+#    #+#             */
-/*   Updated: 2019/06/05 10:53:55 by dieroyer         ###   ########.fr       */
+/*   Updated: 2019/06/05 12:33:10 by dieroyer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,9 +95,8 @@ t_printf	str_bonus(t_printf p)
 		v = va_arg(p.arg, wchar_t*);
 		if (v != NULL)
 		{
-			ft_putlwstr(v);
-			p.ret += ft_strlen(v);
-			//printf("p.ret = %d\n", p.ret);
+			ft_putstrw(v);
+			p.ret += ft_wstrlen(v);
 		}
 	}
 	return (p);

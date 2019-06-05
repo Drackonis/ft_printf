@@ -1,24 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putlwstr.c                                      :+:      :+:    :+:   */
+/*   ft_putstrw.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dieroyer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/05/10 16:24:57 by dieroyer          #+#    #+#             */
-/*   Updated: 2019/06/05 10:50:09 by dieroyer         ###   ########.fr       */
+/*   Created: 2019/06/05 12:09:43 by dieroyer          #+#    #+#             */
+/*   Updated: 2019/06/05 12:29:17 by dieroyer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <wchar.h>
 
-void	ft_putlwstr(wchar_t *str)
+void	ft_putstrw(wchar_t *str)
 {
-	int i;
-
+	int	i;
+	
 	i = 0;
-	while (str[i] != '\0')
+	while (str[i])
 	{
 		write(1, &str[i], 1);
 		i++;

@@ -6,7 +6,7 @@
 /*   By: rkergast <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/09 16:51:21 by rkergast          #+#    #+#             */
-/*   Updated: 2019/06/05 10:33:34 by dieroyer         ###   ########.fr       */
+/*   Updated: 2019/06/05 12:26:24 by dieroyer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ typedef struct		s_list
 int					ft_wstrlen(wchar_t *str);
 int					ft_power(int x, unsigned int y);
 void				ft_putlstr(char *str, int len);
-void				ft_putlwstr(wchar_t *str);
+void				ft_putstrw(wchar_t *wstr);
 int					ft_atoi(const char *str);
 void				ft_bzero(void *str, size_t n);
 int					ft_isalnum(int c);

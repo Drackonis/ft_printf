@@ -58,6 +58,7 @@ typedef struct		s_printf
 	int		numlen;
 }			t_printf;
 
+void		ft_putstrw(wchar_t *str);
 t_printf	ft_putstrret(t_printf p, int ret);
 t_printf	ft_putstrpreci(t_printf p);
 t_printf	ft_flag_modifier(t_printf p);
