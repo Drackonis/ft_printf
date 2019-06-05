@@ -6,7 +6,7 @@
 /*   By: rkergast <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/04 11:59:58 by rkergast          #+#    #+#             */
-/*   Updated: 2019/06/04 13:33:56 by rkergast         ###   ########.fr       */
+/*   Updated: 2019/06/05 10:32:48 by dieroyer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -637,8 +637,10 @@ t_printf	call_conv(t_printf p, t_printf ptmp)
 	ptmp = init_call_conv(ptmp, p);
 	if (p.format[p.i] == 'c')
 		p = char_conv(ptmp);
-	else if (p.format[p.i] == 's' || p.format[p.i] == 'S')
+	else if (p.format[p.i] == 's')
 		p = string_conv(ptmp);
+	else if (p.format[p.i] == 'S' || (p.format[p.i] == 's' && p.format[p.i - 1] == 'l'))
+		p = str_bonus(ptmp);
 	else if (p.format[p.i] == 'p')
 		p = locat_conv(ptmp);
 	else if (p.format[p.i] == 'd' || p.format[p.i] == 'i')

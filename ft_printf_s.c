@@ -6,7 +6,7 @@
 /*   By: dieroyer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 16:07:54 by dieroyer          #+#    #+#             */
-/*   Updated: 2019/05/28 19:31:42 by dieroyer         ###   ########.fr       */
+/*   Updated: 2019/06/05 10:53:55 by dieroyer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,6 @@ t_printf	string_conv(t_printf p)
 			p.ret += ft_strlen(p.str);
 		ft_putstrpreci(p);
 	}
-	else if ((p.format[i] == 'S') || (p.format[i - 1] == 'l'))
-	{
-			str_bonus(p);
-			return (p);
-	}
 	return (p);
 }
 
@@ -100,8 +95,9 @@ t_printf	str_bonus(t_printf p)
 		v = va_arg(p.arg, wchar_t*);
 		if (v != NULL)
 		{
-			ft_putlwstr((wchar_t)v, p.f_precision);
+			ft_putlwstr(v);
 			p.ret += ft_strlen(v);
+			//printf("p.ret = %d\n", p.ret);
 		}
 	}
 	return (p);
