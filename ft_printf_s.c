@@ -6,7 +6,7 @@
 /*   By: dieroyer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 16:07:54 by dieroyer          #+#    #+#             */
-/*   Updated: 2019/06/05 12:33:10 by dieroyer         ###   ########.fr       */
+/*   Updated: 2019/06/05 12:37:22 by dieroyer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ t_printf	ft_putstrpreci(t_printf p)
 
 t_printf	str_bonus(t_printf p)
 {
-	void	*v;
+	wchar_t	*v;
 	int		i;
 
 	p = is_modifier(p);
