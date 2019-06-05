@@ -6,7 +6,7 @@
 /*   By: dieroyer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 16:07:54 by dieroyer          #+#    #+#             */
-/*   Updated: 2019/06/05 12:37:22 by dieroyer         ###   ########.fr       */
+/*   Updated: 2019/06/05 13:23:49 by dieroyer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,8 @@ t_printf	str_bonus(t_printf p)
 
 	p = is_modifier(p);
 	i = p.i + ft_strlen(p.conv) + 1;
-	if ((p.format[i]) == 'S' || (p.format[i - 1] == 'l'))
+	if ((p.format[i]) == 'S' || (p.format[p.i] == 's' 
+				&& p.format[i - 1] == 'l'))
 	{
 		v = va_arg(p.arg, wchar_t*);
 		if (v != NULL)

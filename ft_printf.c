@@ -6,7 +6,7 @@
 /*   By: rkergast <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/04 11:59:58 by rkergast          #+#    #+#             */
-/*   Updated: 2019/06/05 10:32:48 by dieroyer         ###   ########.fr       */
+/*   Updated: 2019/06/05 15:22:37 by dieroyer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -550,6 +550,7 @@ t_printf	get_conv(t_printf p)
 	p = get_arg(p);
 	if (p.minus)
 	{
+	//printf("\nwidth = %d\n", width);
 		p = put_nbr_modified(p);
 		p = put_width(p);
 	}
@@ -635,11 +636,12 @@ t_printf	init_call_conv(t_printf ptmp, t_printf p)
 t_printf	call_conv(t_printf p, t_printf ptmp)
 {
 	ptmp = init_call_conv(ptmp, p);
-	if (p.format[p.i] == 'c')
+	if (p.format[p.i] == 'c' || p.format[p.i] == 'C')
 		p = char_conv(ptmp);
 	else if (p.format[p.i] == 's')
 		p = string_conv(ptmp);
-	else if (p.format[p.i] == 'S' || (p.format[p.i] == 's' && p.format[p.i - 1] == 'l'))
+	else if (p.format[p.i] == 'S' 
+			|| (p.format[p.i] == 's' && p.format[p.i - 1] == 'l'))
 		p = str_bonus(ptmp);
 	else if (p.format[p.i] == 'p')
 		p = locat_conv(ptmp);

@@ -6,7 +6,7 @@
 /*   By: dieroyer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 16:44:19 by dieroyer          #+#    #+#             */
-/*   Updated: 2019/05/27 17:01:52 by dieroyer         ###   ########.fr       */
+/*   Updated: 2019/06/05 15:35:21 by dieroyer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ t_printf	ft_flag_modifier(t_printf p)
 	p.mput = 0;
 	p.plus = 0;
 	p.space = 0;
-	p.sharp = 0;
 	i = 0;
 	while (i < p.is_flag)
 	{
@@ -30,8 +29,6 @@ t_printf	ft_flag_modifier(t_printf p)
 			p.plus++;
 		else if (p.conv[i] == ' ')
 			p.space++;
-		else if (p.conv[i] == '#')
-			p.sharp++;
 		i++;
 	}
 	if (p.space && !p.plus && p.d >= 0)
@@ -42,14 +39,12 @@ t_printf	ft_flag_modifier(t_printf p)
 	return (p);
 }
 
-
 t_printf	ft_putwidth(t_printf p, int len)
 {
 	int		width;
 
 	p = is_modifier(p);
 	width = p.f_width - len;
-	//printf("\nwidth = %d\n", width);
 	while (width > 0)
 	{
 		ft_putchar(' ');
@@ -60,25 +55,25 @@ t_printf	ft_putwidth(t_printf p, int len)
 
 t_printf	ft_getconv(t_printf p, int base, int len)
 {
+	p = initialize(p);
 	p = is_modifier(p);
 	p = flag_modifier(p);
 	p.baseconv = base;
 	p.numlen = len;
-	
 	if (p.minus)
 	{
-		p = put_nbr_modified(p);
 		p = put_width(p);
+		p = put_nbr_modified(p);
 	}
 	else
 	{
-		p = put_width(p);
 		p = put_nbr_modified(p);
+		p = put_width(p);
 	}
 	p.c = 0;
 	while (p.c < p.diff)
 	{
 		p.c++;
 	}
-	return(p);
+	return (p);
 }

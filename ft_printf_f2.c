@@ -6,7 +6,7 @@
 /*   By: dieroyer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 17:17:15 by dieroyer          #+#    #+#             */
-/*   Updated: 2019/05/28 18:23:17 by dieroyer         ###   ########.fr       */
+/*   Updated: 2019/06/05 15:34:09 by dieroyer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ t_printf	float_conv(t_printf p)
 		p.isneg = (p.n < 0) ? 1 : 0;
 		ft_printf_f(p.n, p.strf, p.f_precision);
 	}
-	p.numlen = ft_strlen(p.strf);
-	ft_getconv(p, -1, p.numlen);
+	//p.numlen = ft_strlen(p.strf);
+	p.ret += ft_strlen(p.strf);
+	ft_getconv(p, -1, ft_strlen(p.strf));
 	return (p);
 }
