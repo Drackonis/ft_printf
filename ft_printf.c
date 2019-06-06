@@ -6,7 +6,7 @@
 /*   By: rkergast <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/04 11:59:58 by rkergast          #+#    #+#             */
-/*   Updated: 2019/06/06 14:41:28 by rkergast         ###   ########.fr       */
+/*   Updated: 2019/06/06 15:21:31 by rkergast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,11 @@ t_printf		print_base_nbr(t_printf p)
 		ft_putnbr_base(p.d5, "0123456789ABCDEF");
 	else if (p.baseconv == 5)
 		ft_putnbr_base(p.d6, "0123456789abcdef");
+	if (p.d5 == 0)
+	{
+		write(1, "0", 1);
+		p.ret++;
+	}
 	return (p);
 }
 
@@ -226,63 +231,12 @@ t_printf		put_width(t_printf p)
 	return (p);
 }
 
-t_printf		intialize2(t_printf p)
-{
-	p.d = 0;
-	p.d0 = 0;
-	p.d1 = 0;
-	p.d2 = 0;
-	p.d3 = 0;
-	p.d4 = 0;
-	p.d5 = 0;
-	p.d6 = 0;
-	return (p);
-}
-
-t_printf		initialize(t_printf p)
-{
-	p.c = 0;
-	p.is_flag = 0;
-	p.zero = 0;
-	p.is_width = 0;
-	p.is_precision = 0;
-	p.hcount = 0;
-	p.lcount = 0;
-	p.f_precision = 0;
-	p.f_width = 0;
-	p.Lcount = 0;
-	p.minus = 0;
-	p.mput = 0;
-	p.pput = 0;
-	p.plus = 0;
-	p.space = 0;
-	p.sharp = 0;
-	p.isneg = 0;
-	p.numlen = 0;
-	p = intialize2(p);
-	return (p);
-}
-
 t_printf		get_wipr(t_printf p)
 {
 	p.f_width = ft_nbr_conv(p, p.is_flag + p.is_width - 1, p.is_width);
 	if (p.is_precision)
 		p.f_precision = ft_nbr_conv(p, p.is_flag + p.is_width +\
 				p.is_precision, p.is_precision);
-	if (p.baseconv == 5)
-		p.f_width -= 2;
-	return (p);
-}
-
-t_printf		get_start_flags(t_printf p, char c, int number)
-{
-	if (c == '-' || c == '+' || c == ' ' || c == '#')
-		p.is_flag++;
-	else if (c == '0' && !number)
-	{
-		p.is_flag++;
-		p.zero++;
-	}
 	return (p);
 }
 
@@ -306,33 +260,6 @@ t_printf		get_is_wipr(t_printf p, int point)
 	return (p);
 }
 
-t_printf		is_modifier(t_printf p)
-{
-	char	c;
-	int		point;
-	int		number;
-
-	point = 0;
-	number = 0;
-	while (p.c < p.diff)
-	{
-		c = p.conv[p.c];
-		p = get_start_flags(p, c, number);
-		if (c == '.')
-			point += 1;
-		else if ((c >= '1' && c <= '9') || (c == '0' && number))
-		{
-			number = 1;
-			p = get_is_wipr(p, point);
-		}
-		else
-			p = get_hll(p, c);
-		p.c++;
-	}
-	p = get_wipr(p);
-	return (p);
-}
-
 t_printf		flag_modifier(t_printf p)
 {
 	int		i;
@@ -349,11 +276,6 @@ t_printf		flag_modifier(t_printf p)
 		else if (p.conv[i] == '#')
 			p.sharp++;
 		i++;
-	}
-	if (p.space && !p.plus && p.d >= 0 && p.baseconv == 0)
-	{
-		ft_putchar(' ');
-		p.ret++;
 	}
 	return (p);
 }
@@ -479,12 +401,109 @@ t_printf		get_arg(t_printf p)
 	return (p);
 }
 
+t_printf		range_sharp(t_printf p)
+{
+	if (p.baseconv == 5 || (p.baseconv >= 3 && p.sharp))
+		p.f_width -= 2;
+	if (p.baseconv == 2 && p.sharp)
+		p.f_width--;
+	return (p);
+}
+
+t_printf		put_start_space(t_printf p)
+{
+	if (p.space && !p.plus && p.d >= 0 && p.baseconv == 0 && !p.isneg)
+	{
+		ft_putchar(' ');
+		p.ret++;
+	}
+	return(p);
+}
+
+t_printf		get_start_flags(t_printf p, char c, int number)
+{
+	if (c == '-' || c == '+' || c == ' ' || c == '#')
+		p.is_flag++;
+	else if (c == '0' && !number)
+	{
+		p.is_flag++;
+		p.zero++;
+	}
+	return (p);
+}
+
+t_printf		is_modifier(t_printf p)
+{
+	char	c;
+	int		point;
+	int		number;
+
+	point = 0;
+	number = 0;
+	while (p.c < p.diff)
+	{
+		c = p.conv[p.c];
+		p = get_start_flags(p, c, number);
+		if (c == '.')
+			point += 1;
+		else if ((c >= '1' && c <= '9') || (c == '0' && number))
+		{
+			number = 1;
+			p = get_is_wipr(p, point);
+		}
+		else
+			p = get_hll(p, c);
+		p.c++;
+	}
+	p = get_wipr(p);
+	return (p);
+}
+
+t_printf		intialize2(t_printf p)
+{
+	p.d = 0;
+	p.d0 = 0;
+	p.d1 = 0;
+	p.d2 = 0;
+	p.d3 = 0;
+	p.d4 = 0;
+	p.d5 = 0;
+	p.d6 = 0;
+	return (p);
+}
+
+t_printf		initialize(t_printf p)
+{
+	p.c = 0;
+	p.is_flag = 0;
+	p.zero = 0;
+	p.is_width = 0;
+	p.is_precision = 0;
+	p.hcount = 0;
+	p.lcount = 0;
+	p.f_precision = 0;
+	p.f_width = 0;
+	p.Lcount = 0;
+	p.minus = 0;
+	p.mput = 0;
+	p.pput = 0;
+	p.plus = 0;
+	p.space = 0;
+	p.sharp = 0;
+	p.isneg = 0;
+	p.numlen = 0;
+	p = intialize2(p);
+	return (p);
+}
+
 t_printf		get_conv(t_printf p)
 {
 	p = initialize(p);
 	p = is_modifier(p);
 	p = flag_modifier(p);
+	p = range_sharp(p);
 	p = get_arg(p);
+	p = put_start_space(p);
 	if (p.minus)
 	{
 		p = put_nbr_modified(p);
