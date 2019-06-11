@@ -6,7 +6,7 @@
 /*   By: dieroyer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 16:44:19 by dieroyer          #+#    #+#             */
-/*   Updated: 2019/06/05 15:35:21 by dieroyer         ###   ########.fr       */
+/*   Updated: 2019/06/11 18:30:34 by dieroyer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,13 @@ t_printf	ft_getconv(t_printf p, int base, int len)
 	p = initialize(p);
 	p = is_modifier(p);
 	p = flag_modifier(p);
+	p = range_sharp(p);
+//	p = get_arg(p);
+	p = put_start_space(p);
+	p = float_conv(p);
+	//p = error_f(p);
 	p.baseconv = base;
-	p.numlen = len;
+	len = 0;
 	if (p.minus)
 	{
 		p = put_width(p);
@@ -72,8 +77,6 @@ t_printf	ft_getconv(t_printf p, int base, int len)
 	}
 	p.c = 0;
 	while (p.c < p.diff)
-	{
 		p.c++;
-	}
 	return (p);
 }

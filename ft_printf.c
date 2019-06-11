@@ -6,7 +6,7 @@
 /*   By: rkergast <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/04 11:59:58 by rkergast          #+#    #+#             */
-/*   Updated: 2019/06/06 15:21:31 by rkergast         ###   ########.fr       */
+/*   Updated: 2019/06/11 17:32:38 by dieroyer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -446,7 +446,7 @@ t_printf		is_modifier(t_printf p)
 		p = get_start_flags(p, c, number);
 		if (c == '.')
 			point += 1;
-		else if ((c >= '1' && c <= '9') || (c == '0' && number))
+		else if (((c >= '1' && c <= '9') || (c == '0' && number)))
 		{
 			number = 1;
 			p = get_is_wipr(p, point);
@@ -610,7 +610,7 @@ t_printf		do_conv(t_printf p, t_printf ptmp)
 	else if (p.format[p.i] == 'X')
 		p = mexa_conv(ptmp);
 	else if (p.format[p.i] == 'f')
-		p = float_conv(ptmp);
+		p = ft_getconv(ptmp, -1, 0);
 	else if (p.format[p.i] == '%')
 		p = put_percent(ptmp);
 	return (p);
