@@ -6,7 +6,7 @@
 /*   By: dieroyer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/09 17:09:54 by dieroyer          #+#    #+#             */
-/*   Updated: 2019/06/11 18:07:11 by dieroyer         ###   ########.fr       */
+/*   Updated: 2019/06/12 21:29:09 by dieroyer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,11 @@ int		ft_inttostr(int x, char *str, int d)
 {
 	t_printf	p;
 	int			i;
-	int			neg;
 
 	i = 0;
-	neg = 0;
 	if (x < 0)
 	{
 		x *= -1;
-		neg = 1;
 		p.strf[0] = '-';
 	}
 	while (x)

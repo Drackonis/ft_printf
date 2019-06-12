@@ -19,6 +19,7 @@ typedef struct		s_printf
 	 * 5 = adress %p
 	*/
 	char			strf[100]; // float
+	int				errorf; //float
 	char			*str; //stringconv
 	double			m; //floatconv
 	long double		l;
