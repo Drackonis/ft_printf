@@ -6,7 +6,7 @@
 /*   By: dieroyer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 16:07:54 by dieroyer          #+#    #+#             */
-/*   Updated: 2019/06/07 12:36:29 by dieroyer         ###   ########.fr       */
+/*   Updated: 2019/06/12 15:33:43 by rkergast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ t_printf	char_conv(t_printf p)
 	void	*v;
 	int		i;
 
+	p.baseconv = -3;
 	p = initialize(p);
 	p = is_modifier(p);
 	p = ft_flag_modifier(p);

@@ -6,7 +6,7 @@
 /*   By: rkergast <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/04 11:59:58 by rkergast          #+#    #+#             */
-/*   Updated: 2019/06/11 17:32:38 by dieroyer         ###   ########.fr       */
+/*   Updated: 2019/06/12 16:55:12 by rkergast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ t_printf		print_base_nbr(t_printf p)
 
 t_printf		print_nbr(t_printf p)
 {
-	if (p.baseconv == 0)
+	if (p.baseconv == 0 && !(p.d4 == 0 && p.prec_point && p.f_precision == 0))
 	{
 		if (!p.isneg)
 			ft_putnbr_intmax(p.d4);
@@ -251,9 +251,9 @@ t_printf		get_hll(t_printf p, char c)
 	return (p);
 }
 
-t_printf		get_is_wipr(t_printf p, int point)
+t_printf		get_is_wipr(t_printf p)
 {
-	if (point == 0)
+	if (p.prec_point == 0)
 		p.is_width++;
 	else
 		p.is_precision++;
@@ -397,6 +397,8 @@ t_printf		get_arg(t_printf p)
 		p = get_arg_l(p);
 	else
 		p = get_int_arg(p);
+	if (p.baseconv == 0 && p.prec_point && p.d4 == 0 && p.f_precision == 0)
+		p.numlen = 0;
 	p.ret += p.numlen;
 	return (p);
 }
@@ -435,21 +437,19 @@ t_printf		get_start_flags(t_printf p, char c, int number)
 t_printf		is_modifier(t_printf p)
 {
 	char	c;
-	int		point;
 	int		number;
 
-	point = 0;
 	number = 0;
 	while (p.c < p.diff)
 	{
 		c = p.conv[p.c];
 		p = get_start_flags(p, c, number);
 		if (c == '.')
-			point += 1;
+			p.prec_point++;
 		else if (((c >= '1' && c <= '9') || (c == '0' && number)))
 		{
 			number = 1;
-			p = get_is_wipr(p, point);
+			p = get_is_wipr(p);
 		}
 		else
 			p = get_hll(p, c);
@@ -461,6 +461,7 @@ t_printf		is_modifier(t_printf p)
 
 t_printf		intialize2(t_printf p)
 {
+	p.c = 0;
 	p.d = 0;
 	p.d0 = 0;
 	p.d1 = 0;
@@ -474,7 +475,6 @@ t_printf		intialize2(t_printf p)
 
 t_printf		initialize(t_printf p)
 {
-	p.c = 0;
 	p.is_flag = 0;
 	p.zero = 0;
 	p.is_width = 0;
@@ -484,6 +484,7 @@ t_printf		initialize(t_printf p)
 	p.f_precision = 0;
 	p.f_width = 0;
 	p.Lcount = 0;
+	p.prec_point = 0;
 	p.minus = 0;
 	p.mput = 0;
 	p.pput = 0;

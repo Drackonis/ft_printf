@@ -6,7 +6,7 @@
 /*   By: dieroyer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/13 17:44:08 by dieroyer          #+#    #+#             */
-/*   Updated: 2019/06/06 15:11:56 by rkergast         ###   ########.fr       */
+/*   Updated: 2019/06/12 15:35:31 by rkergast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,27 @@
 
 int		main(int ac, char **av)
 {
-	//INT TESTS_______________________
 	int ret = 0;
 	int true_ret = 0;
 	ac++;
 	printf("True printf :\n");
+
+	//CHAR TESTS_______________________
+	/*
+	true_ret = printf(av[1], (char)av[2][0], (char)av[3][0]);
+	printf("\n");
+	write(1, "My printf :", 11);
+	printf("\n");
+	ret = ft_printf(av[1], (char)av[2][0], (char)av[3][0]);
+	*/
+	//INT TESTS_______________________
+	
 	true_ret = printf(av[1], ft_atoi(av[2]), ft_atoi(av[3]));
 	printf("\n");
 	write(1, "My printf :", 11);
 	printf("\n");
 	ret = ft_printf(av[1], ft_atoi(av[2]), ft_atoi(av[3]));
-	printf("\nTrue ret = %d\nMy ret = %d\n", true_ret, ret);
-	return(0);
+	
 	//FLOAT TESTS_____________________
 	/*
 	t_printf p;
@@ -37,5 +46,7 @@ int		main(int ac, char **av)
 	printf("\n");
 	ft_printf(av[1], ff);
 	*/
+	printf("\nTrue ret = %d\nMy ret = %d\n", true_ret, ret);
+	return(0);
 }
 
