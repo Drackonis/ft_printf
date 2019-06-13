@@ -102,7 +102,7 @@ t_printf		put_sharp(t_printf p)
 t_printf		print_base_nbr(t_printf p)
 {
 	if (p.baseconv == 1)
-		ft_putnbr_base(p.d5, "0123456789");
+		ft_putunbr(p.d5);
 	else if (p.baseconv == 2)
 		ft_putnbr_base(p.d5, "01234567");
 	else if (p.baseconv == 3)

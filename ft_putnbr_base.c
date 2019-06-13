@@ -75,3 +75,28 @@ int	ft_putnbr_base(int nbr, char *base)
 	}
 	return (len);
 }
+
+void	ft_putunbr(unsigned int n)
+{
+	unsigned int j;
+	int	t;
+	char	c;
+
+	t = 0;
+	printf ("%d", n);
+	j = n;
+	while (j >= 10)
+	{
+		t = j % 10;
+		c = t + 48;
+		j = j / 10;
+		write(1, &c, 1);
+	}
+	if (j > 0)
+	{
+		c = j + 48;
+		write(1, &c, 1);
+	}
+}
+
+
