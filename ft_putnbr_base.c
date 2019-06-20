@@ -83,20 +83,16 @@ void	ft_putunbr(unsigned int n)
 	char	c;
 
 	t = 0;
-	printf ("%d", n);
 	j = n;
-	while (j >= 10)
+	if (j > 0)
 	{
 		t = j % 10;
 		c = t + 48;
 		j = j / 10;
-		write(1, &c, 1);
+		ft_putunbr(j);
+	
 	}
-	if (j > 0)
-	{
-		c = j + 48;
-		write(1, &c, 1);
-	}
+	write(1, &c, 1);
 }
 
 

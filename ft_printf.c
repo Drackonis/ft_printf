@@ -111,11 +111,11 @@ t_printf		print_base_nbr(t_printf p)
 		ft_putnbr_base(p.d5, "0123456789ABCDEF");
 	else if (p.baseconv == 5)
 		ft_putnbr_base(p.d6, "0123456789abcdef");
-	if (p.d5 == 0)
+	/*if (p.d5 == 0)
 	{
 		write(1, "0", 1);
 		p.ret++;
-	}
+	}*/
 	return (p);
 }
 
