@@ -6,7 +6,7 @@
 /*   By: rkergast <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/04 11:59:58 by rkergast          #+#    #+#             */
-/*   Updated: 2019/06/12 22:00:10 by dieroyer         ###   ########.fr       */
+/*   Updated: 2019/06/20 14:23:03 by dieroyer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ t_printf		put_sharp(t_printf p)
 t_printf		print_base_nbr(t_printf p)
 {
 	if (p.baseconv == 1)
-		ft_putunbr(p.d5);
+		ft_putnbr(p.d5);
 	else if (p.baseconv == 2)
 		ft_putnbr_base(p.d5, "01234567");
 	else if (p.baseconv == 3)
