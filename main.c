@@ -31,11 +31,11 @@ int		main(int ac, char **av)
 	*/
 	//INT TESTS_______________________
 	
-	true_ret = printf(av[1], ft_atoi(av[2]), ft_atoi(av[3]));
+	true_ret = printf(av[1], ft_atoi(av[2]));
 	printf("\n");
 	write(1, "My printf :", 11);
 	printf("\n");
-	ret = ft_printf(av[1], ft_atoi(av[2]), ft_atoi(av[3]));
+	ret = ft_printf(av[1], ft_atoi(av[2]));
 	
 	//FLOAT TESTS_____________________
 	/*

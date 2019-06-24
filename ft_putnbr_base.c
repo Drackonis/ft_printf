@@ -28,6 +28,19 @@ int	check_base(char *base)
 	return(1);
 }
 
+int	ft_nbrulen_base(unsigned long nbr, int base)
+{
+	int	len;
+
+	len = 0;
+	while (nbr > 0)
+	{
+		nbr /= base;
+		len++;
+	}
+	return(len);
+}
+
 int	ft_nbrlen_base(unsigned int nbr, int base)
 {
 	int	len;
@@ -76,9 +89,9 @@ int	ft_putnbr_base(int nbr, char *base)
 	return (len);
 }
 
-void	ft_putunbr(unsigned int n)
+void	ft_putunbr(unsigned long n)
 {
-	unsigned int j;
+	unsigned long j;
 	int	t;
 	char	c;
 

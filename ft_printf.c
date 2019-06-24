@@ -102,7 +102,7 @@ t_printf		put_sharp(t_printf p)
 t_printf		print_base_nbr(t_printf p)
 {
 	if (p.baseconv == 1)
-		ft_putnbr(p.d5);
+		ft_putunbr(p.d2);
 	else if (p.baseconv == 2)
 		ft_putnbr_base(p.d5, "01234567");
 	else if (p.baseconv == 3)
@@ -352,7 +352,13 @@ t_printf		get_arg_l(t_printf p)
 
 t_printf		get_arg_base(t_printf p, int current_base)
 {
-	if (p.baseconv < 5)
+	if (p.baseconv == 1)
+	{
+		p.d2 = va_arg(p.arg, unsigned long);
+		p.numlen = ft_nbrulen_base(p.d2, 10);
+		p.d5 = (intmax_t)p.d2;
+	}
+	else if (p.baseconv < 5)
 	{
 		p.d5 = va_arg(p.arg, unsigned int);
 		p.numlen = ft_nbrlen_base(p.d5, current_base);
