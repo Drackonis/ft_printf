@@ -33,6 +33,8 @@ int	ft_nbrulen_base(unsigned long nbr, int base)
 	int	len;
 
 	len = 0;
+	if (nbr == 0)
+		return(1);
 	while (nbr > 0)
 	{
 		nbr /= base;
@@ -46,6 +48,8 @@ int	ft_nbrlen_base(unsigned int nbr, int base)
 	int	len;
 
 	len = 0;
+	if (nbr == 0)
+		return(1);
 	while (nbr > 0)
 	{
 		nbr /= base;

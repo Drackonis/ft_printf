@@ -111,16 +111,22 @@ t_printf		print_base_nbr(t_printf p)
 		ft_putnbr_base(p.d5, "0123456789ABCDEF");
 	else if (p.baseconv == 5)
 		ft_putnbr_base(p.d6, "0123456789abcdef");
-	if (p.d5 == 0 && p.baseconv != 5 && !p.sharp && p.f_precision == 0)
+	if (((p.baseconv == 1 && p.d2 == 0) ||\
+		(p.baseconv != 5 && p.d5 == 0)) && !p.sharp)
 	{
-		write(1, "0", 1);
-		p.ret++;
+		if (p.f_precision != 0 || !p.prec_point)
+			write(1,"0", 1);
+		else if (p.f_width > 0)
+			write(1," ", 1);
+		else
+			p.ret--;
 	}
 	return (p);
 }
 
 t_printf		print_nbr(t_printf p)
 {
+
 	if (p.baseconv == 0 && !(p.d4 == 0 && p.prec_point && p.f_precision == 0))
 	{
 		if (!p.isneg)
@@ -166,6 +172,7 @@ t_printf		put_nbr_modified(t_printf p)
 	int			precision;
 
 	i = 0;
+	
 	precision = p.f_precision;
 	p = put_mp(p);
 	if (p.is_precision)
@@ -385,6 +392,7 @@ t_printf		get_int_arg(t_printf p)
 t_printf		get_arg(t_printf p)
 {
 	int			current_base;
+
 
 	current_base = 10;
 	if (p.baseconv == -2)
