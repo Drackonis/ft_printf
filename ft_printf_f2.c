@@ -6,7 +6,7 @@
 /*   By: dieroyer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 17:17:15 by dieroyer          #+#    #+#             */
-/*   Updated: 2019/06/12 22:00:32 by dieroyer         ###   ########.fr       */
+/*   Updated: 2019/06/25 16:46:25 by rkergast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 t_printf	float_conv(t_printf p)
 {
-	//p = is_modifier(p);
 	if (p.f_precision == 0)
 		p.f_precision = 6;
 	if (p.lcount > 0)
@@ -37,7 +36,6 @@ t_printf	float_conv(t_printf p)
 	}
 	p.numlen = ft_strlen(p.strf);
 	p.ret += ft_strlen(p.strf);
-	//ft_getconv(p, -1, ft_strlen(p.strf));
 	return (p);
 }
 

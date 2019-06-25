@@ -6,7 +6,7 @@
 /*   By: dieroyer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/13 17:44:08 by dieroyer          #+#    #+#             */
-/*   Updated: 2019/06/12 15:35:31 by rkergast         ###   ########.fr       */
+/*   Updated: 2019/06/25 15:30:46 by rkergast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,11 @@ int		main(int ac, char **av)
 	*/
 	//INT TESTS_______________________
 	
-	true_ret = printf(av[1], ft_atoi(av[2]));
+	true_ret = printf(av[1], ft_atoi(av[2]), ft_atoi(av[3]));
 	printf("\n");
 	write(1, "My printf :", 11);
 	printf("\n");
-	ret = ft_printf(av[1], ft_atoi(av[2]));
+	ret = ft_printf(av[1], ft_atoi(av[2]), ft_atoi(av[3]));
 	
 	//FLOAT TESTS_____________________
 	/*

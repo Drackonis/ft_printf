@@ -6,7 +6,7 @@
 /*   By: rkergast <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/04 11:59:58 by rkergast          #+#    #+#             */
-/*   Updated: 2019/06/20 14:23:03 by dieroyer         ###   ########.fr       */
+/*   Updated: 2019/06/25 16:58:46 by rkergast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,44 +89,43 @@ t_printf		put_sharp(t_printf p)
 			ft_putstr("0");
 			p.ret++;
 		}
-		else if (p.baseconv == 3)
+		else if (p.baseconv == 3 && p.d5 != 0)
 			ft_putstr("0x");
-		else if (p.baseconv == 4)
+		else if (p.baseconv == 4 && p.d5 != 0)
 			ft_putstr("0X");
 	}
-	if ((p.baseconv >= 3 && p.sharp) || p.baseconv == 5)
+	if ((p.baseconv >= 3 && p.sharp && p.d5 != 0) || p.baseconv == 5)
 		p.ret += 2;
 	return (p);
 }
 
 t_printf		print_base_nbr(t_printf p)
 {
-	if (p.baseconv == 1)
-		ft_putunbr(p.d2);
-	else if (p.baseconv == 2)
-		ft_putnbr_base(p.d5, "01234567");
-	else if (p.baseconv == 3)
-		ft_putnbr_base(p.d5, "0123456789abcdef");
-	else if (p.baseconv == 4)
-		ft_putnbr_base(p.d5, "0123456789ABCDEF");
-	else if (p.baseconv == 5)
-		ft_putnbr_base(p.d6, "0123456789abcdef");
-	if (((p.baseconv == 1 && p.d2 == 0) ||\
-		(p.baseconv != 5 && p.d5 == 0)) && !p.sharp)
+	if (((p.baseconv == 1 && p.d7 == 0) ||\
+		(p.baseconv != 5 && p.d5 == 0) || (p.baseconv == 2 && p.d5 == 0)))
 	{
 		if (p.f_precision != 0 || !p.prec_point)
-			write(1,"0", 1);
+			write(1, "0", 1);
 		else if (p.f_width > 0)
-			write(1," ", 1);
+			write(1, " ", 1);
 		else
 			p.ret--;
 	}
+	else if (p.baseconv == 1)
+		ft_putunbr(p.d7);
+	else if (p.baseconv == 2)
+		ft_putunbr_base(p.d5, "01234567");
+	else if (p.baseconv == 3)
+		ft_putunbr_base(p.d5, "0123456789abcdef");
+	else if (p.baseconv == 4)
+		ft_putunbr_base(p.d5, "0123456789ABCDEF");
+	else if (p.baseconv == 5)
+		ft_putunbr_base(p.d6, "0123456789abcdef");
 	return (p);
 }
 
 t_printf		print_nbr(t_printf p)
 {
-
 	if (p.baseconv == 0 && !(p.d4 == 0 && p.prec_point && p.f_precision == 0))
 	{
 		if (!p.isneg)
@@ -139,7 +138,8 @@ t_printf		print_nbr(t_printf p)
 		if (p.baseconv >= 1)
 			p = print_base_nbr(p);
 		else if (p.baseconv == -1)
-		{	if (p.errorf)
+		{
+			if (p.errorf)
 				ft_putchar('0');
 			ft_putstr(p.strf);
 		}
@@ -172,7 +172,6 @@ t_printf		put_nbr_modified(t_printf p)
 	int			precision;
 
 	i = 0;
-	
 	precision = p.f_precision;
 	p = put_mp(p);
 	if (p.is_precision)
@@ -361,9 +360,9 @@ t_printf		get_arg_base(t_printf p, int current_base)
 {
 	if (p.baseconv == 1)
 	{
-		p.d2 = va_arg(p.arg, unsigned long);
-		p.numlen = ft_nbrulen_base(p.d2, 10);
-		p.d5 = (intmax_t)p.d2;
+		p.d7 = va_arg(p.arg, unsigned long);
+		p.numlen = ft_nbrulen_base(p.d7, current_base);
+		p.d5 = (unsigned int)p.d7;
 	}
 	else if (p.baseconv < 5)
 	{
@@ -389,17 +388,20 @@ t_printf		get_int_arg(t_printf p)
 	return (p);
 }
 
+t_printf		set_perc_conv(t_printf p)
+{
+	p.numlen = 1;
+	p.f_precision = 0;
+	return (p);
+}
+
 t_printf		get_arg(t_printf p)
 {
 	int			current_base;
 
-
 	current_base = 10;
 	if (p.baseconv == -2)
-	{
-		p.numlen = 1;
-		p.f_precision = 0;
-	}
+		p = set_perc_conv(p);
 	else if (p.baseconv > 0 && p.hcount == 0 && p.lcount == 0)
 	{
 		if (p.baseconv == 2)
@@ -436,7 +438,7 @@ t_printf		put_start_space(t_printf p)
 		ft_putchar(' ');
 		p.ret++;
 	}
-	return(p);
+	return (p);
 }
 
 t_printf		get_start_flags(t_printf p, char c, int number)
@@ -487,6 +489,7 @@ t_printf		intialize2(t_printf p)
 	p.d4 = 0;
 	p.d5 = 0;
 	p.d6 = 0;
+	p.d7 = 0;
 	return (p);
 }
 
