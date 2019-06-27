@@ -69,6 +69,35 @@ int			ft_nbrlen_base(unsigned int nbr, int base)
 	return (len);
 }
 
+int			ft_putunbr_ll_base(unsigned long long nbr, char *base)
+{
+	int		size;
+	int		n[100];
+	int		i;
+	int		len;
+
+	i = 0;
+	size = 0;
+	len = 0;
+	if (check_base(base))
+	{
+		while (base[size])
+			size++;
+		while (nbr > 0)
+		{
+			n[i] = nbr % size;
+			nbr = nbr / size;
+			i++;
+		}
+		while (--i >= 0)
+		{
+			ft_putchar(base[n[i]]);
+			len++;
+		}
+	}
+	return (len);
+}
+
 int			ft_putunbr_base(unsigned int nbr, char *base)
 {
 	int		size;

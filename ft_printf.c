@@ -99,10 +99,24 @@ t_printf		put_sharp(t_printf p)
 	return (p);
 }
 
+void			printf_base_ll_nbr(t_printf p)
+{
+	if (p.baseconv == 1)
+		ft_putunbr(p.d7);
+	else if (p.baseconv == 2)
+		ft_putunbr_ll_base(p.d3, "01234567");
+	else if (p.baseconv == 3)
+		ft_putunbr_ll_base(p.d3, "0123456789abcdef");
+	else if (p.baseconv == 4)
+		ft_putunbr_ll_base(p.d3, "0123456789ABCDEF");
+
+}
+
 t_printf		print_base_nbr(t_printf p)
 {
 	if (((p.baseconv == 1 && p.d7 == 0) ||\
-		(p.baseconv != 5 && p.d5 == 0) || (p.baseconv == 2 && p.d5 == 0)))
+		(p.baseconv != 5 && p.d5 == 0) || (p.baseconv == 2 && p.d5 == 0))\
+			&& p.d3 == 0)
 	{
 		if (p.f_precision != 0 || !p.prec_point)
 			write(1, "0", 1);
@@ -111,6 +125,8 @@ t_printf		print_base_nbr(t_printf p)
 		else
 			p.ret--;
 	}
+	else if (p.lcount == 2)
+		printf_base_ll_nbr(p);
 	else if (p.baseconv == 1)
 		ft_putunbr(p.d7);
 	else if (p.baseconv == 2)
@@ -318,9 +334,31 @@ int				int_init_error(t_printf p)
 	return (0);
 }
 
+t_printf		get_base_arg(t_printf p)
+{
+	if (p.lcount == 1 || p.hcount > 0)
+	{
+		p.d5 = va_arg(p.arg, long);
+		p.isneg = (p.d5 < 0) ? 1 : 0;
+		p.numlen = ft_nbrlen(p.d5);
+		p.d4 = (intmax_t)p.d2;
+	}
+	else if (p.lcount == 2)
+	{
+		p.d3 = va_arg(p.arg, long long);
+		p.isneg = (p.d3 < 0) ? 1 : 0;
+		p.numlen = ft_nbrlen(p.d3);
+		p.d4 = (intmax_t)p.d3;
+	}
+
+	return (p);
+}
+
 t_printf		get_arg_h(t_printf p)
 {
-	if (p.hcount == 1)
+	if (p.baseconv != 0)
+		p = get_base_arg(p);
+	else if (p.hcount == 1)
 	{
 		p.d1 = (short)va_arg(p.arg, int);
 		p.isneg = (p.d1 < 0) ? 1 : 0;
@@ -339,7 +377,9 @@ t_printf		get_arg_h(t_printf p)
 
 t_printf		get_arg_l(t_printf p)
 {
-	if (p.lcount == 1)
+	if (p.baseconv != 0 && p.lcount != 2)
+		p = get_base_arg(p);
+	else if (p.lcount == 1)
 	{
 		p.d2 = va_arg(p.arg, long);
 		p.isneg = (p.d2 < 0) ? 1 : 0;

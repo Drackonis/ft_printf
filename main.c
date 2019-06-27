@@ -30,12 +30,19 @@ int		main(int ac, char **av)
 	ret = ft_printf(av[1], (char)av[2][0], (char)av[3][0]);
 	*/
 	//INT TESTS_______________________
-	
-	true_ret = printf(av[1], ft_atoi(av[2]), ft_atoi(av[3]));
+
+	true_ret = printf(av[1], ft_atoi(av[2]));
+	printf("\n");
+	write(1, "My printf :", 11);
+	printf("\n");
+	ret = ft_printf(av[1], ft_atoi(av[2]));
+
+	/*true_ret = printf(av[1], ft_atoi(av[2]), ft_atoi(av[3]));
 	printf("\n");
 	write(1, "My printf :", 11);
 	printf("\n");
 	ret = ft_printf(av[1], ft_atoi(av[2]), ft_atoi(av[3]));
+	*/
 	
 	//FLOAT TESTS_____________________
 	/*

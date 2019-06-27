@@ -134,5 +134,7 @@ int					ft_nbrlen_base(unsigned int nbr, int base);
 void				ft_putunbr(unsigned long n);
 int					ft_nbrulen_base(unsigned long nbr, int base);
 int					ft_putunbr_base(unsigned int nbr, char *base);
+t_printf			get_base_arg(t_printf p);
+int				ft_putunbr_ll_base(unsigned long long nbrn, char *base);
 
 #endif
