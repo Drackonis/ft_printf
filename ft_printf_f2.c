@@ -6,7 +6,7 @@
 /*   By: dieroyer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 17:17:15 by dieroyer          #+#    #+#             */
-/*   Updated: 2019/06/25 16:46:25 by rkergast         ###   ########.fr       */
+/*   Updated: 2019/06/27 19:43:47 by dieroyer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 t_printf	float_conv(t_printf p)
 {
-	if (p.f_precision == 0)
-		p.f_precision = 6;
+	//if (!p.f_precision)
+	//	p.f_precision = 6;
 	if (p.lcount > 0)
 	{
 		p.m = va_arg(p.arg, double);
@@ -30,9 +30,9 @@ t_printf	float_conv(t_printf p)
 	}
 	else
 	{
-		p.n = va_arg(p.arg, double);
+		p.n = (double)va_arg(p.arg, double);
 		p.isneg = (p.n < 0) ? 1 : 0;
-		ft_printf_f(p.n, p.strf, p.f_precision);
+		ft_printf_lf(p.n, p.strf, p.f_precision);
 	}
 	p.numlen = ft_strlen(p.strf);
 	p.ret += ft_strlen(p.strf);

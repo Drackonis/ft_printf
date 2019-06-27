@@ -6,7 +6,7 @@
 /*   By: rkergast <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/04 11:59:58 by rkergast          #+#    #+#             */
-/*   Updated: 2019/06/25 16:58:46 by rkergast         ###   ########.fr       */
+/*   Updated: 2019/06/27 18:03:34 by dieroyer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -339,7 +339,7 @@ t_printf		get_base_arg(t_printf p)
 	if (p.lcount == 1 || p.hcount > 0)
 	{
 		p.d5 = va_arg(p.arg, long);
-		p.isneg = (p.d5 < 0) ? 1 : 0;
+		//p.isneg = (p.d5 < 0) ? 1 : 0;
 		p.numlen = ft_nbrlen(p.d5);
 		p.d4 = (intmax_t)p.d2;
 	}
