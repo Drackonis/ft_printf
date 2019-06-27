@@ -6,7 +6,7 @@
 /*   By: dieroyer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/09 17:09:54 by dieroyer          #+#    #+#             */
-/*   Updated: 2019/06/27 19:48:55 by dieroyer         ###   ########.fr       */
+/*   Updated: 2019/06/27 20:22:30 by dieroyer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void	ft_printf_blf(long double n, char *res, int afterpoint)
 	}
 }
 
-void	ft_printf_lf(double n, char *res, int afterpoint)
+t_printf	ft_printf_lf(double n, char *res, int afterpoint, t_printf p)
 {
 	intmax_t	ipart;
 	double		fpart;
@@ -98,9 +98,13 @@ void	ft_printf_lf(double n, char *res, int afterpoint)
 
 	ipart = (intmax_t)n;
 	fpart = n - (double)ipart;
-	if (afterpoint == 0 && fpart > 0.5)
+	printf ("fpart = %lf", fpart);
+	if (ipart < 0)
 	{
-		ipart = ipart + 0.5;
+		ipart = ipart * -1;
+		if (fpart < 0.5)
+			ipart += 1;
+		p.strf[0] = '-';
 	}
 	i = ft_inttostr(ipart, res, 0);
 	if (fpart < 0)
@@ -111,4 +115,10 @@ void	ft_printf_lf(double n, char *res, int afterpoint)
 		fpart = fpart * ft_power(10, afterpoint) + 0.5;
 		ft_inttostr((intmax_t)fpart, res + i + 1, afterpoint);
 	}
+	return (p);
 }
+
+
+
+
+

@@ -6,7 +6,7 @@
 /*   By: rkergast <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 17:02:26 by rkergast          #+#    #+#             */
-/*   Updated: 2019/06/25 17:02:51 by rkergast         ###   ########.fr       */
+/*   Updated: 2019/06/27 20:15:41 by dieroyer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ void				reverse(char *str, int len);
 int					ft_inttostr(int x, char *str, int d);
 void				ft_printf_f(float n, char *res, int afterpoint);
 void				ft_printf_blf(long double n, char *res, int afterpoint);
-void				ft_printf_lf(double n, char *res, int afterpoint);
+t_printf				ft_printf_lf(double n, char *res, int afterpoint, t_printf p);
 t_printf			float_conv(t_printf p);
 t_printf			char_conv(t_printf p);
 t_printf			string_conv(t_printf p);
