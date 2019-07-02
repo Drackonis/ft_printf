@@ -6,14 +6,13 @@
 /*   By: dieroyer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/13 17:44:08 by dieroyer          #+#    #+#             */
-/*   Updated: 2019/06/25 15:30:46 by rkergast         ###   ########.fr       */
+/*   Updated: 2019/07/02 15:24:08 by rkergast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include <stdio.h>
 #include <float.h>
-
 int		main(int ac, char **av)
 {
 	int ret = 0;

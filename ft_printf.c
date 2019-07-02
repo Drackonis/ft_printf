@@ -6,7 +6,7 @@
 /*   By: rkergast <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/04 11:59:58 by rkergast          #+#    #+#             */
-/*   Updated: 2019/06/27 18:03:34 by dieroyer         ###   ########.fr       */
+/*   Updated: 2019/07/02 15:42:50 by rkergast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,6 @@ void			printf_base_ll_nbr(t_printf p)
 		ft_putunbr_ll_base(p.d3, "0123456789abcdef");
 	else if (p.baseconv == 4)
 		ft_putunbr_ll_base(p.d3, "0123456789ABCDEF");
-
 }
 
 t_printf		print_base_nbr(t_printf p)
@@ -339,7 +338,6 @@ t_printf		get_base_arg(t_printf p)
 	if (p.lcount == 1 || p.hcount > 0)
 	{
 		p.d5 = va_arg(p.arg, long);
-		//p.isneg = (p.d5 < 0) ? 1 : 0;
 		p.numlen = ft_nbrlen(p.d5);
 		p.d4 = (intmax_t)p.d2;
 	}
@@ -350,7 +348,6 @@ t_printf		get_base_arg(t_printf p)
 		p.numlen = ft_nbrlen(p.d3);
 		p.d4 = (intmax_t)p.d3;
 	}
-
 	return (p);
 }
 
@@ -629,10 +626,78 @@ t_printf		int_conv(t_printf p)
 	return (p);
 }
 
+int				cmp_flag(char c)
+{
+	if (c == ' ' || c == '+' || c == '#' || c == '-' || c == '0')
+		return (1);
+	else
+		return (0);
+}
+
+int				cmp_nb(char c)
+{
+	if (c >= '0' && c <= '9')
+		return (1);
+	else if (c == '.')
+		return (2);
+	else
+		return (0);
+}
+
+int				cmp_lh(char c)
+{
+	if (c == 'l' || c == 'h')
+		return (1);
+	else
+		return (0);
+}
+
+void			print_error(void)
+{
+	write(1, "Error input format : %[flags][width][.precision]", 49);
+	write(1, "[length]specifier\n", 18);
+}
+
+int				chech_is_conv(char c)
+{
+	if (c == 'c' || c == 'C' || c == 's' || c == 'S' || c == 'p' || c == 'd'\
+			|| c == 'i' || c == 'o' || c == 'u' || c == 'x' || c == 'X'\
+			|| c == 'f' || c == '%')
+		return (1);
+	else if (!c)
+	{
+		print_error();
+		return (0);
+	}
+	else
+	{
+		print_error();
+		return (0);
+	}
+}
+
 int				check_error(t_printf p)
 {
-	p.i = 0;
-	return (p.i);
+	int			i;
+
+	i = 0;
+	while (p.format[i])
+	{
+		if (p.format[i] == '%')
+		{
+			i++;
+			while (p.format[i] && cmp_flag(p.format[i]))
+				i++;
+			while (p.format[i] && cmp_nb(p.format[i]))
+				i++;
+			while (p.format[i] && cmp_lh(p.format[i]))
+				i++;
+			if (!chech_is_conv(p.format[i]))
+				return (0);
+		}
+		i++;
+	}
+	return (1);
 }
 
 t_printf		init_call_conv(t_printf ptmp, t_printf p)
@@ -723,7 +788,8 @@ int				ft_printf(const char *format, ...)
 	p.ret = 0;
 	p.baseconv = 0;
 	p.format = ft_strdup(format);
-	check_error(p);
+	if (!check_error(p))
+		return (0);
 	va_start(p.arg, format);
 	while (p.format[p.i])
 	{
@@ -741,20 +807,3 @@ int				ft_printf(const char *format, ...)
 	va_end(p.arg);
 	return (p.ret);
 }
-/*
-**int		main(int argc, char **argv)
-**{
-**	int ret = 0;
-**	int true_ret = 0;
-**	char y;
-**	argc++;
-**	printf("TRUE PRINTF :\n");
-**	true_ret = printf(argv[1], ft_atoi(argv[2]));
-**	printf ("\n");
-**	write(1,"MY PRINTF :", 11);
-**	printf ("\n");
-**	ret = ft_printf(argv[1], ft_atoi(argv[2]));
-**	printf("\nTRUE RET = %d\nMY RET = %d\n", true_ret, ret);
-**	return (0);
-**}
-*/

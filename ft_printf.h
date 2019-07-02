@@ -6,7 +6,7 @@
 /*   By: rkergast <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 17:02:26 by rkergast          #+#    #+#             */
-/*   Updated: 2019/06/27 20:15:41 by dieroyer         ###   ########.fr       */
+/*   Updated: 2019/07/02 15:26:19 by rkergast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,11 @@ void				ft_putunbr(unsigned long n);
 int					ft_nbrulen_base(unsigned long nbr, int base);
 int					ft_putunbr_base(unsigned int nbr, char *base);
 t_printf			get_base_arg(t_printf p);
-int				ft_putunbr_ll_base(unsigned long long nbrn, char *base);
+int					ft_putunbr_ll_base(unsigned long long nbrn, char *base);
+int					check_is_conv(char c);
+void				print_error(void);
+int					cmp_flag(char c);
+int					cmp_nb(char c);
+int					cmp_lh(char c);
 
 #endif
