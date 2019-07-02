@@ -6,7 +6,7 @@
 /*   By: dieroyer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 16:44:19 by dieroyer          #+#    #+#             */
-/*   Updated: 2019/06/25 16:45:39 by rkergast         ###   ########.fr       */
+/*   Updated: 2019/07/02 20:47:55 by dieroyer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ t_printf	ft_getconv(t_printf p, int base, int len)
 	p = error_f(p);
 	p.baseconv = base;
 	len = 0;
-	if (p.minus)
+	if (!p.minus)
 	{
 		p = put_width(p);
 		p = put_nbr_modified(p);
