@@ -6,7 +6,7 @@
 /*   By: rkergast <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/04 11:59:58 by rkergast          #+#    #+#             */
-/*   Updated: 2019/07/02 15:42:50 by rkergast         ###   ########.fr       */
+/*   Updated: 2019/07/02 18:31:11 by dieroyer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -646,7 +646,7 @@ int				cmp_nb(char c)
 
 int				cmp_lh(char c)
 {
-	if (c == 'l' || c == 'h')
+	if (c == 'l' || c == 'h' || c == 'L')
 		return (1);
 	else
 		return (0);

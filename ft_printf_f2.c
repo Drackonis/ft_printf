@@ -6,7 +6,7 @@
 /*   By: dieroyer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 17:17:15 by dieroyer          #+#    #+#             */
-/*   Updated: 2019/06/27 20:15:31 by dieroyer         ###   ########.fr       */
+/*   Updated: 2019/07/02 19:13:58 by dieroyer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,15 @@
 
 t_printf	float_conv(t_printf p)
 {
-	//if (!p.f_precision)
-	//	p.f_precision = 6;
-	if (p.lcount > 0)
+	if (p.prec_point == 0)
+		p.f_precision = 6;
+	/*if (p.lcount > 0)
 	{
 		p.m = va_arg(p.arg, double);
 		p.isneg = (p.m < 0) ? 1 : 0;
 		ft_printf_lf(p.m, p.strf, p.f_precision, p);
-	}
-	else if (p.Lcount > 0)
+	}*/
+	if (p.Lcount > 0)
 	{
 		p.l = va_arg(p.arg, long double);
 		p.isneg = (p.l < 0) ? 1 : 0;
@@ -30,9 +30,9 @@ t_printf	float_conv(t_printf p)
 	}
 	else
 	{
-		p.n = (double)va_arg(p.arg, double);
-		p.isneg = (p.n < 0) ? 1 : 0;
-		ft_printf_lf(p.n, p.strf, p.f_precision, p);
+		p.m = va_arg(p.arg, double);
+		p.isneg = (p.m < 0) ? 1 : 0;
+		ft_printf_lf(p.m, p.strf, p.f_precision, p);
 	}
 	p.numlen = ft_strlen(p.strf);
 	p.ret += ft_strlen(p.strf);

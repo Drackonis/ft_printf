@@ -6,13 +6,13 @@
 /*   By: dieroyer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/09 17:09:54 by dieroyer          #+#    #+#             */
-/*   Updated: 2019/06/27 20:22:30 by dieroyer         ###   ########.fr       */
+/*   Updated: 2019/07/02 20:21:58 by dieroyer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft/libft.h"
 #include "ft_printf.h"
-
+#include <math.h>
 void	reverse(char *str, int len)
 {
 	int i;
@@ -31,12 +31,13 @@ void	reverse(char *str, int len)
 	}
 }
 
-int		ft_inttostr(int x, char *str, int d)
+int		ft_inttostr(intmax_t x, char *str, int d)
 {
 	t_printf	p;
 	int			i;
 
 	i = 0;
+	printf("x = %jd\n", x);
 	if (x < 0)
 	{
 		x *= -1;
@@ -85,7 +86,7 @@ void	ft_printf_blf(long double n, char *res, int afterpoint)
 	if (afterpoint != 0)
 	{
 		res[i] = '.';
-		fpart = fpart * ft_power(10, afterpoint);
+		fpart = fpart * ft_power2(10, afterpoint);
 		ft_inttostr((intmax_t)fpart, res + i + 1, afterpoint);
 	}
 }
@@ -96,9 +97,9 @@ t_printf	ft_printf_lf(double n, char *res, int afterpoint, t_printf p)
 	double		fpart;
 	intmax_t	i;
 
+	printf("afterpoint %d\n", afterpoint);
 	ipart = (intmax_t)n;
 	fpart = n - (double)ipart;
-	printf ("fpart = %lf", fpart);
 	if (ipart < 0)
 	{
 		ipart = ipart * -1;
@@ -112,13 +113,12 @@ t_printf	ft_printf_lf(double n, char *res, int afterpoint, t_printf p)
 	if (afterpoint != 0)
 	{
 		res[i] = '.';
-		fpart = fpart * ft_power(10, afterpoint) + 0.5;
+		printf("fpart 0 = %f\n", fpart);
+		fpart = fpart * ft_power2(10, afterpoint) + 0.5;
+		printf("fpart = %jd\n", (intmax_t)fpart);
 		ft_inttostr((intmax_t)fpart, res + i + 1, afterpoint);
 	}
+	if (afterpoint == 0 && p.sharp)
+		res[i] = '.';
 	return (p);
 }
-
-
-
-
-
