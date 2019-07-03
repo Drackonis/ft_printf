@@ -6,7 +6,7 @@
 /*   By: dieroyer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 16:07:54 by dieroyer          #+#    #+#             */
-/*   Updated: 2019/07/03 17:00:05 by dieroyer         ###   ########.fr       */
+/*   Updated: 2019/07/03 19:00:00 by dieroyer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,39 +16,31 @@
 t_printf	char_conv(t_printf p)
 {
 	void	*v;
-	int		i;
 
 	p.baseconv = -3;
 	p = initialize(p);
 	p = is_modifier(p);
 	p = ft_flag_modifier(p);
-	i = p.i + ft_strlen(p.conv) + 1;
-	if ((p.format[i] == 'C') || (p.format[i] == 'c'))
+	v = va_arg(p.arg, void*);
+	if (p.minus)
 	{
-		v = va_arg(p.arg, void*);
-		if (p.minus)
-		{
-			ft_putchar((char)v);
-			ft_putwidth(p, 1);
-		}
-		else
-		{
-			ft_putwidth(p, 1);
-			ft_putchar((char)v);
-		}
-		p.ret += (p.f_width > 1) ? p.f_width : 1;
+		ft_putchar((char)v);
+		ft_putwidth(p, 1);
 	}
+	else
+	{
+		ft_putwidth(p, 1);
+		ft_putchar((char)v);
+	}
+	p.ret += (p.f_width > 1) ? p.f_width : 1;
 	return (p);
 }
 
 t_printf	string_conv(t_printf p)
 {
-	int		i;
-
 	p = initialize(p);
 	p = is_modifier(p);
-	i = p.i + ft_strlen(p.conv) + 1;
-	if (p.format[i] == 's' && p.format[i - 1] != 'l')
+	if (p.lcount == 0)
 	{
 		p.str = va_arg(p.arg, char*);
 		if (p.str == NULL)
@@ -89,19 +81,13 @@ t_printf	ft_putstrpreci(t_printf p)
 t_printf	str_bonus(t_printf p)
 {
 	wchar_t	*v;
-	int		i;
 
 	p = is_modifier(p);
-	i = p.i + ft_strlen(p.conv) + 1;
-	if ((p.format[i]) == 'S' || (p.format[p.i] == 's'
-				&& p.format[i - 1] == 'l'))
+	v = va_arg(p.arg, wchar_t*);
+	if (v != NULL)
 	{
-		v = va_arg(p.arg, wchar_t*);
-		if (v != NULL)
-		{
-			ft_putstrw(v);
-			p.ret += ft_wstrlen(v);
-		}
+		ft_putstrw(v);
+		p.ret += ft_wstrlen(v);
 	}
 	return (p);
 }
