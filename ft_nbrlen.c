@@ -6,13 +6,13 @@
 /*   By: rkergast <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 17:02:26 by rkergast          #+#    #+#             */
-/*   Updated: 2019/07/02 20:22:34 by rkergast         ###   ########.fr       */
+/*   Updated: 2019/07/03 16:52:03 by dieroyer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int				ft_nbr_conv(t_printf p, int start, int val)
+int			ft_nbr_conv(t_printf p, int start, int val)
 {
 	int			i;
 	int			nbr;
@@ -45,7 +45,6 @@ int			ft_nbrlen(intmax_t n)
 	l++;
 	return (l);
 }
-
 
 int			ft_nbrulen_base(unsigned long nbr, int base)
 {

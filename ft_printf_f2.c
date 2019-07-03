@@ -6,27 +6,22 @@
 /*   By: dieroyer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 17:17:15 by dieroyer          #+#    #+#             */
-/*   Updated: 2019/07/02 19:13:58 by dieroyer         ###   ########.fr       */
+/*   Updated: 2019/07/03 16:59:18 by dieroyer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+#include "libft/libft.h"
 
 t_printf	float_conv(t_printf p)
 {
 	if (p.prec_point == 0)
 		p.f_precision = 6;
-	/*if (p.lcount > 0)
-	{
-		p.m = va_arg(p.arg, double);
-		p.isneg = (p.m < 0) ? 1 : 0;
-		ft_printf_lf(p.m, p.strf, p.f_precision, p);
-	}*/
-	if (p.Lcount > 0)
+	if (p.blcount > 0)
 	{
 		p.l = va_arg(p.arg, long double);
 		p.isneg = (p.l < 0) ? 1 : 0;
-		ft_printf_blf(p.l, p.strf, p.f_precision);
+		ft_printf_blf(p.l, p.strf, p.f_precision, p);
 	}
 	else
 	{

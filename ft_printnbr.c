@@ -6,10 +6,12 @@
 /*   By: rkergast <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 18:22:34 by rkergast          #+#    #+#             */
-/*   Updated: 2019/07/02 13:27:38 by rkergast         ###   ########.fr       */
+/*   Updated: 2019/07/03 17:07:32 by dieroyer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <unistd.h>
+#include "libft/libft.h"
 #include "ft_printf.h"
 
 t_printf		put_sharp(t_printf p)

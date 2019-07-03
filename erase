@@ -1,1 +1,0 @@
-find . \( -name "*$" -o -name "*.gch" -o -name "a.out" -o -name "*swp" -o -name "*exe*" -o -name "*~" -o -name "#*" -a -name "*#" \) -print -delete | cut -d "/" -f2

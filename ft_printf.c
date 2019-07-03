@@ -6,14 +6,14 @@
 /*   By: rkergast <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/04 11:59:58 by rkergast          #+#    #+#             */
-/*   Updated: 2019/07/02 18:31:11 by rkergast         ###   ########.fr       */
+/*   Updated: 2019/07/03 17:06:38 by dieroyer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <unistd.h>
 #include "ft_printf.h"
 #include "libft/libft.h"
 #include <wchar.h>
-#include <string.h>
 
 t_printf		do_conv(t_printf p, t_printf ptmp)
 {
@@ -109,9 +109,7 @@ int				ft_printf(const char *format, ...)
 	while (p.format[p.i])
 	{
 		if (p.format[p.i] == '%')
-		{
 			p = check_conv(p);
-		}
 		else
 		{
 			write(1, &p.format[p.i], 1);
@@ -119,6 +117,7 @@ int				ft_printf(const char *format, ...)
 			p.i++;
 		}
 	}
+	free(p.format);
 	va_end(p.arg);
 	return (p.ret);
 }

@@ -6,16 +6,14 @@
 /*   By: rkergast <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/09 16:51:21 by rkergast          #+#    #+#             */
-/*   Updated: 2019/07/02 20:16:14 by dieroyer         ###   ########.fr       */
+/*   Updated: 2019/07/03 17:05:59 by dieroyer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 
-# include <unistd.h>
 # include <wchar.h>
-# include <stdlib.h>
 
 typedef struct		s_list
 {

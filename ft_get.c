@@ -6,7 +6,7 @@
 /*   By: rkergast <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 18:22:34 by rkergast          #+#    #+#             */
-/*   Updated: 2019/07/02 13:27:38 by rkergast         ###   ########.fr       */
+/*   Updated: 2019/07/03 16:51:28 by dieroyer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ t_printf		get_hll(t_printf p, char c)
 	else if (c == 'l')
 		p.lcount++;
 	else if (c == 'L')
-		p.Lcount++;
+		p.blcount++;
 	return (p);
 }
 

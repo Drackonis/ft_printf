@@ -6,11 +6,13 @@
 /*   By: rkergast <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 16:48:43 by rkergast          #+#    #+#             */
-/*   Updated: 2019/06/25 16:53:13 by rkergast         ###   ########.fr       */
+/*   Updated: 2019/07/03 17:07:00 by dieroyer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <unistd.h>
 #include "ft_printf.h"
+#include "libft/libft.h"
 
 int			check_base(char *base)
 {
@@ -115,7 +117,7 @@ void		ft_putunbr(unsigned long n)
 	}
 }
 
-void			ft_putnbr_intmax(intmax_t num)
+void		ft_putnbr_intmax(intmax_t num)
 {
 	intmax_t	nb;
 	int			t;

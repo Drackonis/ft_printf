@@ -6,34 +6,24 @@
 /*   By: rkergast <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 17:02:26 by rkergast          #+#    #+#             */
-/*   Updated: 2019/07/02 20:22:34 by dieroyer         ###   ########.fr       */
+/*   Updated: 2019/07/03 17:07:58 by dieroyer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PRINTF
-# define FT_PRINTF
+#ifndef FT_PRINTF_H
+# define FT_PRINTF_H
 
 # include <stdarg.h>
-# include <stdio.h>
-# include "libft/libft.h" //includes abusifs
+# include <wchar.h>
+# include <stdlib.h>
 
 typedef struct		s_printf
 {
 	int				baseconv;
-	/* -3 = char %c
-	 * -2 = %%
-	 * -1 = float %f
-	 * 0 = decimal %d %i
-	 * 1 = unsigned decimal %u
-	 * 2 = octal %o
-	 * 3 = exadecimal %x
-	 * 4 = maj exadecimal %X
-	 * 5 = adress %p
-	*/
-	char			strf[100]; // float
-	int				errorf; //float
-	char			*str; //stringconv
-	double			m; //floatconv
+	char			strf[100];
+	int				errorf;
+	char			*str;
+	double			m;
 	long double		l;
 	float			n;
 	int				ret;
@@ -68,7 +58,7 @@ typedef struct		s_printf
 	int				pput;
 	int				hcount;
 	int				lcount;
-	int				Lcount;
+	int				blcount;
 	int				isneg;
 	int				numlen;
 }					t_printf;
@@ -113,9 +103,10 @@ t_printf			check_conv(t_printf ptmp);
 int					ft_printf(const char *format, ...);
 void				reverse(char *str, int len);
 int					ft_inttostr(intmax_t x, char *str, int d);
-void				ft_printf_f(float n, char *res, int afterpoint);
-void				ft_printf_blf(long double n, char *res, int afterpoint);
-t_printf				ft_printf_lf(double n, char *res, int afterpoint, t_printf p);
+t_printf			ft_printf_blf(long double n
+		, char *res, int afterpoint, t_printf p);
+t_printf			ft_printf_lf(double n
+		, char *res, int afterpoint, t_printf p);
 t_printf			float_conv(t_printf p);
 t_printf			char_conv(t_printf p);
 t_printf			string_conv(t_printf p);

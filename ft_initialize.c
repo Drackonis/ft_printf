@@ -6,7 +6,7 @@
 /*   By: rkergast <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 17:02:26 by rkergast          #+#    #+#             */
-/*   Updated: 2019/07/02 20:22:34 by rkergast         ###   ########.fr       */
+/*   Updated: 2019/07/03 16:51:57 by dieroyer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ t_printf		initialize(t_printf p)
 	p.lcount = 0;
 	p.f_precision = 0;
 	p.f_width = 0;
-	p.Lcount = 0;
+	p.blcount = 0;
 	p.prec_point = 0;
 	p.minus = 0;
 	p.mput = 0;
@@ -62,5 +62,5 @@ t_printf		call_conv_idx(t_printf p, int i)
 {
 	p.baseconv = i;
 	p = get_conv(p);
-	return(p);
+	return (p);
 }
