@@ -25,7 +25,16 @@ SRC = ft_printf.c \
 	  ft_printf_f2.c \
 	  ft_putnbr_base.c \
 	  ft_printf_s.c \
-	  ft_getconv.c 
+	  ft_getconv.c \
+	  ft_get.c \
+	  ft_set.c \
+	  ft_error.c \
+	  ft_getarg.c \
+	  ft_initialize.c \
+	  ft_nbrlen.c \
+	  ft_printnbr.c \
+	  ft_putspace.c \
+	  ft_utils.c
 
 SRC_LIBFT = libft/ft_atoi.c \
 			libft/ft_putchar.c \

@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_nbrlen.c                                        :+:      :+:    :+:   */
+/*   ft_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rkergast <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,67 +12,36 @@
 
 #include "ft_printf.h"
 
-int				ft_nbr_conv(t_printf p, int start, int val)
+int				ft_ctoi(char c)
 {
 	int			i;
-	int			nbr;
-	int			puissance;
 
-	i = 0;
-	nbr = 0;
-	puissance = 1;
-	while (i < val)
-	{
-		nbr += puissance * (ft_ctoi(p.conv[start - i]));
-		puissance *= 10;
-		i++;
-	}
-	return (nbr);
+	i = c - '0';
+	return (i);
 }
 
-int			ft_nbrlen(intmax_t n)
+int				cmp_flag(char c)
 {
-	int		l;
-
-	l = 0;
-	if (n < 0)
-		n = -n;
-	while (n > 9)
-	{
-		n = n / 10;
-		l++;
-	}
-	l++;
-	return (l);
-}
-
-
-int			ft_nbrulen_base(unsigned long nbr, int base)
-{
-	int		len;
-
-	len = 0;
-	if (nbr == 0)
+	if (c == ' ' || c == '+' || c == '#' || c == '-' || c == '0')
 		return (1);
-	while (nbr > 0)
-	{
-		nbr /= base;
-		len++;
-	}
-	return (len);
+	else
+		return (0);
 }
 
-int			ft_nbrlen_base(unsigned int nbr, int base)
+int				cmp_nb(char c)
 {
-	int		len;
-
-	len = 0;
-	if (nbr == 0)
+	if (c >= '0' && c <= '9')
 		return (1);
-	while (nbr > 0)
-	{
-		nbr /= base;
-		len++;
-	}
-	return (len);
+	else if (c == '.')
+		return (2);
+	else
+		return (0);
+}
+
+int				cmp_lh(char c)
+{
+	if (c == 'l' || c == 'h' || c == 'L')
+		return (1);
+	else
+		return (0);
 }

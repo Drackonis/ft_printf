@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_nbrlen.c                                        :+:      :+:    :+:   */
+/*   ft_initialize.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rkergast <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,67 +12,55 @@
 
 #include "ft_printf.h"
 
-int				ft_nbr_conv(t_printf p, int start, int val)
+t_printf		intialize2(t_printf p)
 {
-	int			i;
-	int			nbr;
-	int			puissance;
-
-	i = 0;
-	nbr = 0;
-	puissance = 1;
-	while (i < val)
-	{
-		nbr += puissance * (ft_ctoi(p.conv[start - i]));
-		puissance *= 10;
-		i++;
-	}
-	return (nbr);
+	p.c = 0;
+	p.d = 0;
+	p.d0 = 0;
+	p.d1 = 0;
+	p.d2 = 0;
+	p.d3 = 0;
+	p.d4 = 0;
+	p.d5 = 0;
+	p.d6 = 0;
+	p.d7 = 0;
+	return (p);
 }
 
-int			ft_nbrlen(intmax_t n)
+t_printf		initialize(t_printf p)
 {
-	int		l;
-
-	l = 0;
-	if (n < 0)
-		n = -n;
-	while (n > 9)
-	{
-		n = n / 10;
-		l++;
-	}
-	l++;
-	return (l);
+	p.is_flag = 0;
+	p.zero = 0;
+	p.is_width = 0;
+	p.is_precision = 0;
+	p.hcount = 0;
+	p.lcount = 0;
+	p.f_precision = 0;
+	p.f_width = 0;
+	p.Lcount = 0;
+	p.prec_point = 0;
+	p.minus = 0;
+	p.mput = 0;
+	p.pput = 0;
+	p.plus = 0;
+	p.space = 0;
+	p.sharp = 0;
+	p.isneg = 0;
+	p.numlen = 0;
+	p = intialize2(p);
+	return (p);
 }
 
-
-int			ft_nbrulen_base(unsigned long nbr, int base)
+t_printf		set_perc_conv(t_printf p)
 {
-	int		len;
-
-	len = 0;
-	if (nbr == 0)
-		return (1);
-	while (nbr > 0)
-	{
-		nbr /= base;
-		len++;
-	}
-	return (len);
+	p.numlen = 1;
+	p.f_precision = 0;
+	return (p);
 }
 
-int			ft_nbrlen_base(unsigned int nbr, int base)
+t_printf		call_conv_idx(t_printf p, int i)
 {
-	int		len;
-
-	len = 0;
-	if (nbr == 0)
-		return (1);
-	while (nbr > 0)
-	{
-		nbr /= base;
-		len++;
-	}
-	return (len);
+	p.baseconv = i;
+	p = get_conv(p);
+	return(p);
 }

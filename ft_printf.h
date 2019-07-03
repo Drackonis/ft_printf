@@ -105,13 +105,6 @@ t_printf			is_modifier(t_printf p);
 t_printf			intialize2(t_printf p);
 t_printf			initialize(t_printf p);
 t_printf			get_conv(t_printf p);
-t_printf			locat_conv(t_printf p);
-t_printf			put_percent(t_printf p);
-t_printf			octo_conv(t_printf p);
-t_printf			dec_conv(t_printf p);
-t_printf			exa_conv(t_printf p);
-t_printf			mexa_conv(t_printf p);
-t_printf			int_conv(t_printf p);
 int					check_error(t_printf p);
 t_printf			init_call_conv(t_printf ptmp, t_printf p);
 t_printf			do_conv(t_printf p, t_printf ptmp);
@@ -141,5 +134,6 @@ void				print_error(void);
 int					cmp_flag(char c);
 int					cmp_nb(char c);
 int					cmp_lh(char c);
+t_printf			call_conv_idx(t_printf p, int i);
 
 #endif

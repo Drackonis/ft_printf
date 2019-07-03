@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_nbrlen.c                                        :+:      :+:    :+:   */
+/*   ft_error.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rkergast <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,67 +12,50 @@
 
 #include "ft_printf.h"
 
-int				ft_nbr_conv(t_printf p, int start, int val)
+void			print_error(void)
+{
+	write(1, "Error input format : %[flags][width][.precision]", 49);
+	write(1, "[length]specifier\n", 18);
+}
+
+int				chech_is_conv(char c)
+{
+	if (c == 'c' || c == 'C' || c == 's' || c == 'S' || c == 'p' || c == 'd'\
+			|| c == 'i' || c == 'o' || c == 'u' || c == 'x' || c == 'X'\
+			|| c == 'f' || c == '%')
+		return (1);
+	else if (!c)
+	{
+		print_error();
+		return (0);
+	}
+	else
+	{
+		print_error();
+		return (0);
+	}
+}
+
+int				check_error(t_printf p)
 {
 	int			i;
-	int			nbr;
-	int			puissance;
 
 	i = 0;
-	nbr = 0;
-	puissance = 1;
-	while (i < val)
+	while (p.format[i])
 	{
-		nbr += puissance * (ft_ctoi(p.conv[start - i]));
-		puissance *= 10;
+		if (p.format[i] == '%')
+		{
+			i++;
+			while (p.format[i] && cmp_flag(p.format[i]))
+				i++;
+			while (p.format[i] && cmp_nb(p.format[i]))
+				i++;
+			while (p.format[i] && cmp_lh(p.format[i]))
+				i++;
+			if (!chech_is_conv(p.format[i]))
+				return (0);
+		}
 		i++;
 	}
-	return (nbr);
-}
-
-int			ft_nbrlen(intmax_t n)
-{
-	int		l;
-
-	l = 0;
-	if (n < 0)
-		n = -n;
-	while (n > 9)
-	{
-		n = n / 10;
-		l++;
-	}
-	l++;
-	return (l);
-}
-
-
-int			ft_nbrulen_base(unsigned long nbr, int base)
-{
-	int		len;
-
-	len = 0;
-	if (nbr == 0)
-		return (1);
-	while (nbr > 0)
-	{
-		nbr /= base;
-		len++;
-	}
-	return (len);
-}
-
-int			ft_nbrlen_base(unsigned int nbr, int base)
-{
-	int		len;
-
-	len = 0;
-	if (nbr == 0)
-		return (1);
-	while (nbr > 0)
-	{
-		nbr /= base;
-		len++;
-	}
-	return (len);
+	return (1);
 }

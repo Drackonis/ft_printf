@@ -114,3 +114,22 @@ void		ft_putunbr(unsigned long n)
 		write(1, &c, 1);
 	}
 }
+
+void			ft_putnbr_intmax(intmax_t num)
+{
+	intmax_t	nb;
+	int			t;
+	char		c;
+
+	t = 0;
+	nb = num;
+	if (nb >= 10)
+	{
+		t = nb % 10;
+		c = t + 48;
+		ft_putnbr_intmax(nb / 10);
+	}
+	else
+		c = nb + 48;
+	write(1, &c, 1);
+}
