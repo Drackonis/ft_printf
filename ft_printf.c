@@ -34,22 +34,6 @@ void			ft_putnbr_intmax(intmax_t num)
 	write(1, &c, 1);
 }
 
-int				ft_nbrlen(intmax_t n)
-{
-	int			l;
-
-	l = 0;
-	if (n < 0)
-		n = -n;
-	while (n > 9)
-	{
-		n = n / 10;
-		l++;
-	}
-	l++;
-	return (l);
-}
-
 int				ft_ctoi(char c)
 {
 	int			i;
