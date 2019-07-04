@@ -6,7 +6,7 @@
 /*   By: rkergast <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 18:22:34 by rkergast          #+#    #+#             */
-/*   Updated: 2019/07/03 17:07:32 by dieroyer         ###   ########.fr       */
+/*   Updated: 2019/07/04 16:48:25 by rkergast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ t_printf		put_sharp(t_printf p)
 void			printf_base_ll_nbr(t_printf p)
 {
 	if (p.baseconv == 1)
-		ft_putunbr(p.d7);
+		ft_putunbr_ll_base(p.d3, "0123456789");
 	else if (p.baseconv == 2)
 		ft_putunbr_ll_base(p.d3, "01234567");
 	else if (p.baseconv == 3)
@@ -62,10 +62,10 @@ t_printf		print_base_nbr(t_printf p)
 		else
 			p.ret--;
 	}
-	else if (p.lcount == 2)
+	else if (p.lcount >= 1)
 		printf_base_ll_nbr(p);
 	else if (p.baseconv == 1)
-		ft_putunbr(p.d7);
+		ft_putunbr(p.d7, "0123456789");
 	else if (p.baseconv == 2)
 		ft_putunbr_base(p.d5, "01234567");
 	else if (p.baseconv == 3)
@@ -73,19 +73,15 @@ t_printf		print_base_nbr(t_printf p)
 	else if (p.baseconv == 4)
 		ft_putunbr_base(p.d5, "0123456789ABCDEF");
 	else if (p.baseconv == 5)
-		ft_putunbr_base(p.d6, "0123456789abcdef");
+		p.ret = (p.ret - p.numlen) +\
+				ft_putunbr_ll_base(p.d8, "0123456789abcdef");
 	return (p);
 }
 
 t_printf		print_nbr(t_printf p)
 {
 	if (p.baseconv == 0 && !(p.d4 == 0 && p.prec_point && p.f_precision == 0))
-	{
-		if (!p.isneg)
-			ft_putnbr_intmax(p.d4);
-		else
-			ft_putnbr_intmax(-p.d4);
-	}
+		(!p.isneg) ? ft_putnbr_intmax(p.d4) : ft_putnbr_intmax(-p.d4);
 	else
 	{
 		if (p.baseconv >= 1)

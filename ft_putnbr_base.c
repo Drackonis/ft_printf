@@ -6,7 +6,7 @@
 /*   By: rkergast <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 16:48:43 by rkergast          #+#    #+#             */
-/*   Updated: 2019/07/03 17:11:47 by dieroyer         ###   ########.fr       */
+/*   Updated: 2019/07/04 16:03:38 by rkergast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,22 +99,33 @@ int			ft_putunbr_base(unsigned int nbr, char *base)
 	return (len);
 }
 
-void		ft_putunbr(unsigned long n)
+int			ft_putunbr(unsigned long nbr, char *base)
 {
-	char	c;
+	int		size;
+	int		n[100];
+	int		i;
+	int		len;
 
-	c = 0;
-	if (n > 9)
+	i = 0;
+	size = 0;
+	len = 0;
+	if (check_base(base))
 	{
-		ft_putunbr(n / 10);
-		c = n % 10 + '0';
-		write(1, &c, 1);
+		while (base[size])
+			size++;
+		while (nbr > 0)
+		{
+			n[i] = nbr % size;
+			nbr = nbr / size;
+			i++;
+		}
+		while (--i >= 0)
+		{
+			ft_putchar(base[n[i]]);
+			len++;
+		}
 	}
-	else
-	{
-		c = n % 10 + '0';
-		write(1, &c, 1);
-	}
+	return (len);
 }
 
 void		ft_putnbr_intmax(intmax_t num)

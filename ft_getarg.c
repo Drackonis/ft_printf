@@ -6,11 +6,19 @@
 /*   By: rkergast <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 18:22:34 by rkergast          #+#    #+#             */
-/*   Updated: 2019/07/03 16:51:43 by dieroyer         ###   ########.fr       */
+/*   Updated: 2019/07/04 16:48:45 by rkergast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+
+t_printf		get_base_arg(t_printf p)
+{
+	p.d3 = va_arg(p.arg, long long);
+	p.numlen = ft_nbrlen(p.d3);
+	p.d4 = (intmax_t)p.d3;
+	return (p);
+}
 
 t_printf		get_arg_h(t_printf p)
 {
@@ -54,24 +62,6 @@ t_printf		get_arg_l(t_printf p)
 	return (p);
 }
 
-t_printf		get_base_arg(t_printf p)
-{
-	if (p.lcount == 1 || p.hcount > 0)
-	{
-		p.d5 = va_arg(p.arg, long);
-		p.numlen = ft_nbrlen(p.d5);
-		p.d4 = (intmax_t)p.d2;
-	}
-	else if (p.lcount == 2)
-	{
-		p.d3 = va_arg(p.arg, long long);
-		p.isneg = (p.d3 < 0) ? 1 : 0;
-		p.numlen = ft_nbrlen(p.d3);
-		p.d4 = (intmax_t)p.d3;
-	}
-	return (p);
-}
-
 t_printf		get_arg_base(t_printf p, int current_base)
 {
 	if (p.baseconv == 1)
@@ -88,9 +78,9 @@ t_printf		get_arg_base(t_printf p, int current_base)
 	}
 	else
 	{
-		p.d6 = (uintptr_t)va_arg(p.arg, void*);
-		p.numlen = ft_nbrlen_base(p.d6, current_base);
-		p.d4 = (intmax_t)p.d6;
+		p.d8 = (unsigned long long)va_arg(p.arg, void*);
+		p.numlen = ft_nbrlen_base(p.d8, current_base);
+		p.d4 = (intmax_t)p.d8;
 	}
 	return (p);
 }
