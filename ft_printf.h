@@ -6,7 +6,7 @@
 /*   By: rkergast <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 17:02:26 by rkergast          #+#    #+#             */
-/*   Updated: 2019/07/08 15:11:33 by rkergast         ###   ########.fr       */
+/*   Updated: 2019/07/08 18:05:03 by rkergast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,5 +133,6 @@ t_printf				call_conv_idx(t_printf p, int i);
 void					printf_base_ll_nbr(t_printf p);
 void					printf_base_hh_nbr(t_printf p);
 void					ft_printf_base_select(t_printf p);
+t_printf				ft_llmin(t_printf p);
 
 #endif

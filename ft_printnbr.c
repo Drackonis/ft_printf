@@ -6,7 +6,7 @@
 /*   By: rkergast <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 18:22:34 by rkergast          #+#    #+#             */
-/*   Updated: 2019/07/08 15:10:39 by rkergast         ###   ########.fr       */
+/*   Updated: 2019/07/08 18:06:59 by rkergast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,9 @@ t_printf		print_base_nbr(t_printf p)
 
 t_printf		print_nbr(t_printf p)
 {
-	if (p.baseconv == 0 && !(p.d4 == 0 && p.prec_point && p.f_precision == 0))
+	if (p.baseconv == 0 && p.d4 < -9223372036854775807)
+		p = ft_llmin(p);
+	else if (p.baseconv == 0 && !(p.d4 == 0 && p.prec_point && p.f_precision == 0))
 		(!p.isneg) ? ft_putnbr_intmax(p.d4) : ft_putnbr_intmax(-p.d4);
 	else
 	{

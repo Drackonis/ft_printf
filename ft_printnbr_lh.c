@@ -6,7 +6,7 @@
 /*   By: rkergast <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/08 15:02:08 by rkergast          #+#    #+#             */
-/*   Updated: 2019/07/08 15:12:33 by rkergast         ###   ########.fr       */
+/*   Updated: 2019/07/08 18:06:32 by rkergast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,15 @@ void			printf_base_ll_nbr(t_printf p)
 		else if (p.baseconv == 4)
 			ft_putunbr_ll_base(p.d3, "0123456789ABCDEF");
 	}
+}
+
+t_printf		ft_llmin(t_printf p)
+{
+	ft_putunbr_ll_base(p.d4, "0123456789");
+	p.ret = 20;
+	if (p.d4 >= 0)
+		p.ret--;
+	return (p);
 }
 
 void			ft_printf_base_select(t_printf p)
