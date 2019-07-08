@@ -6,7 +6,7 @@
 /*   By: rkergast <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 18:22:34 by rkergast          #+#    #+#             */
-/*   Updated: 2019/07/08 14:54:15 by rkergast         ###   ########.fr       */
+/*   Updated: 2019/07/08 18:20:57 by rkergast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,14 @@ t_printf		get_arg_h(t_printf p)
 	{
 		p.d1 = (short)va_arg(p.arg, int);
 		p.isneg = (p.d1 < 0) ? 1 : 0;
-		p.numlen = ft_nbrlen(p.d1);
+		p.numlen = ft_nbrulen_base(p.d1, p.current_base);
 		p.d4 = (intmax_t)p.d1;
 	}
 	else if (p.hcount == 2)
 	{
 		p.d0 = (signed char)va_arg(p.arg, int);
 		p.isneg = (p.d0 < 0) ? 1 : 0;
-		p.numlen = ft_nbrlen(p.d0);
+		p.numlen = ft_nbrulen_base(p.d0, p.current_base);
 		p.d4 = (intmax_t)p.d0;
 	}
 	return (p);
