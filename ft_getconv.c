@@ -6,7 +6,7 @@
 /*   By: dieroyer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 16:44:19 by dieroyer          #+#    #+#             */
-/*   Updated: 2019/07/03 17:00:28 by dieroyer         ###   ########.fr       */
+/*   Updated: 2019/07/08 18:26:26 by dieroyer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,15 @@ t_printf	ft_putwidth(t_printf p, int len)
 	int		width;
 
 	p = is_modifier(p);
-	width = p.f_width - len;
+	width = p.f_width;
+	if (p.is_precision && len == -2)
+		width -= p.f_precision;
+	else if (len == -1)
+		width -= 6;
+	else if (width >= (int)ft_strlen(p.str) && len == -2)
+		width -= (int)ft_strlen(p.str);
+	else if (width < (int)ft_strlen(p.str) && len == -2)
+		width = 0;
 	while (width > 0)
 	{
 		ft_putchar(' ');
