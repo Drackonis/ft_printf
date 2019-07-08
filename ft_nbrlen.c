@@ -6,7 +6,7 @@
 /*   By: rkergast <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 17:02:26 by rkergast          #+#    #+#             */
-/*   Updated: 2019/07/03 16:52:03 by dieroyer         ###   ########.fr       */
+/*   Updated: 2019/07/08 18:30:38 by rkergast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,23 @@ int			ft_nbrlen(intmax_t n)
 	}
 	l++;
 	return (l);
+}
+
+int			ft_nbrhlen_base(intmax_t nbr, int base)
+{
+	int		len;
+
+	len = 0;
+	if (nbr == 0)
+		return (1);
+	if (nbr < 0)
+		nbr = -nbr;
+	while (nbr > 0)
+	{
+		nbr /= base;
+		len++;
+	}
+	return (len);
 }
 
 int			ft_nbrulen_base(unsigned long nbr, int base)
