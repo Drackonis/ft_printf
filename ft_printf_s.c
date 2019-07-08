@@ -6,7 +6,7 @@
 /*   By: dieroyer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 16:07:54 by dieroyer          #+#    #+#             */
-/*   Updated: 2019/07/08 18:29:10 by dieroyer         ###   ########.fr       */
+/*   Updated: 2019/07/08 19:02:55 by dieroyer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,11 @@ t_printf	char_conv(t_printf p)
 	if (p.minus)
 	{
 		ft_putchar((char)v);
-		ft_putwidth(p, p.f_precision);
+		ft_putwidth(p, -3);
 	}
 	else
 	{
-		ft_putwidth(p, p.f_precision);
+		ft_putwidth(p, -3);
 		ft_putchar((char)v);
 	}
 	p.ret += (p.f_width > 1) ? p.f_width : 1;
