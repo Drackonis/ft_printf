@@ -6,7 +6,7 @@
 /*   By: rkergast <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 18:22:34 by rkergast          #+#    #+#             */
-/*   Updated: 2019/07/04 16:48:25 by rkergast         ###   ########.fr       */
+/*   Updated: 2019/07/08 15:10:39 by rkergast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,38 +22,27 @@ t_printf		put_sharp(t_printf p)
 	}
 	if (p.sharp)
 	{
-		if (p.baseconv == 2)
+		if (p.baseconv == 2 && (p.d4 != 0 || p.f_precision == 0))
 		{
 			ft_putstr("0");
 			p.ret++;
 		}
-		else if (p.baseconv == 3 && p.d5 != 0)
+		else if (p.baseconv == 3 && (p.d5 != 0 || p.d4 != 0))
 			ft_putstr("0x");
-		else if (p.baseconv == 4 && p.d5 != 0)
+		else if (p.baseconv == 4 && (p.d5 != 0 || p.d4 != 0))
 			ft_putstr("0X");
 	}
-	if ((p.baseconv >= 3 && p.sharp && p.d5 != 0) || p.baseconv == 5)
+	if ((p.baseconv >= 3 && p.sharp && (p.d5 != 0 || p.d4 != 0))\
+			|| p.baseconv == 5)
 		p.ret += 2;
 	return (p);
-}
-
-void			printf_base_ll_nbr(t_printf p)
-{
-	if (p.baseconv == 1)
-		ft_putunbr_ll_base(p.d3, "0123456789");
-	else if (p.baseconv == 2)
-		ft_putunbr_ll_base(p.d3, "01234567");
-	else if (p.baseconv == 3)
-		ft_putunbr_ll_base(p.d3, "0123456789abcdef");
-	else if (p.baseconv == 4)
-		ft_putunbr_ll_base(p.d3, "0123456789ABCDEF");
 }
 
 t_printf		print_base_nbr(t_printf p)
 {
 	if (((p.baseconv == 1 && p.d7 == 0) ||\
 		(p.baseconv != 5 && p.d5 == 0) || (p.baseconv == 2 && p.d5 == 0))\
-			&& p.d3 == 0)
+			&& p.d3 == 0 && p.d8 == 0 && p.d0 == 0 && p.d1 == 0)
 	{
 		if (p.f_precision != 0 || !p.prec_point)
 			write(1, "0", 1);
@@ -62,8 +51,8 @@ t_printf		print_base_nbr(t_printf p)
 		else
 			p.ret--;
 	}
-	else if (p.lcount >= 1)
-		printf_base_ll_nbr(p);
+	else if (p.lcount > 0 || p.hcount > 0)
+		ft_printf_base_select(p);
 	else if (p.baseconv == 1)
 		ft_putunbr(p.d7, "0123456789");
 	else if (p.baseconv == 2)
@@ -84,7 +73,7 @@ t_printf		print_nbr(t_printf p)
 		(!p.isneg) ? ft_putnbr_intmax(p.d4) : ft_putnbr_intmax(-p.d4);
 	else
 	{
-		if (p.baseconv >= 1)
+		if (p.baseconv > 0)
 			p = print_base_nbr(p);
 		else if (p.baseconv == -1)
 		{

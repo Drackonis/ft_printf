@@ -6,7 +6,7 @@
 /*   By: rkergast <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 18:22:34 by rkergast          #+#    #+#             */
-/*   Updated: 2019/07/04 16:48:45 by rkergast         ###   ########.fr       */
+/*   Updated: 2019/07/08 14:54:15 by rkergast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,24 @@
 
 t_printf		get_base_arg(t_printf p)
 {
-	p.d3 = va_arg(p.arg, long long);
-	p.numlen = ft_nbrlen(p.d3);
-	p.d4 = (intmax_t)p.d3;
+	if (p.lcount > 0 && p.current_base != 10)
+	{
+		p.d8 = va_arg(p.arg, unsigned long long);
+		p.numlen = ft_nbrulen_base(p.d8, p.current_base);
+		p.d4 = (intmax_t)p.d8;
+	}
+	else
+	{
+		p.d3 = va_arg(p.arg, long long);
+		p.numlen = ft_nbrlen(p.d3);
+		p.d4 = (intmax_t)p.d3;
+	}
 	return (p);
 }
 
 t_printf		get_arg_h(t_printf p)
 {
-	if (p.baseconv != 0)
-		p = get_base_arg(p);
-	else if (p.hcount == 1)
+	if (p.hcount == 1)
 	{
 		p.d1 = (short)va_arg(p.arg, int);
 		p.isneg = (p.d1 < 0) ? 1 : 0;
@@ -43,7 +50,7 @@ t_printf		get_arg_h(t_printf p)
 
 t_printf		get_arg_l(t_printf p)
 {
-	if (p.baseconv != 0 && p.lcount != 2)
+	if (p.baseconv != 0)
 		p = get_base_arg(p);
 	else if (p.lcount == 1)
 	{
