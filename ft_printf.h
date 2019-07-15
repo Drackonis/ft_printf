@@ -6,7 +6,7 @@
 /*   By: rkergast <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 17:02:26 by rkergast          #+#    #+#             */
-/*   Updated: 2019/07/15 16:35:26 by rkergast         ###   ########.fr       */
+/*   Updated: 2019/07/15 20:55:57 by dieroyer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ typedef struct			s_printf
 	char				strf[100];
 	int					errorf;
 	char				*str;
+	int					strerror;
 	double				m;
 	long double			l;
 	float				n;
