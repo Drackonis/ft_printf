@@ -6,7 +6,7 @@
 /*   By: rkergast <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 18:22:34 by rkergast          #+#    #+#             */
-/*   Updated: 2019/07/08 18:06:59 by rkergast         ###   ########.fr       */
+/*   Updated: 2019/07/15 15:59:13 by rkergast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_printf		put_sharp(t_printf p)
 	}
 	if (p.sharp)
 	{
-		if (p.baseconv == 2 && (p.d4 != 0 || p.f_precision == 0))
+		if (p.baseconv == 2 && p.d4 != 0)
 		{
 			ft_putstr("0");
 			p.ret++;
@@ -41,10 +41,10 @@ t_printf		put_sharp(t_printf p)
 t_printf		print_base_nbr(t_printf p)
 {
 	if (((p.baseconv == 1 && p.d7 == 0) ||\
-		(p.baseconv != 5 && p.d5 == 0) || (p.baseconv == 2 && p.d5 == 0))\
+		(p.baseconv != 5 && p.d5 == 0) || (p.baseconv == 2 && p.d4 == 0))\
 			&& p.d3 == 0 && p.d8 == 0 && p.d0 == 0 && p.d1 == 0)
 	{
-		if (p.f_precision != 0 || !p.prec_point)
+		if (p.f_precision != 0 || (!p.prec_point || p.d4 == 0))
 			write(1, "0", 1);
 		else if (p.f_width > 0)
 			write(1, " ", 1);
@@ -71,7 +71,8 @@ t_printf		print_nbr(t_printf p)
 {
 	if (p.baseconv == 0 && p.d4 < -9223372036854775807)
 		p = ft_llmin(p);
-	else if (p.baseconv == 0 && !(p.d4 == 0 && p.prec_point && p.f_precision == 0))
+	else if (p.baseconv == 0 && !(p.d4 == 0 &&\
+				p.prec_point && p.f_precision == 0))
 		(!p.isneg) ? ft_putnbr_intmax(p.d4) : ft_putnbr_intmax(-p.d4);
 	else
 	{
@@ -97,6 +98,7 @@ t_printf		put_nbr_modified(t_printf p)
 	i = 0;
 	precision = p.f_precision;
 	p = put_mp(p);
+	precision -= (p.baseconv == 2 && p.sharp && p.d4 != 0) ? 1 : 0;
 	if (p.is_precision)
 	{
 		p = put_sharp(p);

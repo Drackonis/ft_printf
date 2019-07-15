@@ -6,7 +6,7 @@
 /*   By: rkergast <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 18:22:34 by rkergast          #+#    #+#             */
-/*   Updated: 2019/07/08 14:52:21 by rkergast         ###   ########.fr       */
+/*   Updated: 2019/07/15 15:58:57 by rkergast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,11 +70,11 @@ t_printf		put_width(t_printf p)
 	{
 		precision = p.f_precision;
 		precision -= p.numlen;
-		if (precision < 0)
-			precision = 0;
+		precision -= (p.baseconv == 2 && p.sharp && p.d4 != 0) ? 1 : 0;
+		precision = (precision < 0) ? 0 : precision;
 		width -= precision;
 	}
-	width -= p.numlen;
+	width -= (p.baseconv == 2 && p.d4 == 0 && p.sharp) ? 0 : p.numlen;
 	p = put_width2(p, width);
 	if (!p.zero && !p.minus && p.is_precision == 0)
 		p = put_sharp(p);
