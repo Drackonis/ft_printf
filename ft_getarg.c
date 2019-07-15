@@ -6,7 +6,7 @@
 /*   By: rkergast <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 18:22:34 by rkergast          #+#    #+#             */
-/*   Updated: 2019/07/08 18:28:00 by rkergast         ###   ########.fr       */
+/*   Updated: 2019/07/15 16:19:02 by rkergast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ t_printf		get_arg_base(t_printf p, int current_base)
 	else
 	{
 		p.d8 = (unsigned long long)va_arg(p.arg, void*);
-		p.numlen = ft_nbrlen_base(p.d8, current_base);
+		p.numlen = ft_nbrulen_base(p.d8, current_base);
 		p.d4 = (intmax_t)p.d8;
 	}
 	return (p);
