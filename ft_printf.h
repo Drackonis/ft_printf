@@ -6,7 +6,7 @@
 /*   By: rkergast <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 17:02:26 by rkergast          #+#    #+#             */
-/*   Updated: 2019/07/08 18:25:44 by rkergast         ###   ########.fr       */
+/*   Updated: 2019/07/15 16:35:26 by rkergast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,7 @@ void					printf_base_ll_nbr(t_printf p);
 void					printf_base_hh_nbr(t_printf p);
 void					ft_printf_base_select(t_printf p);
 t_printf				ft_llmin(t_printf p);
-int			ft_nbrhlen_base(intmax_t nbr, int base);
+int						ft_nbrhlen_base(intmax_t nbr, int base);
+t_printf				put_zero(t_printf p);
 
 #endif

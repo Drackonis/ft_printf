@@ -6,7 +6,7 @@
 /*   By: rkergast <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 18:22:34 by rkergast          #+#    #+#             */
-/*   Updated: 2019/07/03 16:51:28 by dieroyer         ###   ########.fr       */
+/*   Updated: 2019/07/15 18:07:01 by rkergast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ t_printf		get_start_flags(t_printf p, char c, int number)
 
 t_printf		range_sharp(t_printf p)
 {
-	if (p.baseconv == 5 || (p.baseconv >= 3 && p.sharp))
+	if (p.baseconv == 5 || (p.baseconv >= 3 && (p.sharp && p.d4 != 0)))
 		p.f_width -= 2;
 	if (p.baseconv == 2 && p.sharp)
 		p.f_width--;

@@ -6,7 +6,7 @@
 /*   By: rkergast <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 18:22:34 by rkergast          #+#    #+#             */
-/*   Updated: 2019/07/08 13:59:17 by rkergast         ###   ########.fr       */
+/*   Updated: 2019/07/15 18:06:48 by rkergast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,8 @@ t_printf		get_conv(t_printf p)
 	p = initialize(p);
 	p = is_modifier(p);
 	p = flag_modifier(p);
-	p = range_sharp(p);
 	p = get_arg(p);
+	p = range_sharp(p);
 	p = put_start_space(p);
 	if (p.minus)
 	{
