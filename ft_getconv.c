@@ -6,7 +6,7 @@
 /*   By: dieroyer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 16:44:19 by dieroyer          #+#    #+#             */
-/*   Updated: 2019/07/15 20:55:03 by dieroyer         ###   ########.fr       */
+/*   Updated: 2019/07/17 21:26:17 by dieroyer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,23 @@ t_printf	ft_flag_modifier(t_printf p)
 	return (p);
 }
 
+t_printf	ft_putwidth2(t_printf p, int width)
+{
+	while (width > 0 && !p.zero)
+	{
+		printf("ici1");
+		ft_putchar(' ');
+		width--;
+	}
+	while (width > 0 && p.zero)
+	{
+		printf("ici2");
+		ft_putchar('0');
+		width--;
+	}
+	return (p);
+}
+
 t_printf	ft_putwidth(t_printf p, int len)
 {
 	int		width;
@@ -59,11 +76,7 @@ t_printf	ft_putwidth(t_printf p, int len)
 	}
 	else if (len == -3)
 		width -= 1;
-	while (width > 0)
-	{
-		ft_putchar(' ');
-		width--;
-	}
+	ft_putwidth2(p, width);
 	return (p);
 }
 
@@ -73,9 +86,9 @@ t_printf	ft_getconv(t_printf p, int base, int len)
 	p = is_modifier(p);
 	p = flag_modifier(p);
 	p = range_sharp(p);
-	p = put_start_space(p);
 	p = float_conv(p);
 	p = error_f(p);
+	p = put_start_space2(p);
 	p.baseconv = base;
 	len = 0;
 	if (!p.minus)
@@ -85,11 +98,22 @@ t_printf	ft_getconv(t_printf p, int base, int len)
 	}
 	else
 	{
+
 		p = put_nbr_modified(p);
 		p = put_width(p);
 	}
 	p.c = 0;
 	while (p.c < p.diff)
 		p.c++;
+	return (p);
+}
+
+t_printf		put_start_space2(t_printf p)
+{
+	if (p.space && !p.plus && p.isneg == 0)
+	{
+		ft_putchar(' ');
+		p.ret++;
+	}
 	return (p);
 }

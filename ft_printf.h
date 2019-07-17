@@ -6,7 +6,7 @@
 /*   By: rkergast <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 17:02:26 by rkergast          #+#    #+#             */
-/*   Updated: 2019/07/15 20:55:57 by dieroyer         ###   ########.fr       */
+/*   Updated: 2019/07/17 21:10:54 by dieroyer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ typedef struct			s_printf
 	int					baseconv;
 	char				strf[100];
 	int					errorf;
+	intmax_t			ipart;
 	char				*str;
 	int					strerror;
 	double				m;
@@ -95,6 +96,7 @@ t_printf				get_int_arg(t_printf p);
 t_printf				get_arg(t_printf p);
 t_printf				range_sharp(t_printf p);
 t_printf				put_start_space(t_printf p);
+t_printf				put_start_space2(t_printf p);
 t_printf				get_start_flags(t_printf p, char c, int number);
 t_printf				is_modifier(t_printf p);
 t_printf				intialize2(t_printf p);
@@ -107,7 +109,7 @@ t_printf				call_conv(t_printf p, t_printf ptmp);
 t_printf				check_conv(t_printf ptmp);
 int						ft_printf(const char *format, ...);
 void					reverse(char *str, int len);
-int						ft_inttostr(intmax_t x, char *str, int d);
+intmax_t				ft_inttostr(intmax_t x, char *str, int d);
 t_printf				ft_printf_blf(long double n
 		, char *res, int afterpoint, t_printf p);
 t_printf				ft_printf_lf(double n

@@ -6,7 +6,7 @@
 /*   By: rkergast <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 18:22:34 by rkergast          #+#    #+#             */
-/*   Updated: 2019/07/17 15:10:16 by rkergast         ###   ########.fr       */
+/*   Updated: 2019/07/17 18:34:33 by dieroyer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ t_printf		print_nbr(t_printf p)
 			if (p.errorf)
 				ft_putchar('0');
 			ft_putstr(p.strf);
+			ft_strclr(p.strf);
 		}
 		else if (p.baseconv == -2)
 			ft_putchar('%');

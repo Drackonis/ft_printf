@@ -6,7 +6,7 @@
 /*   By: dieroyer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/09 17:09:54 by dieroyer          #+#    #+#             */
-/*   Updated: 2019/07/03 16:52:22 by dieroyer         ###   ########.fr       */
+/*   Updated: 2019/07/17 21:03:40 by dieroyer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,10 @@ void		reverse(char *str, int len)
 	}
 }
 
-int			ft_inttostr(intmax_t x, char *str, int d)
+intmax_t	ft_inttostr(intmax_t x, char *str, int d)
 {
 	t_printf	p;
-	int			i;
+	intmax_t	i;
 
 	i = 0;
 	if (x < 0)
@@ -56,20 +56,19 @@ int			ft_inttostr(intmax_t x, char *str, int d)
 
 t_printf	ft_printf_blf(long double n, char *res, int afterpoint, t_printf p)
 {
-	intmax_t	ipart;
 	long double	fpart;
 	intmax_t	i;
 
-	ipart = (intmax_t)n;
-	fpart = n - (long double)ipart;
-	if (ipart < 0)
+	p.ipart = (intmax_t)n;
+	fpart = n - (long double)p.ipart;
+	if (p.ipart < 0)
 	{
-		ipart = ipart * -1;
+		p.ipart = p.ipart * -1;
 		p.strf[0] = '-';
 	}
 	if ((fpart >= 0.5 || fpart < -0.5) && afterpoint == 0)
-		ipart += 1;
-	i = ft_inttostr(ipart, res, 0);
+		p.ipart += 1;
+	i = ft_inttostr(p.ipart, res, 0);
 	if (fpart < 0)
 		fpart = fpart * -1;
 	if (afterpoint != 0)
@@ -85,22 +84,20 @@ t_printf	ft_printf_blf(long double n, char *res, int afterpoint, t_printf p)
 
 t_printf	ft_printf_lf(double n, char *res, int afterpoint, t_printf p)
 {
-	intmax_t	ipart;
 	double		fpart;
 	intmax_t	i;
 
-	ipart = (intmax_t)n;
-	fpart = n - (double)ipart;
-	if (ipart < 0)
+	p.ipart = (intmax_t)n;
+	fpart = n - (double)p.ipart;
+	if (p.ipart < 0)
 	{
-		ipart = ipart * -1;
+		p.ipart = p.ipart * -1;
 		p.strf[0] = '-';
 	}
 	if ((fpart >= 0.5 || fpart < -0.5) && afterpoint == 0)
-		ipart += 1;
-	i = ft_inttostr(ipart, res, 0);
-	if (fpart < 0)
-		fpart = fpart * -1;
+			p.ipart += 1;
+	i = ft_inttostr(p.ipart, res, 0);
+	fpart = (fpart < 0) ? fpart * -1 : fpart * 1;
 	if (afterpoint != 0)
 	{
 		res[i] = '.';
