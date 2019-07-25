@@ -6,7 +6,7 @@
 /*   By: rkergast <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 18:22:34 by rkergast          #+#    #+#             */
-/*   Updated: 2019/07/17 18:34:33 by dieroyer         ###   ########.fr       */
+/*   Updated: 2019/07/25 13:47:46 by dieroyer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,8 @@ t_printf		print_nbr(t_printf p)
 			p = print_base_nbr(p);
 		else if (p.baseconv == -1)
 		{
-			if (p.errorf)
-				ft_putchar('0');
+			//if (p.errorf)
+			//	ft_putchar('0');
 			ft_putstr(p.strf);
 			ft_strclr(p.strf);
 		}

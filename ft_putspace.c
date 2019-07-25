@@ -6,7 +6,7 @@
 /*   By: rkergast <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 18:22:34 by rkergast          #+#    #+#             */
-/*   Updated: 2019/07/17 21:32:29 by dieroyer         ###   ########.fr       */
+/*   Updated: 2019/07/25 13:54:43 by dieroyer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,13 @@ t_printf		put_width2(t_printf p, int width)
 	{
 		while (i < width)
 		{
-			(p.baseconv == -2 && p.zero) ? ft_putchar('0') : ft_putchar(' ');
+			((p.baseconv == -2 || p.baseconv == -1) && p.zero)\
+				? ft_putchar('0') : ft_putchar(' ');
 			i++;
 			p.ret++;
 		}
+		if (p.baseconv == -1)
+			p = put_mp(p);
 	}
 	return (p);
 }

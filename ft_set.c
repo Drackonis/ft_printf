@@ -6,7 +6,7 @@
 /*   By: rkergast <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 18:22:34 by rkergast          #+#    #+#             */
-/*   Updated: 2019/07/17 16:09:34 by rkergast         ###   ########.fr       */
+/*   Updated: 2019/07/25 13:32:46 by dieroyer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ t_printf		flag_modifier(t_printf p)
 	{
 		if (p.conv[i] == '-')
 			p.minus++;
-		else if (p.conv[i] == '+' && p.baseconv == 0)
+		else if (p.conv[i] == '+' && (p.baseconv == 0 || p.baseconv == -1))
 			p.plus++;
 		else if (p.conv[i] == ' ')
 			p.space++;
