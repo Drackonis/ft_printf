@@ -6,7 +6,7 @@
 /*   By: dieroyer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 16:44:19 by dieroyer          #+#    #+#             */
-/*   Updated: 2019/07/25 17:38:42 by dieroyer         ###   ########.fr       */
+/*   Updated: 2019/07/25 18:39:59 by rkergast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 t_printf	ft_flag_modifier(t_printf p)
 {
-	int	i;
+	int		i;
 
 	p.minus = 0;
 	p.mput = 0;
@@ -48,12 +48,12 @@ t_printf	ft_putwidth(t_printf p, int len)
 	width = p.f_width;
 	if (len == -2 || len == -1)
 	{
-		if (p.is_precision && len == -2 && p.strerror != 1 
+		if (p.is_precision && len == -2 && p.strerror != 1
 				&& p.f_precision < (int)ft_strlen(p.str))
 			width -= p.f_precision;
 		else if (len == -1)
-				width -= 6;
-		else if ((width >= (int)ft_strlen(p.str) 
+			width -= 6;
+		else if ((width >= (int)ft_strlen(p.str)
 					|| p.f_precision > (int)ft_strlen(p.str)) && len == -2)
 			width -= (int)ft_strlen(p.str);
 		else if (width < (int)ft_strlen(p.str) && len == -2)
@@ -98,7 +98,7 @@ t_printf	ft_getconv(t_printf p, int base, int len)
 	return (p);
 }
 
-t_printf		put_start_space2(t_printf p)
+t_printf	put_start_space2(t_printf p)
 {
 	if (p.space && !p.plus && p.isneg == 0)
 	{

@@ -6,7 +6,7 @@
 /*   By: dieroyer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 16:07:54 by dieroyer          #+#    #+#             */
-/*   Updated: 2019/07/25 17:18:23 by dieroyer         ###   ########.fr       */
+/*   Updated: 2019/07/25 18:43:11 by rkergast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,23 @@ t_printf	char_conv(t_printf p)
 	return (p);
 }
 
+t_printf	string_null(t_printf p)
+{
+	p.f_precision = (p.prec_point == 0) ? 6 : p.f_precision;
+	if (p.minus)
+	{
+		ft_putlstr("(null)", p.f_precision);
+		ft_putwidth(p, -1);
+	}
+	else
+	{
+		ft_putwidth(p, -1);
+		ft_putlstr("(null)", p.f_precision);
+	}
+	p.ret += (p.f_width > 6) ? p.f_width : 6;
+	return (p);
+}
+
 t_printf	string_conv(t_printf p)
 {
 	p = initialize(p);
@@ -45,18 +62,7 @@ t_printf	string_conv(t_printf p)
 		p.str = va_arg(p.arg, char*);
 		if (p.str == NULL)
 		{
-			p.f_precision = (p.prec_point == 0) ? 6 : p.f_precision;
-			if (p.minus)
-			{
-				ft_putlstr("(null)", p.f_precision);
-				ft_putwidth(p, -1);
-			}
-			else
-			{
-				ft_putwidth(p, -1);
-				ft_putlstr("(null)", p.f_precision);
-			}
-			p.ret += (p.f_width > 6) ? p.f_width : 6;
+			p = string_null(p);
 			return (p);
 		}
 		if ((p.prec_point == 0 || p.f_precision > (int)ft_strlen((p.str))))

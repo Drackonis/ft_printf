@@ -6,7 +6,7 @@
 /*   By: rkergast <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 17:02:26 by rkergast          #+#    #+#             */
-/*   Updated: 2019/07/25 15:52:41 by rkergast         ###   ########.fr       */
+/*   Updated: 2019/07/25 18:43:06 by rkergast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,7 @@ t_printf				ft_printf_lf(double n
 t_printf				float_conv(t_printf p);
 t_printf				char_conv(t_printf p);
 t_printf				string_conv(t_printf p);
+t_printf				string_null(t_printf p);
 t_printf				ft_putstrpreci(t_printf p);
 t_printf				str_bonus(t_printf p);
 int						check_base(char *base);
