@@ -6,7 +6,7 @@
 /*   By: dieroyer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/09 17:09:54 by dieroyer          #+#    #+#             */
-/*   Updated: 2019/07/25 14:02:17 by dieroyer         ###   ########.fr       */
+/*   Updated: 2019/07/25 14:34:51 by rkergast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ t_printf	ft_printf_lf(double n, char *res, int afterpoint, t_printf p)
 	if (p.ipart < 0)
 		p.ipart = p.ipart * -1;
 	if ((fpart >= 0.5 || fpart < -0.5) && afterpoint == 0)
-			p.ipart += 1;
+		p.ipart += 1;
 	if (p.ipart != 0)
 		i = ft_inttostr(p.ipart, res, 0);
 	else

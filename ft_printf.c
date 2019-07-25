@@ -6,7 +6,7 @@
 /*   By: rkergast <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/04 11:59:58 by rkergast          #+#    #+#             */
-/*   Updated: 2019/07/17 20:40:48 by dieroyer         ###   ########.fr       */
+/*   Updated: 2019/07/25 15:05:38 by rkergast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,8 +103,8 @@ int				ft_printf(const char *format, ...)
 	p.ret = 0;
 	p.baseconv = 0;
 	p.format = ft_strdup(format);
-	if (!check_error(p))
-		return (0);
+	if (p.format == NULL || !check_error(p))
+		return (-1);
 	va_start(p.arg, format);
 	while (p.format[p.i])
 	{

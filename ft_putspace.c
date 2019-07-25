@@ -6,7 +6,7 @@
 /*   By: rkergast <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 18:22:34 by rkergast          #+#    #+#             */
-/*   Updated: 2019/07/25 13:54:43 by dieroyer         ###   ########.fr       */
+/*   Updated: 2019/07/25 15:47:43 by rkergast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,23 +30,30 @@ t_printf		put_mp(t_printf p)
 	return (p);
 }
 
+t_printf		put_width3(t_printf p, int width)
+{
+	int			i;
+
+	i = 0;
+	p = put_mp(p);
+	p = put_sharp(p);
+	while (i < width)
+	{
+		(p.baseconv >= 1 && ((p.d4 == 0 && p.f_precision > 0)\
+		|| p.prec_point)) ? ft_putchar(' ') : ft_putchar('0');
+		i++;
+		p.ret++;
+	}
+	return (p);
+}
+
 t_printf		put_width2(t_printf p, int width)
 {
 	int			i;
 
 	i = 0;
 	if (p.zero && !p.minus && p.is_precision == 0)
-	{
-		while (i < width)
-		{
-			(p.baseconv >= 1 && ((p.d4 == 0 && p.f_precision > 0)\
-			|| p.prec_point)) ? ft_putchar(' ') : ft_putchar('0');
-			i++;
-			p.ret++;
-		}
-		p = put_mp(p);
-		p = put_sharp(p);
-	}
+		p = put_width3(p, width);
 	else
 	{
 		while (i < width)

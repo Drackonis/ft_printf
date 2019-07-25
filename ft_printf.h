@@ -6,7 +6,7 @@
 /*   By: rkergast <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 17:02:26 by rkergast          #+#    #+#             */
-/*   Updated: 2019/07/17 21:10:54 by dieroyer         ###   ########.fr       */
+/*   Updated: 2019/07/25 15:52:41 by rkergast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ t_printf				print_base_nbr(t_printf p);
 t_printf				print_nbr(t_printf p);
 t_printf				put_mp(t_printf p);
 t_printf				put_nbr_modified(t_printf p);
+t_printf				put_width3(t_printf p, int width);
 t_printf				put_width2(t_printf p, int width);
 t_printf				put_width(t_printf p);
 t_printf				get_wipr(t_printf p);

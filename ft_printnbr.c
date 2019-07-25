@@ -6,7 +6,7 @@
 /*   By: rkergast <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 18:22:34 by rkergast          #+#    #+#             */
-/*   Updated: 2019/07/25 13:47:46 by dieroyer         ###   ########.fr       */
+/*   Updated: 2019/07/25 15:29:32 by rkergast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ t_printf		put_zero(t_printf p)
 
 t_printf		print_base_nbr(t_printf p)
 {
-	if (((p.baseconv == 1 && p.d7 == 0) ||\
-		(p.baseconv != 5 && p.d5 == 0) || (p.baseconv == 2 && p.d4 == 0))\
+	if (((p.baseconv == 1 && p.d7 == 0) || (p.baseconv != 5 && p.d5 == 0) ||\
+		(p.baseconv == 5 && p.d5 == 0) || (p.baseconv == 2 && p.d4 == 0))\
 			&& p.d3 == 0 && p.d8 == 0 && p.d0 == 0 && p.d1 == 0)
 		p = put_zero(p);
 	else if (p.lcount > 0 || p.hcount > 0)
@@ -85,8 +85,6 @@ t_printf		print_nbr(t_printf p)
 			p = print_base_nbr(p);
 		else if (p.baseconv == -1)
 		{
-			//if (p.errorf)
-			//	ft_putchar('0');
 			ft_putstr(p.strf);
 			ft_strclr(p.strf);
 		}

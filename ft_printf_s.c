@@ -6,7 +6,7 @@
 /*   By: dieroyer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 16:07:54 by dieroyer          #+#    #+#             */
-/*   Updated: 2019/07/15 19:32:05 by dieroyer         ###   ########.fr       */
+/*   Updated: 2019/07/25 14:35:03 by rkergast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ t_printf	string_conv(t_printf p)
 		{
 			ft_putwidth(p, -1);
 			ft_putstr("(null)");
-			p.ret += (p.f_width > 6 ) ? p.f_width : 6;
+			p.ret += (p.f_width > 6) ? p.f_width : 6;
 			return (p);
 		}
 		if (ft_strcmp(p.str, "") == 0)

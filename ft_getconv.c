@@ -6,7 +6,7 @@
 /*   By: dieroyer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 16:44:19 by dieroyer          #+#    #+#             */
-/*   Updated: 2019/07/25 14:01:37 by dieroyer         ###   ########.fr       */
+/*   Updated: 2019/07/25 14:34:15 by rkergast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 t_printf	ft_flag_modifier(t_printf p)
 {
-	int	i;
+	int		i;
 
 	p.minus = 0;
 	p.mput = 0;
@@ -96,7 +96,7 @@ t_printf	ft_getconv(t_printf p, int base, int len)
 	return (p);
 }
 
-t_printf		put_start_space2(t_printf p)
+t_printf	put_start_space2(t_printf p)
 {
 	if (p.space && !p.plus && p.isneg == 0)
 	{
