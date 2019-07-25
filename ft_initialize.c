@@ -6,7 +6,7 @@
 /*   By: rkergast <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 17:02:26 by rkergast          #+#    #+#             */
-/*   Updated: 2019/07/17 20:56:20 by dieroyer         ###   ########.fr       */
+/*   Updated: 2019/07/25 18:32:04 by rkergast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ t_printf		intialize2(t_printf p)
 	p.d5 = 0;
 	p.d6 = 0;
 	p.d7 = 0;
+	p.d8 = 0;
 	p.strerror = 0;
 	return (p);
 }
