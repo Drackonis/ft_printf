@@ -6,7 +6,7 @@
 /*   By: dieroyer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 16:07:54 by dieroyer          #+#    #+#             */
-/*   Updated: 2019/07/25 14:35:03 by rkergast         ###   ########.fr       */
+/*   Updated: 2019/07/25 17:18:23 by dieroyer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,21 +39,31 @@ t_printf	string_conv(t_printf p)
 {
 	p = initialize(p);
 	p = is_modifier(p);
+	p = ft_flag_modifier(p);
 	if (p.lcount == 0)
 	{
 		p.str = va_arg(p.arg, char*);
 		if (p.str == NULL)
 		{
-			ft_putwidth(p, -1);
-			ft_putstr("(null)");
+			p.f_precision = (p.prec_point == 0) ? 6 : p.f_precision;
+			if (p.minus)
+			{
+				ft_putlstr("(null)", p.f_precision);
+				ft_putwidth(p, -1);
+			}
+			else
+			{
+				ft_putwidth(p, -1);
+				ft_putlstr("(null)", p.f_precision);
+			}
 			p.ret += (p.f_width > 6) ? p.f_width : 6;
 			return (p);
 		}
+		if ((p.prec_point == 0 || p.f_precision > (int)ft_strlen((p.str))))
+			p.f_precision = ft_strlen(p.str);
 		if (ft_strcmp(p.str, "") == 0)
 			p.strerror = 1;
-		if ((p.prec_point == 0) || (p.f_precision > (int)ft_strlen((p.str))))
-			p.f_precision = ft_strlen(p.str);
-		if (p.is_width)
+		if (p.is_width && p.str != NULL)
 			p.ret += p.f_width;
 		else if (p.prec_point != 0)
 			p.ret += p.f_precision;
