@@ -6,7 +6,7 @@
 /*   By: dieroyer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 16:44:19 by dieroyer          #+#    #+#             */
-/*   Updated: 2019/07/29 15:33:37 by rkergast         ###   ########.fr       */
+/*   Updated: 2019/07/29 16:02:39 by rkergast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,6 @@ t_printf	ft_flag_modifier(t_printf p)
 		else if (p.conv[i] == ' ')
 			p.space++;
 		i++;
-	}
-	if (p.space && !p.plus && p.d >= 0)
-	{
-		ft_putchar(' ');
-		p.ret++;
 	}
 	return (p);
 }

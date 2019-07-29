@@ -6,7 +6,7 @@
 /*   By: rkergast <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 18:22:34 by rkergast          #+#    #+#             */
-/*   Updated: 2019/07/29 15:35:22 by rkergast         ###   ########.fr       */
+/*   Updated: 2019/07/29 15:56:44 by rkergast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,8 @@ t_printf		put_width(t_printf p)
 	int			precision;
 
 	width = p.f_width;
-	if ((p.space && p.baseconv <= 0) || (p.plus && !p.isneg) || p.isneg)
+	if ((p.space && p.baseconv <= 0) || (p.plus && !p.isneg) ||\
+			(p.isneg && p.baseconv <= 0))
 		width--;
 	if (p.is_precision)
 	{
