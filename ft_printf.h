@@ -6,7 +6,7 @@
 /*   By: rkergast <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 17:02:26 by rkergast          #+#    #+#             */
-/*   Updated: 2019/07/29 14:48:26 by rkergast         ###   ########.fr       */
+/*   Updated: 2019/07/29 15:23:31 by rkergast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,4 +146,6 @@ int						ft_putunbr_h_base(unsigned short nbr, char *base);
 int						ft_unbrhhlen_base(unsigned short nbr, int base);
 int						ft_unbrhlen_base(unsigned char nbr, int base);
 t_printf				get_arg_uh(t_printf p);
+int						along_format(t_printf p, int i);
+
 #endif

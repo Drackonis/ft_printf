@@ -6,14 +6,11 @@
 /*   By: rkergast <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/04 11:59:58 by rkergast          #+#    #+#             */
-/*   Updated: 2019/07/25 15:05:38 by rkergast         ###   ########.fr       */
+/*   Updated: 2019/07/29 15:33:59 by rkergast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
 #include "ft_printf.h"
-#include "libft/libft.h"
-#include <wchar.h>
 
 t_printf		do_conv(t_printf p, t_printf ptmp)
 {
@@ -103,7 +100,7 @@ int				ft_printf(const char *format, ...)
 	p.ret = 0;
 	p.baseconv = 0;
 	p.format = ft_strdup(format);
-	if (p.format == NULL || !check_error(p))
+	if (!check_error(p))
 		return (-1);
 	va_start(p.arg, format);
 	while (p.format[p.i])

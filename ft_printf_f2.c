@@ -6,12 +6,11 @@
 /*   By: dieroyer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 17:17:15 by dieroyer          #+#    #+#             */
-/*   Updated: 2019/07/17 21:45:58 by dieroyer         ###   ########.fr       */
+/*   Updated: 2019/07/29 15:34:38 by rkergast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include "libft/libft.h"
 
 t_printf	float_conv(t_printf p)
 {

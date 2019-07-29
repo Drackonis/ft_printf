@@ -6,12 +6,11 @@
 /*   By: rkergast <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/29 14:17:33 by rkergast          #+#    #+#             */
-/*   Updated: 2019/07/29 15:07:10 by rkergast         ###   ########.fr       */
+/*   Updated: 2019/07/29 15:34:26 by rkergast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include "libft/libft.h"
 
 int			ft_putunbr_hh_base(unsigned char nbr, char *base)
 {

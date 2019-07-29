@@ -6,11 +6,10 @@
 /*   By: dieroyer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/09 17:09:54 by dieroyer          #+#    #+#             */
-/*   Updated: 2019/07/25 18:35:26 by rkergast         ###   ########.fr       */
+/*   Updated: 2019/07/29 15:34:35 by rkergast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/libft.h"
 #include "ft_printf.h"
 
 void		reverse(char *str, int len)

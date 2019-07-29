@@ -6,11 +6,10 @@
 /*   By: dieroyer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 16:44:19 by dieroyer          #+#    #+#             */
-/*   Updated: 2019/07/25 18:39:59 by rkergast         ###   ########.fr       */
+/*   Updated: 2019/07/29 15:33:37 by rkergast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/libft.h"
 #include "ft_printf.h"
 
 t_printf	ft_flag_modifier(t_printf p)

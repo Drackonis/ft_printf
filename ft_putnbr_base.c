@@ -6,13 +6,11 @@
 /*   By: rkergast <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 16:48:43 by rkergast          #+#    #+#             */
-/*   Updated: 2019/07/04 16:03:38 by rkergast         ###   ########.fr       */
+/*   Updated: 2019/07/29 15:35:13 by rkergast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
 #include "ft_printf.h"
-#include "libft/libft.h"
 
 int			check_base(char *base)
 {

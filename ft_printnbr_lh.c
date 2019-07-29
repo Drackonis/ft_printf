@@ -6,11 +6,10 @@
 /*   By: rkergast <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/08 15:02:08 by rkergast          #+#    #+#             */
-/*   Updated: 2019/07/29 14:33:53 by rkergast         ###   ########.fr       */
+/*   Updated: 2019/07/29 15:35:07 by rkergast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/libft.h"
 #include "ft_printf.h"
 
 void			printf_base_hh_nbr(t_printf p)
