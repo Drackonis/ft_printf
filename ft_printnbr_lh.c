@@ -6,7 +6,7 @@
 /*   By: rkergast <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/08 15:02:08 by rkergast          #+#    #+#             */
-/*   Updated: 2019/07/08 18:06:32 by rkergast         ###   ########.fr       */
+/*   Updated: 2019/07/29 14:33:53 by rkergast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,24 +18,24 @@ void			printf_base_hh_nbr(t_printf p)
 	if (p.hcount == 1)
 	{
 		if (p.baseconv == 1)
-			ft_putunbr_ll_base(p.d1, "0123456789");
+			ft_putunbr_h_base(p.d1, "0123456789");
 		else if (p.baseconv == 2)
-			ft_putunbr_ll_base(p.d1, "01234567");
+			ft_putunbr_h_base(p.d1, "01234567");
 		else if (p.baseconv == 3)
-			ft_putunbr_ll_base(p.d1, "0123456789abcdef");
+			ft_putunbr_h_base(p.d1, "0123456789abcdef");
 		else if (p.baseconv == 4)
-			ft_putunbr_ll_base(p.d1, "0123456789ABCDEF");
+			ft_putunbr_h_base(p.d1, "0123456789ABCDEF");
 	}
 	else
 	{
 		if (p.baseconv == 1)
-			ft_putunbr_ll_base(p.d0, "0123456789");
+			ft_putunbr_hh_base(p.d0, "0123456789");
 		else if (p.baseconv == 2)
-			ft_putunbr_ll_base(p.d0, "01234567");
+			ft_putunbr_hh_base(p.d0, "01234567");
 		else if (p.baseconv == 3)
-			ft_putunbr_ll_base(p.d0, "0123456789abcdef");
+			ft_putunbr_hh_base(p.d0, "0123456789abcdef");
 		else if (p.baseconv == 4)
-			ft_putunbr_ll_base(p.d0, "0123456789ABCDEF");
+			ft_putunbr_hh_base(p.d0, "0123456789ABCDEF");
 	}
 }
 

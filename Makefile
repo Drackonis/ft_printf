@@ -6,7 +6,7 @@
 #    By: rkergast <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/24 16:06:19 by rkergast          #+#    #+#              #
-#    Updated: 2019/07/08 15:06:14 by rkergast         ###   ########.fr        #
+#    Updated: 2019/07/29 14:24:13 by rkergast         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,6 +35,7 @@ SRC = ft_printf.c \
 	  ft_printnbr.c \
 	  ft_putspace.c \
 	  ft_printnbr_lh.c \
+	  ft_printnbr_hh.c \
 	  ft_utils.c
 
 SRC_LIBFT = libft/ft_atoi.c \

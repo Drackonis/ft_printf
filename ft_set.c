@@ -6,7 +6,7 @@
 /*   By: rkergast <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 18:22:34 by rkergast          #+#    #+#             */
-/*   Updated: 2019/07/25 13:32:46 by dieroyer         ###   ########.fr       */
+/*   Updated: 2019/07/29 15:06:35 by rkergast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_printf		get_arg(t_printf p)
 	else if (p.baseconv > 0 && p.hcount == 0 && p.lcount == 0)
 		p = get_arg_base(p, p.current_base);
 	else if (p.hcount > 0)
-		p = get_arg_h(p);
+		p = (p.baseconv == 0) ? get_arg_h(p) : get_arg_uh(p);
 	else if (p.lcount > 0)
 		p = get_arg_l(p);
 	else

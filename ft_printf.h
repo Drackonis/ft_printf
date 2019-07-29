@@ -6,7 +6,7 @@
 /*   By: rkergast <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/25 17:02:26 by rkergast          #+#    #+#             */
-/*   Updated: 2019/07/25 18:43:06 by rkergast         ###   ########.fr       */
+/*   Updated: 2019/07/29 14:48:26 by rkergast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,5 +141,9 @@ void					ft_printf_base_select(t_printf p);
 t_printf				ft_llmin(t_printf p);
 int						ft_nbrhlen_base(intmax_t nbr, int base);
 t_printf				put_zero(t_printf p);
-
+int						ft_putunbr_hh_base(unsigned char nbr, char *base);
+int						ft_putunbr_h_base(unsigned short nbr, char *base);
+int						ft_unbrhhlen_base(unsigned short nbr, int base);
+int						ft_unbrhlen_base(unsigned char nbr, int base);
+t_printf				get_arg_uh(t_printf p);
 #endif
