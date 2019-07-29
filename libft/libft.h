@@ -6,7 +6,7 @@
 /*   By: rkergast <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/09 16:51:21 by rkergast          #+#    #+#             */
-/*   Updated: 2019/07/03 17:05:59 by dieroyer         ###   ########.fr       */
+/*   Updated: 2019/07/29 15:50:47 by dieroyer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ double				ft_power2(double nb, double power);
 int					ft_wstrlen(wchar_t *str);
 int					ft_power(int x, unsigned int y);
 void				ft_putlstr(char *str, int len);
-void				ft_putstrw(wchar_t *wstr);
+void				ft_putstrw(wchar_t *wstr, int len);
 int					ft_atoi(const char *str);
 void				ft_bzero(void *str, size_t n);
 int					ft_isalnum(int c);

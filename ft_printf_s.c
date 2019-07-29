@@ -6,7 +6,7 @@
 /*   By: dieroyer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 16:07:54 by dieroyer          #+#    #+#             */
-/*   Updated: 2019/07/29 15:34:42 by rkergast         ###   ########.fr       */
+/*   Updated: 2019/07/29 15:45:52 by dieroyer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,11 +99,22 @@ t_printf	str_bonus(t_printf p)
 {
 	wchar_t	*v;
 
+	p = initialize(p);
+	p = ft_flag_modifier(p);
 	p = is_modifier(p);
-	v = va_arg(p.arg, wchar_t*);
+	v = va_arg(p.arg, void*);
 	if (v != NULL)
 	{
-		ft_putstrw(v);
+		if (p.minus)
+		{
+			ft_putstrw(v, p.f_precision);
+			ft_putwidth(p, -2);
+		}
+		else
+		{
+			ft_putwidth(p, -2);
+			ft_putstrw(v, p.f_precision);
+		}
 		p.ret += ft_wstrlen(v);
 	}
 	return (p);

@@ -6,19 +6,19 @@
 /*   By: dieroyer <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/05 12:09:43 by dieroyer          #+#    #+#             */
-/*   Updated: 2019/06/25 16:44:27 by rkergast         ###   ########.fr       */
+/*   Updated: 2019/07/29 15:50:38 by dieroyer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <wchar.h>
 
-void	ft_putstrw(wchar_t *str)
+void	ft_putstrw(wchar_t *str, int len)
 {
 	int	i;
 
 	i = 0;
-	while (str[i])
+	while (str[i] && i < len)
 	{
 		write(1, &str[i], 1);
 		i++;
